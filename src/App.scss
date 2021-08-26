@@ -17,13 +17,6 @@
         align-items: center;
         border-top: 2px solid #DDD;
 
-        .button{
-            min-width: 3em; height: 100%;
-            display: flex; align-items: center; justify-content: center;
-            color: #555;
-            cursor:pointer;
-            &:hover{background-color: #EEE;}
-        }
     }
 
     #sidebar{
@@ -32,13 +25,19 @@
         transition: .5s;
         width:15em;
         margin-left:-15em;
-        padding-top: 1em;
         overflow: auto;
 
         &.open{
             margin-left:0em;
+            @media(max-width:600px){width:100vw}
         }
         border-right: 2px solid #DDD;
+
+        .top{
+            height:3em;
+            display: flex; align-items: center;
+
+        }
 
         .song{
             padding: .3em 1em ;
@@ -52,5 +51,14 @@
                 background-color: #EEE;
             }
         }
+    }
+
+    .button{
+        min-width: 3em; height: 100%;
+        display: flex; align-items: center; justify-content: center;
+        color: #555;
+        cursor:pointer;
+        &:hover{background-color: #EEE;}
+        @media(max-width:600px){min-width: 2.5em;}
     }
 }

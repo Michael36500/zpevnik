@@ -33,6 +33,7 @@ class App extends React.Component{
     return (
       <div id="app">
           <div id="sidebar" className={this.state.sidebarOpen?"open":""}>
+            <div className="top"><i class="button fas fa-arrow-left" onClick={()=>this.toggleSidebar()}></i></div>
             {songs.map((song,key) => <Link to={"/"+key} className="notA">
               <div className="song">{song.title} <span className="author">{song.author}</span></div>
             </Link>)}
