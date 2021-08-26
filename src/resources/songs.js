@@ -11,9 +11,9 @@ export const songs = [
 [C]Kopat hroby byl můj ide[D]ál.`
           },
           {
-            lyrics: `[G]Jezdit s hlínou, jezdit s vozíkem,
-[Em]s černou rakví, s bílým pomníkem,
-[C]toho bych se nikdy nenad[D]ál.`
+            lyrics: `Jezdit s hlínou, jezdit s vozíkem,
+s černou rakví, s bílým pomníkem,
+toho bych se nikdy nenadál.`
           },
           {
             lyrics: `Že do módy přijde kremace,
@@ -31,9 +31,9 @@ export const songs = [
             sbohem, bílé město zářící.`
           },
           {
-            lyrics:`Sbohem, moje město,
-            vzpomínat budu přesto
-            jak jsem poznal tvůj smích a tvůj pláč!
+            lyrics:`[G]Sbohem, moje [Em]město,
+            [C]vzpomínat budu [D]přesto
+            jak jsem [G]poznal tvůj [Em]smích[C] a tvůj [D]pláč!
             Na na na. . .
             `
           }
@@ -45,11 +45,23 @@ export const songs = [
         author:"Olympic",
         verses: [
           {
-            lyrics: ` [Em]Mám [H7]v kapse jeden [Em]frank,
+            lyrics: `[Em]Mám [H7]v kapse jeden [Em]frank,
             jsem [D7]nejbohatší z [G]bank nad Sei[H7]nou. 
-            [Em]Mám [H7]víc než krupi[Em]ér
+            [Em]Mám [H7]víc než krupi[Em]ér,
             [D7]stíny Sacre-[G]Coure nade [H7]mnou.`
           },
+          {
+            lyrics: `[C]Láska je [D]úděl [G]tvůj.
+            [Am]Pán bůh tě [H7]opa[Em]truj.
+            |: Bon so[C]ir, mademoi[D]selle Pa[Em]ris. :|`
+          },
+          {
+            lyrics: `Znám bulvár Saint Michellee,
+            tam jsem včera šel s Marie-Claire.
+            Vím, jak zní z úst krásných žen,
+            slůvka „Car je taime, oh mon cher“.`
+          },
+          
         ]
       }
 ]

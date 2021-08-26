@@ -10,11 +10,18 @@ class App extends React.Component{
     super()
     this.state = {
       sidebarOpen: false,
+      columns:1,
     }
   }
 
   toggleSidebar(){
     this.setState({sidebarOpen:!this.state.sidebarOpen})
+  }
+
+  toggleColumns(){
+    var c = this.state.columns;
+    c = c>=3?1:c+1
+    this.setState({columns: c})
   }
 
   getSong(ctx){
@@ -32,11 +39,19 @@ class App extends React.Component{
           </div>
           <div id="main">
             <Switch>
-                <Route path="/:id" render={ctx => <Song song={this.getSong(ctx)}/>}/>
+                <Route path="/:id" render={ctx => <Song
+                  song={this.getSong(ctx)}
+                  columns={this.state.columns}
+                />}/>
             </Switch>
           </div>
           <div id="toolbar">
             <i className="button fas fa-bars" onClick={()=>this.toggleSidebar()}></i>
+            <div className="spacer"></div>
+            <i class="button fas fa-expand-arrows-alt" alt="Auto fit"></i>
+            <i class="button fas fa-search-plus" alt="Font size"></i>
+            <i class="button fas fa-hashtag" alt="Transpoze"></i>
+            <i className="button fas fa-columns" alt="Columns" onClick={()=>this.toggleColumns()}>{this.state.columns}</i>
           </div>
       </div>
     );

@@ -4,6 +4,7 @@
     grid-template-columns: auto 1fr;
     grid-template-rows: 1fr 3em;
     position: relative;
+    overflow: hidden;
 
     #main{
         //background-color: #00F5;
