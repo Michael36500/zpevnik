@@ -54,7 +54,7 @@ class App extends React.Component{
     }
 
     if(song < main){
-      var i = setInterval(()=>{
+      let i = setInterval(()=>{
         correct(.1)
         if(song>main){
           clearInterval(i)
@@ -64,7 +64,7 @@ class App extends React.Component{
     }
 
     if(song > main){
-      var i = setInterval(()=>{
+      let i = setInterval(()=>{
         correct(-.1)
         if(song<main){
           clearInterval(i)
