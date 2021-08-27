@@ -79,10 +79,18 @@ class App extends React.Component{
     return (
       <div id="app">
           <div id="sidebar" className={this.state.sidebarOpen?"open":""}>
-            <div className="top"><i class="button fas fa-arrow-left" onClick={()=>this.toggleSidebar()}></i></div>
-            {songs.map((song,key) => <Link to={"/"+key} className="notA">
-              <div className="song">{song.title} <span className="author">{song.author}</span></div>
-            </Link>)}
+            <div className="top">
+              <input size="1" placeholder="Hledej ..." onChange={e=>this.setState({search:e.target.value})} value={this.state.search}/>
+              <i class="button fas fa-arrow-left" onClick={()=>this.toggleSidebar()}></i>
+            </div>
+
+            {songs
+              .sort((a,b)=>(a.title>b.title)?1:-1)
+              .filter(s => (normalize(s.title)+normalize(s.author)).includes(normalize(this.state.search)))
+              .map((song,key) => <Link to={"/"+key} className="notA">
+                <div className="song">{song.title} <span className="author">{song.author}</span></div>
+              </Link>)
+            }
           </div>
 
           <div id="main">
@@ -129,3 +137,7 @@ class App extends React.Component{
 
 export default App;
 
+function normalize(string){
+  if(typeof string !== "string") return ""
+  return string.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+}

@@ -50,7 +50,16 @@
         .top{
             height:3em;
             display: flex; align-items: center;
-
+            
+            input{
+                border: none;
+                margin-left: .7em;
+                flex-grow: 1;
+                border-bottom: 1px solid #DDD;
+                font-family: inherit;
+                font-size: 1em;
+                padding: .3em .5em 0em
+            }
         }
 
         .song{
