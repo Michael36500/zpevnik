@@ -2,16 +2,28 @@ import React from 'react';
 import './song.scss';
 import { Lyrics } from '../lyrics';
 
-export function Song({song,columns=1}){
-    return <div className="song">
+
+const notes = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
+
+function transpoze(lyrics, howMuch=0){
+  return lyrics.replaceAll(/\[(.*?)\]/g,chord => {
+    return chord.replaceAll(/[CDEFGAB]#?/g, note => {
+      return notes[(notes.indexOf(note)+howMuch)%notes.length]
+    })
+  })
+}
+
+export function Song({song,columns=1, fontsize=20, trans=0}){
+    return <div className="song" style={{fontSize:fontsize}}>
         <h1 className="title">{song.title}</h1>
         <h2 className="author">{song.author}</h2>
         <div className="lyrics" style={{columnCount:columns}}>
             {song.verses?.map(verse => {
                 return <div className="verse"><Lyrics>
-                    {verse.lyrics}
+                    {transpoze(verse.lyrics, trans)}
                 </Lyrics></div>
             })}
         </div>
     </div>
 }
+
