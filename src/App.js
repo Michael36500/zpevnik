@@ -40,6 +40,41 @@ class App extends React.Component{
     else this.setState({popup:id})
   }
 
+  async autoFit(){
+    var song = document.getElementById("song")?.clientHeight
+    var main = document.getElementById("main")?.clientHeight
+    if(!song || !main)return
+
+    const t = this
+    function correct(val){
+      t.setState({fontsize:parseInt((t.state.fontsize+val)*10)/10}, () => {
+        song = document.getElementById("song")?.clientHeight
+        main = document.getElementById("main")?.clientHeight
+      })
+    }
+
+    if(song < main){
+      var i = setInterval(()=>{
+        correct(.1)
+        if(song>main){
+          clearInterval(i)
+          this.autoFit()
+        }
+      },0)
+    }
+
+    if(song > main){
+      var i = setInterval(()=>{
+        correct(-.1)
+        if(song<main){
+          clearInterval(i)
+        }
+      },0)
+    }
+
+    
+  }
+
   render(){
     return (
       <div id="app">
@@ -64,7 +99,7 @@ class App extends React.Component{
           <div id="toolbar">
             <i className="button fas fa-bars" onClick={()=>this.toggleSidebar()}></i>
             <div className="spacer"></div>
-            <i class="button fas fa-expand-arrows-alt" alt="Auto fit"></i>
+            <i class="button fas fa-expand-arrows-alt" alt="Auto fit" onClick={()=>this.autoFit()}></i>
             <i class="button fas fa-search-plus" alt="Font size" onClick={()=>this.togglePopup("fontsize")}></i>
             <i class="button fas fa-hashtag" alt="Transpoze" onClick={()=>this.togglePopup("transpoze")}>{!!this.state.transpoze&&<>&thinsp;{this.state.transpoze}</>}</i>
             <i className="button fas fa-columns" alt="Columns" onClick={()=>this.toggleColumns()}>&thinsp;{this.state.columns}</i>

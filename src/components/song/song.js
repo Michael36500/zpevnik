@@ -14,7 +14,7 @@ function transpoze(lyrics, howMuch=0){
 }
 
 export function Song({song,columns=1, fontsize=20, trans=0}){
-    return <div className="song" style={{fontSize:fontsize}}>
+    return <div id="song" style={{fontSize:fontsize}}>
         <h1 className="title">{song.title}</h1>
         <h2 className="author">{song.author}</h2>
         <div className="lyrics" style={{columnCount:columns}}>

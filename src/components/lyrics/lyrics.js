@@ -10,7 +10,6 @@ export function Lyrics({children}){
         chords++;
         return `<span class="chord">${chord.substring(1,chord.length-1)}</span>`
       })
-      console.log(newRow)
       return <div className={"lyrics-line"+(chords?" with-chords":"")} dangerouslySetInnerHTML={{__html:newRow}}></div>
     })
 
