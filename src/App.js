@@ -1,7 +1,7 @@
 import './Main.scss'
 import {Song} from './components/song'
 import {songs} from './resources/songs.js'
-import {Switch, Route, Link} from 'react-router-dom'
+import {Switch, Route, Link, Redirect} from 'react-router-dom'
 import React from 'react';
 import './App.scss';
 import InputRange from 'react-input-range';
@@ -99,7 +99,7 @@ class App extends React.Component{
               .sort((a,b)=>(a.title>b.title)?1:-1)
               .filter(s => (normalize(s.title)+normalize(s.author)).includes(normalize(this.state.search)))
               .map(song => <Link to={"/"+song.id} className="notA">
-                <div className="song">{song.title} <span className="author">{song.author}</span></div>
+                <div className="song" onClick={()=>{if(isMobile())this.toggleSidebar()}}>{song.title} <span className="author">{song.author}</span></div>
               </Link>)
             }
           </div>
@@ -112,6 +112,7 @@ class App extends React.Component{
                   fontsize={this.state.fontsize}
                   trans={this.state.transpoze}
                 />}/>
+                <Route path="/" exact><Redirect to="/1"/></Route>
             </Switch>
           </div>
 
@@ -151,4 +152,8 @@ export default App;
 function normalize(string){
   if(typeof string !== "string") return ""
   return string.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+}
+
+function isMobile(){
+  return Boolean(window.innerWidth < 600);
 }
