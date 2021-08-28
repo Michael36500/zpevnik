@@ -6,6 +6,7 @@ import React from 'react';
 import './App.scss';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css'
+import { getCacheSongs, getSongs } from './resources/api/song';
 
 
 class App extends React.Component{
@@ -17,7 +18,17 @@ class App extends React.Component{
       popup:"",
       transpoze:0,
       fontsize:20,
+      songs: [],
     }
+  }
+
+  componentDidMount(){
+    const cache = getCacheSongs()
+    if(Array.isArray(cache))this.setState({songs:cache})
+
+    getSongs().then(res=>{
+      this.setState({songs:res})
+    }).catch(err => console.log(err))
   }
 
   toggleSidebar(){
@@ -32,7 +43,7 @@ class App extends React.Component{
 
   getSong(ctx){
     const id = ctx.match.params.id;
-    return songs[id]||{}
+    return this.state.songs.filter(s => parseInt(s.id)===parseInt(id))[0]||{}
   } 
 
   togglePopup(id){
@@ -84,10 +95,10 @@ class App extends React.Component{
               <i class="button fas fa-arrow-left" onClick={()=>this.toggleSidebar()}></i>
             </div>
 
-            {songs
+            {this.state.songs
               .sort((a,b)=>(a.title>b.title)?1:-1)
               .filter(s => (normalize(s.title)+normalize(s.author)).includes(normalize(this.state.search)))
-              .map((song,key) => <Link to={"/"+key} className="notA">
+              .map(song => <Link to={"/"+song.id} className="notA">
                 <div className="song">{song.title} <span className="author">{song.author}</span></div>
               </Link>)
             }
