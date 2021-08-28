@@ -20,12 +20,22 @@
     align-items: center;
 
     .lyrics{
+        column-gap: 2em;
+        margin-top:.5em;
         
         
 
     .verse{
             &:not(:first-child){margin-top: 1em;}
-               break-inside: avoid;
+            break-inside: avoid;
+            position: relative;
+            padding-left: 1.5em;
+            min-height: 2em;
+            .before{
+                position:absolute;
+                left: -1.5em;
+                font-weight: 800;
+            }
         }
     }
 }

@@ -1,15 +1,17 @@
 import React from 'react';
 import './lyrics.scss';
 
-export function Lyrics({children}){
-    if(!typeof children === "String")return <p></p>
+export function Lyrics({children="",name=""}){
+    if(typeof children !== "string")children=""
+    if(typeof name !== "string")name=""
     const rows = children.split("\n")
-    const mappedRows = rows.map(row => {
+    const mappedRows = rows.map((row,key) => {
       let chords = 0;
-      const newRow = row.replaceAll(/\[(.*?)\]/g, chord => {
+      let newRow = row.replaceAll(/\[(.*?)\]/g, chord => {
         chords++;
         return `<span class="chord">${chord.substring(1,chord.length-1)}</span>`
       })
+      if(key===0) newRow = `<span class="before">${name}</span>`+newRow;
       return <div className={"lyrics-line"+(chords?" with-chords":"")} dangerouslySetInnerHTML={{__html:newRow}}></div>
     })
 
