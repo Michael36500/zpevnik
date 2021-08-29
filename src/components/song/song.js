@@ -19,6 +19,7 @@ export function Song({song,columns=1, fontsize=20, trans=0}){
         <h1 className="title">{song.title}</h1>
         <h2 className="author">{song.author}</h2>
         <div className="lyrics" style={{columnCount:columns}}>
+            {!!song.capo&&<div className="capo">Capo {song.capo}</div>}
             {song.verses?.map(verse => {
                 return <div className="verse">
                 <Lyrics name={verse.name}>

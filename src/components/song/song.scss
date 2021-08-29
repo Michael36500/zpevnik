@@ -11,7 +11,7 @@
     }
     h2.author{
         text-align: center;
-        margin-top: 0em;
+        margin: 0em;
         font-size: 1.1em;
         font-style: italic;
         font-weight: 600;
@@ -21,9 +21,11 @@
 
     .lyrics{
         column-gap: 2em;
-        margin-top:.5em;
+        margin-top:1em;
         
-        
+    .capo{
+        text-align: right;
+    }
 
     .verse{
             &:not(:first-child){margin-top: 1em;}
