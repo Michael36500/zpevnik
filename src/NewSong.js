@@ -13,7 +13,7 @@ export default class NewSong extends React.Component{
                 sfw: true,
                 verses: [
                     {
-                        lyrics: "[G]Jednou [C7]jeden [G]šnek [D7]\n[G]šíle[C]ně se [G]lek’, [D7]\n[G]nikdo už dnes [G7]neví, z [C]čeho se tak [Cm]zjevil,\nže se [G]dal hned [D]na ú[G]těk.[D]", 
+                        lyrics: "", 
                         name:"1."
                     }
                 ],
@@ -91,8 +91,8 @@ export default class NewSong extends React.Component{
         return <div id="new-song">
             <h1>Nová písnička</h1>
             <div className="grid">
-                <div className="label">Název</div><input name="title" type="text" placeholder="Název" value={song.title} onChange={e=>this.input(e)}/>
-                <div className="label">Autor:</div><input name="author" type="text" placeholder="Autor" value={song.author} onChange={e=>this.input(e)}/>
+                <div className="label">Název:</div><input name="title" type="text" placeholder="Šnečí blues" value={song.title} onChange={e=>this.input(e)}/>
+                <div className="label">Autor:</div><input name="author" type="text" placeholder="Jaromír Nohavica" value={song.author} onChange={e=>this.input(e)}/>
                 <div className="label">Capo:</div><input name="capo" type="number" min="0" placeholder="Capo" value={song.capo} onChange={e=>this.input(e)}/>
                 <label><input name="sfw" type="checkbox" checked={song.sfw} onChange={e=>this.input(e)}/>sfw</label>
             </div>
@@ -102,7 +102,7 @@ export default class NewSong extends React.Component{
                 {song.verses?.map((verse,key) => {
                     return <>
                         <input size="1" type="text" value={verse.name} onChange={e=>this.editVerse(key,"name",e.target.value)}/>
-                        <textarea id={"v"+key+"-lyrics"} rows="5" cols="100" value={verse.lyrics} onChange={e=>this.editVerse(key,"lyrics",e.target.value)}/>
+                        <textarea placeholder={(key===0)&&"[G]Jednou [C7]jeden [G]šnek [D7]\n[G]šíle[C]ně se [G]lek’, [D7]\n[G]nikdo už dnes [G7]neví, z [C]čeho se tak [Cm]zjevil,\nže se [G]dal hned [D]na ú[G]těk.[D]"} id={"v"+key+"-lyrics"} rows="5" cols="100" value={verse.lyrics} onChange={e=>this.editVerse(key,"lyrics",e.target.value)}/>
                         <div className="remove" onClick={()=>this.deleteVerse(key)}>×</div>
                     </> 
                 })}
