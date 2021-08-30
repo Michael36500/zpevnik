@@ -1,0 +1,61 @@
+#new-song{
+    padding: 2em;
+    max-width: 1000px;
+    margin:auto;
+
+    .grid{
+        display: grid;
+        grid-template-columns: auto 1fr;
+        grid-gap:1em .5em;
+    }
+
+    .verses{
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        grid-gap: 1em;
+        justify-content: center; align-items: center;
+        .remove{
+            padding: .5em;
+            font-size: 2em;
+            cursor: pointer;
+        }
+        input{
+            width:2em;
+            height: 2em;
+            padding: .3em;
+            text-align: center;
+            border-radius: 100%;
+            border: 2px solid #CCC;
+            margin: .5em;
+        }
+        textarea{
+            font-size: inherit; font-family: inherit;
+            padding: .3em;
+            border: 0em;
+            border-bottom: 2px solid #CCC
+        }
+    }
+
+    input{
+        border: none;
+        margin-left: .7em;
+        flex-grow: 1;
+        border-bottom: 1px solid #DDD;
+        font-family: inherit;
+        font-size: 1em;
+        padding: .3em .5em 0em
+    }
+
+    .button{
+        margin-top: 2em;
+        padding: .5em;
+        border-radius:4px;
+        background-color: #EEE;
+        &:hover{
+            background-color: #DDD;
+        }
+    }
+    editor-squiggler{
+        display: none;
+    }
+}
