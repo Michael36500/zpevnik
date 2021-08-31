@@ -78,6 +78,7 @@ export default class NewSong extends React.Component{
     }
 
     submit(){
+        if(window.confirm("Opravdu chcete písničku odeslat?"))
         createSong(this.state.song).then(res => {
             alert("Písnička úspěšně přidána.")
             this.clear()
@@ -109,7 +110,7 @@ export default class NewSong extends React.Component{
             </div>
 
             <div className="button" onClick={()=>this.submit()}>
-                Přidat
+                Odeslat
             </div>
         </div>
     }

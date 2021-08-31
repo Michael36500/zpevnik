@@ -7,6 +7,7 @@ import { Song } from './components/song';
 import './Main.scss';
 import NewSong from './NewSong';
 import { getCacheSongs, getSongs } from './resources/api/song';
+import TexToLyrics from './TexToLyrics';
 
 
 class App extends React.Component {
@@ -107,6 +108,7 @@ class App extends React.Component {
         <div id="main">
           <Switch>
             <Route path="/new" exact><NewSong/></Route>
+            <Route path="/ttl" exact><TexToLyrics/></Route>
             <Route path="/:id" render={ctx => <Song
               song={this.getSong(ctx)}
               columns={this.state.columns}
