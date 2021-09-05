@@ -97,7 +97,7 @@ class App extends React.Component {
           </div>
 
           {this.state.songs
-            .sort((a, b) => (a.title > b.title) ? 1 : -1)
+            .sort((a, b) => a.title.localeCompare(b.title))
             .filter(s => (normalize(s.title) + normalize(s.author)).includes(normalize(this.state.search)))
             .map(song => <Link to={"/" + song.id} className="notA">
               <div className="song" onClick={() => { if (isMobile()) this.toggleSidebar() }}>{song.title} <span className="author">{song.author}</span></div>
