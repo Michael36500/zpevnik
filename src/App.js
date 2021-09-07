@@ -98,6 +98,7 @@ class App extends React.Component {
   }
 
   render() {
+    const settings = this.state.settings
     return (
       <div id="app" className={this.state.settings.darkMode?"dark-theme":"light-theme"}>
         <div id="sidebar" className={this.state.sidebarOpen ? "open" : ""}>
@@ -109,6 +110,7 @@ class App extends React.Component {
           {this.state.songs
             .sort((a, b) => a.title.localeCompare(b.title))
             .filter(s => (normalize(s.title) + normalize(s.author)).includes(normalize(this.state.search)))
+            .filter(s => s.sfw || settings.displayNsfw)
             .map(song => <Link to={"/" + song.id} className="notA">
               <div className="song" onClick={() => { if (isMobile()) this.toggleSidebar() }}>{song.title} <span className="author">{song.author}</span></div>
             </Link>)
