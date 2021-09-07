@@ -1,6 +1,25 @@
 import React from 'react';
 import './lyrics.scss';
 
+const replacers = [
+  {
+    reg: /\\h{(.*?)}/g,
+    fun: str=>`<span class="hskip" style="width:${str.substring(3,str.length-1)}"> </span>`
+  },
+  {
+    reg: /\\hskip{(.*?)}/g,
+    fun: str=>`<span class="hskip" style="width:${str.substring(3,str.length-1)}"> </span>`
+  },
+  {
+    reg: /\*\*(.*?)\*\*/g,
+    fun: str=>`<span class="bold">${str.substring(2,str.length-2)}</span>`
+  },
+  {
+    reg: /\*(.*?)\*/g,
+    fun: str=>`<span class="italic">${str.substring(1,str.length-1)}</span>`
+  },
+]
+
 export function Lyrics({children="",name=""}){
     if(typeof children !== "string")children=""
     if(typeof name !== "string")name=""
@@ -13,7 +32,9 @@ export function Lyrics({children="",name=""}){
         return `<span class="chord">${chord.substring(1,chord.length-1)}</span>`
       })
 
-      newRow = newRow.replaceAll(/\\h{(.*?)}/g, width => `<span class="hskip" style="width:${width.substring(3,width.length-1)}"> </span>`)
+      replacers.forEach(rep => {
+        newRow = newRow.replaceAll(rep.reg, x => rep.fun(x))
+      })
 
       if(key===0) newRow = `<span class="before">${name}</span>`+newRow;
       return <div className={"lyrics-line"+(chords?" with-chords":"")} dangerouslySetInnerHTML={{__html:newRow}}></div>
