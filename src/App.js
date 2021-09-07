@@ -5,7 +5,8 @@ import { Link, Redirect, Route, Switch } from 'react-router-dom';
 import './App.scss';
 import { Song } from './components/song';
 import './Main.scss';
-import NewSong from './NewSong';
+import NewSong from './pages/NewSong';
+import Settings from './pages/Settings';
 import { getCacheSongs, getSongs } from './resources/api/song';
 import TexToLyrics from './TexToLyrics';
 
@@ -20,6 +21,9 @@ class App extends React.Component {
       transpoze: 0,
       fontsize: 20,
       songs: [],
+      settings:{
+        darkMode: false,
+      }
     }
   }
 
@@ -30,6 +34,9 @@ class App extends React.Component {
     getSongs().then(res => {
       this.setState({ songs: res })
     }).catch(err => console.log(err))
+
+    const settings = JSON.parse(localStorage.getItem("settings"))
+    if(settings)this.setState({settings:settings})
   }
 
   toggleSidebar() {
@@ -83,13 +90,16 @@ class App extends React.Component {
         }
       }, 0)
     }
+  }
 
-
+  updateSettings(val){
+    this.setState({settings: val})
+    localStorage.setItem("settings",JSON.stringify(val))
   }
 
   render() {
     return (
-      <div id="app">
+      <div id="app" className={this.state.settings.darkMode?"dark-theme":"light-theme"}>
         <div id="sidebar" className={this.state.sidebarOpen ? "open" : ""}>
           <div className="top">
             <input size="1" placeholder="Hledej ..." onChange={e => this.setState({ search: e.target.value })} value={this.state.search} />
@@ -107,6 +117,7 @@ class App extends React.Component {
 
         <div id="main">
           <Switch>
+            <Route path="/settings"><Settings settings={this.state.settings} onChange={v=>this.updateSettings(v)}/></Route>
             <Route path="/new" exact><NewSong/></Route>
             <Route path="/ttl" exact><TexToLyrics/></Route>
             <Route path="/:id" render={ctx => <Song
@@ -122,6 +133,7 @@ class App extends React.Component {
         <div id="toolbar">
           <i className="button fas fa-bars" onClick={() => this.toggleSidebar()}></i>
           <div className="spacer"></div>
+          <Link to="/settings" className="notA button"><i class="fas fa-cog"></i></Link>
           <i class="button fas fa-expand-arrows-alt" alt="Auto fit" onClick={() => this.autoFit()}></i>
           <i class="button fas fa-search-plus" alt="Font size" onClick={() => this.togglePopup("fontsize")}></i>
           <i class="button fas fa-hashtag" alt="Transpoze" onClick={() => this.togglePopup("transpoze")}>{!!this.state.transpoze && <>&thinsp;{this.state.transpoze}</>}</i>

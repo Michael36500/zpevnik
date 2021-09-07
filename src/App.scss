@@ -5,6 +5,9 @@
     grid-template-rows: 1fr 3em;
     position: relative;
     overflow: hidden;
+    background-color: var(--primary-bg);
+    color: var(--primary-text);
+    transition: .2s;
 
     #main{
         //background-color: #00F5;
@@ -15,7 +18,7 @@
         //background-color: #0F05;
         display: flex;
         align-items: center;
-        border-top: 2px solid #DDD;
+        border-top: 2px solid var(--border);
         position: relative;
 
         #popup{
@@ -23,7 +26,7 @@
             right: .5em;
             top: -4.5em;
             border-radius: 4px;
-            background-color: white;
+            background-color: var(--primary-bg);
             box-shadow: 0px 0px 8px 4px #00000019;
             width: 15em;
             @media(max-width:600px){
@@ -45,7 +48,7 @@
             margin-left:0em;
             @media(max-width:600px){width:100vw}
         }
-        border-right: 2px solid #DDD;
+        border-right: 2px solid var(--border);
 
         .top{
             height:3em;
@@ -55,10 +58,12 @@
                 border: none;
                 margin-left: .7em;
                 flex-grow: 1;
-                border-bottom: 1px solid #DDD;
+                border-bottom: 1px solid var(--border);
                 font-family: inherit;
                 font-size: 1em;
-                padding: .3em .5em 0em
+                padding: .3em .5em 0em;
+                background-color: inherit;
+                color: inherit;
             }
         }
 
@@ -71,7 +76,7 @@
                 font-style: italic;
             }
             &:hover{
-                background-color: #EEE;
+                background-color: var(--primary-bg-hover);
             }
         }
     }
@@ -79,11 +84,27 @@
     .button{
         min-width: 3em; height: 100%;
         display: flex; align-items: center; justify-content: center;
-        color: #555;
+        color: var(--icon);
         cursor:pointer;
-        &:hover{background-color: #EEE;}
+        &:hover{background-color: var(--primary-bg-hover);}
         @media(max-width:600px){min-width: 2.5em;}
         font-family: "Font Awesome 5 Free", "Nunito";
         font-weight: 800;
     }
+}
+
+.dark-theme{
+    --primary-bg:#111;
+    --primary-bg-hover: #222;
+    --primary-text: #DDD;
+    --border: #333;
+    --icon:#AAA;
+}
+
+.light-theme{
+    --primary-bg:#FFF;
+    --primary-bg-hover: #EEE;
+    --primary-text: #000;
+    --border: #DDD;
+    --icon:#555;
 }

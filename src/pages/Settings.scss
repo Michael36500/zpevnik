@@ -1,0 +1,29 @@
+#settings{
+    padding: 2em;
+    @media (max-width:600px) {padding: 1em;}
+    max-width: 1000px; margin: auto;
+    
+    h1{
+        margin: 0em 0em .5em; font-weight: 300;
+    }
+
+    .setting{
+        display: flex;
+        .left{
+            flex-grow: 1;
+            .title{
+                font-weight: 700;
+            }
+            .description{
+                color:#777;
+                font-size: .8em;
+            }
+        }
+        .right{
+            padding-left:1em;
+            display: flex;
+            align-items: center; justify-content: center;
+        }
+    }
+    
+}

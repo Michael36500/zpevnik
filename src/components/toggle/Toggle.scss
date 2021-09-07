@@ -1,0 +1,27 @@
+.comp-toggle{
+    height: 1em;
+    padding: .2em;
+    width: 2.5em;
+    border-radius: 1em;
+    cursor: pointer;
+    background-color: #777;
+    position: relative;
+    transition: .3s;
+    -webkit-tap-highlight-color: transparent;
+
+    .thumb{
+        height: 1em; width: 1em;
+        background-color: #FFF;
+        border-radius: 1em;
+        box-shadow: 0px 0px 4px 2px #0000002A;
+        position: absolute; left:.2em;
+        transition: .3s;
+    }
+
+    &.active{
+        background-color: #0B0;
+        .thumb{
+            left:1.7em;
+        }
+    }
+}

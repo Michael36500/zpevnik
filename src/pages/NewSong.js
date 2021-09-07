@@ -1,6 +1,6 @@
 import React from 'react';
 import './NewSong.scss';
-import { createSong } from './resources/api/song';
+import { createSong } from '../resources/api/song';
 
 export default class NewSong extends React.Component{
     constructor(props){
