@@ -40,7 +40,7 @@ class App extends React.Component {
   }
 
   toggleSidebar() {
-    this.setState({ sidebarOpen: !this.state.sidebarOpen })
+    this.setState({ sidebarOpen: !this.state.sidebarOpen, popup:"" })
   }
 
   toggleColumns() {
