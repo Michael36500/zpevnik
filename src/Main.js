@@ -9,8 +9,8 @@ function Main({settings={}, getSong=()=>{}, updateSettings=()=>{}, location, his
     const songId=parseInt(location.pathname.substring(1,location.pathname.length))
     const next=songIds[(songIds.indexOf(songId)+1)%songIds.length]
     const prev=songIds[(songIds.indexOf(songId)-1)>=0?(songIds.indexOf(songId)-1):songIds.length-1]
-    console.log(songIds)
-    console.log(songId,next,prev)
+    //console.log(songIds)
+    //console.log(songId,next,prev)
 
     const handlers = useSwipeable({
         onSwipedLeft: ()=>{history.push("/"+next)},

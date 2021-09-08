@@ -6,7 +6,8 @@ export default class Settings extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            settings: props.settings || {}
+            settings: props.settings || {},
+            showNSFW: -5,
         }
     }
 
@@ -26,34 +27,19 @@ export default class Settings extends React.Component{
     render(){
         const settings = this.state.settings
         return <div id="settings">
-            <h1>Settings</h1>
+            <h1 onClick={()=>this.setState({showNSFW:this.state.showNSFW+1})}>Settings</h1>
             <Setting
                 title="Dark Mode"
                 text="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
                 value={settings.darkMode}
                 onChange={v => this.set("darkMode",v)}
             />
-            <Setting
+            {(this.state.showNSFW>0 || settings.displayNsfw)&&<Setting
                 title="Display all songs"
                 text=""
                 value={settings.displayNsfw}
-                onChange={v => {
-                    if(settings.displayNsfw === false && v === true){
-                        const x = window.prompt("Zadej heslo:")
-                        if(x === "kolecko"){
-                            this.set("displayNsfw",true)
-                        }
-                        else{
-                            setTimeout(()=>this.setState({settings:{...this.state.settings,displayNsfw:true}}),1)
-                            setTimeout(()=>this.setState({settings:{...this.state.settings,displayNsfw:false}}),2)
-                        }
-                    }
-                    else{
-                        this.set("displayNsfw",v)
-                    }
-                    
-                }}
-            />
+                onChange={v => this.set("displayNsfw",v)}
+            />}
         </div>
     }
 }
