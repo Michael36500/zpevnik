@@ -128,7 +128,7 @@ class App extends React.Component {
                getSong={(ctx)=>this.getSong(ctx)}
                updateSettings={(set)=>this.updateSettings(set)}
                settings={settings}
-               songIds={this.state.songs.sort((a, b) => a.title.localeCompare(b.title)).map(song => song.id)}
+               songIds={this.state.songs.filter(s=>s.sfw).sort((a, b) => a.title.localeCompare(b.title)).map(song => song.id)}
             />
             
 
