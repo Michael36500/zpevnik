@@ -14,14 +14,14 @@ function transpoze(lyrics="", howMuch=0){
   })
 }
 
-export function Song({song,columns=1, fontsize=20, trans=0}){
-    return <div id="song" style={{fontSize:fontsize}}>
+export function Song({song,columns=1, fontsize=20, trans=0, swipes={}}){
+    return <div id="song" style={{fontSize:fontsize}} {...swipes}>
         <h1 className="title">{song.title}</h1>
         <h2 className="author">{song.author}</h2>
         <div className="lyrics" style={{columnCount:columns}}>
             {!!song.capo&&<div className="capo">Capo {song.capo}</div>}
-            {song.verses?.map(verse => {
-                return <div className="verse">
+            {song.verses?.map((verse,k) => {
+                return <div className="verse" key={k}>
                 <Lyrics name={verse.name}>
                     {transpoze(verse.lyrics, trans)}
                 </Lyrics></div>

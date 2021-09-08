@@ -26,14 +26,15 @@
             padding: .3em;
             text-align: center;
             border-radius: 100%;
-            border: 2px solid #CCC;
+            border: 2px solid var(--border);
             margin: .5em;
         }
         textarea{
-            font-size: inherit; font-family: inherit;
+            font-size: inherit; font-family: inherit; color: inherit;
             padding: .3em;
             border: 0em;
-            border-bottom: 2px solid #CCC
+            border-bottom: 2px solid var(--border);
+            background-color: var(--primary-bg);
         }
     }
 
@@ -41,22 +42,26 @@
         border: none;
         margin-left: .7em;
         flex-grow: 1;
-        border-bottom: 1px solid #DDD;
+        border-bottom: 1px solid var(--border);
         font-family: inherit;
+        color:inherit;
         font-size: 1em;
-        padding: .3em .5em 0em
+        padding: .3em .5em 0em;
+        background-color: var(--primary-bg);
     }
 
     .button{
         margin-top: 2em;
         padding: .5em;
         border-radius:4px;
-        background-color: #EEE;
+        background-color: var(--widget-bg);
         &:hover{
-            background-color: #DDD;
+            background-color: var(--widget-bg-hover);
         }
     }
     editor-squiggler{
         display: none;
     }
+
+    
 }

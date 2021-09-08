@@ -18,6 +18,14 @@ const replacers = [
     reg: /\*(.*?)\*/g,
     fun: str=>`<span class="italic">${str.substring(1,str.length-1)}</span>`
   },
+  {
+    reg: "|:",
+    fun: x=>"𝄆"
+  },
+  {
+    reg: ":|",
+    fun: x=>"𝄇"
+  },
 ]
 
 export function Lyrics({children="",name=""}){
@@ -37,7 +45,7 @@ export function Lyrics({children="",name=""}){
       })
 
       if(key===0) newRow = `<span class="before">${name}</span>`+newRow;
-      return <div className={"lyrics-line"+(chords?" with-chords":"")} dangerouslySetInnerHTML={{__html:newRow}}></div>
+      return <div className={"lyrics-line"+(chords?" with-chords":"")} key={key} dangerouslySetInnerHTML={{__html:newRow}}></div>
     })
 
     return <div className="chord-lyrics">

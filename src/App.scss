@@ -99,6 +99,8 @@
     --primary-text: #DDD;
     --border: #333;
     --icon:#AAA;
+    --widget-bg:#222;
+    --widget-bg-hover: #333;
 }
 
 .light-theme{
@@ -107,4 +109,6 @@
     --primary-text: #000;
     --border: #DDD;
     --icon:#555;
+    --widget-bg:#EEE;
+    --widget-bg-hover: #DDD;
 }

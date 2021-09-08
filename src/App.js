@@ -1,176 +1,172 @@
 import React from 'react';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
-import { Link, Redirect, Route, Switch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './App.scss';
-import { Song } from './components/song';
+import Main from './Main';
 import './Main.scss';
-import NewSong from './pages/NewSong';
-import Settings from './pages/Settings';
 import { getCacheSongs, getSongs } from './resources/api/song';
-import TexToLyrics from './TexToLyrics';
+import Sidebar from './Sidebar';
+
+
 
 
 class App extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      sidebarOpen: false,
-      columns: 1,
-      popup: "",
-      transpoze: 0,
-      fontsize: 20,
-      songs: [],
-      settings:{
-        darkMode: false,
+   constructor() {
+      super()
+      this.state = {
+         sidebarOpen: false,
+         popup: "",
+         search: "",
+         songs: [],
+         settings: {
+            columns: 1,
+            darkMode: false,
+            fontsize: 20,
+            transpoze: 0,
+            displayNsfw: false,
+         }
       }
-    }
-  }
+   }
 
-  componentDidMount() {
-    const cache = getCacheSongs()
-    if (Array.isArray(cache)) this.setState({ songs: cache })
+   componentDidMount() {
+      const cache = getCacheSongs()
+      if (Array.isArray(cache)) this.setState({ songs: cache })
 
-    getSongs().then(res => {
-      this.setState({ songs: res })
-    }).catch(err => console.log(err))
+      getSongs().then(res => {
+         this.setState({ songs: res })
+      }).catch(err => console.log(err))
 
-    const settings = JSON.parse(localStorage.getItem("settings"))
-    if(settings)this.setState({settings:settings})
-  }
+      const settings = JSON.parse(localStorage.getItem("settings"))
+      if (settings) this.updateSettings( settings)
+   }
 
-  toggleSidebar() {
-    this.setState({ sidebarOpen: !this.state.sidebarOpen, popup:"" })
-  }
+   toggleSidebar() {
+      this.setState({ sidebarOpen: !this.state.sidebarOpen, popup: "" })
+   }
 
-  toggleColumns() {
-    var c = this.state.columns;
-    c = c >= 3 ? 1 : c + 1
-    this.setState({ columns: c })
-  }
+   toggleColumns() {
+      var c = this.state.settings.columns;
+      c = c >= 3 ? 1 : c + 1
+      this.updateSetting("columns",c)
+   }
 
-  getSong(ctx) {
-    const id = ctx.match.params.id;
-    return this.state.songs.filter(s => parseInt(s.id) === parseInt(id))[0] || {}
-  }
+   getSong(ctx) {
+      const id = ctx.match.params.id;
+      return this.state.songs.filter(s => parseInt(s.id) === parseInt(id))[0] || {}
+   }
 
-  togglePopup(id) {
-    if (this.state.popup === id) this.setState({ popup: "" })
-    else this.setState({ popup: id })
-  }
+   togglePopup(id) {
+      if (this.state.popup === id) this.setState({ popup: "" })
+      else this.setState({ popup: id })
+   }
 
-  async autoFit() {
-    var song = document.getElementById("song")?.clientHeight
-    var main = document.getElementById("main")?.clientHeight
-    if (!song || !main) return
+   async autoFit() {
+      var song = document.getElementById("song")?.clientHeight
+      var main = document.getElementById("main")?.clientHeight
+      if (!song || !main) return
 
-    const t = this
-    function correct(val) {
-      t.setState({ fontsize: parseInt((t.state.fontsize + val) * 10) / 10 }, () => {
-        song = document.getElementById("song")?.clientHeight
-        main = document.getElementById("main")?.clientHeight
-      })
-    }
+      const t = this
+      function correct(val) {
+         const fs =  parseInt((t.state.settings.fontsize + val) * 10) / 10 
+         t.setState({settings: {...t.state.settings, fontsize:fs}}, () => {
+            song = document.getElementById("song")?.clientHeight
+            main = document.getElementById("main")?.clientHeight
+         })
+      }
 
-    if (song < main) {
-      let i = setInterval(() => {
-        correct(.1)
-        if (song > main) {
-          clearInterval(i)
-          this.autoFit()
-        }
-      }, 0)
-    }
+      if (song < main) {
+         let i = setInterval(() => {
+            correct(.1)
+            if (song > main) {
+               clearInterval(i)
+               this.autoFit()
+            }
+         }, 0)
+      }
 
-    if (song > main) {
-      let i = setInterval(() => {
-        correct(-.1)
-        if (song < main) {
-          clearInterval(i)
-        }
-      }, 0)
-    }
-  }
+      if (song > main) {
+         let i = setInterval(() => {
+            correct(-.1)
+            if (song < main) {
+               clearInterval(i)
+            }
+         }, 0)
+      }
+   }
 
-  updateSettings(val){
-    this.setState({settings: val})
-    localStorage.setItem("settings",JSON.stringify(val))
-  }
+   updateSetting(name,val){
+      //console.log("updateSetting")
+      let settings = this.state.settings
+      settings[name] = val
+      this.updateSettings(settings)
+   }
 
-  render() {
-    const settings = this.state.settings
-    return (
-      <div id="app" className={this.state.settings.darkMode?"dark-theme":"light-theme"}>
-        <div id="sidebar" className={this.state.sidebarOpen ? "open" : ""}>
-          <div className="top">
-            <input size="1" placeholder="Hledej ..." onChange={e => this.setState({ search: e.target.value })} value={this.state.search} />
-            <i class="button fas fa-arrow-left" onClick={() => this.toggleSidebar()}></i>
-          </div>
+   updateSettings(set) {
+      //console.log("updateSettings", set)
+      let settings = {...this.state.settings, ...set}
+      this.setState({ settings: settings })
+      localStorage.setItem("settings", JSON.stringify(settings))
+   }
 
-          {this.state.songs
-            .sort((a, b) => a.title.localeCompare(b.title))
-            .filter(s => (normalize(s.title) + normalize(s.author)).includes(normalize(this.state.search)))
-            .filter(s => s.sfw || settings.displayNsfw)
-            .map(song => <Link to={"/" + song.id} className="notA">
-              <div className="song" onClick={() => { if (isMobile()) this.toggleSidebar() }}>{song.title} <span className="author">{song.author}</span></div>
-            </Link>)
-          }
-        </div>
+   render() {
+      const settings = this.state.settings
+      //console.log(settings)
 
-        <div id="main">
-          <Switch>
-            <Route path="/settings"><Settings settings={this.state.settings} onChange={v=>this.updateSettings(v)}/></Route>
-            <Route path="/new" exact><NewSong/></Route>
-            <Route path="/ttl" exact><TexToLyrics/></Route>
-            <Route path="/:id" render={ctx => <Song
-              song={this.getSong(ctx)}
-              columns={this.state.columns}
-              fontsize={this.state.fontsize}
-              trans={this.state.transpoze}
-            />} />
-            <Route path="/" exact><Redirect to="/1" /></Route>
-          </Switch>
-        </div>
+      return (
+         <div id="app" className={this.state.settings.darkMode ? "dark-theme" : "light-theme"}>
+            <Sidebar
+               songs={this.state.songs}
+               toggle={() => this.toggleSidebar()}
+               inputVal={this.state.search}
+               inputOnChange={e => this.setState({ search: e.target.value })}
+               open={this.state.sidebarOpen}
+               settings={settings}
+            />
+            
+            <Main
+               getSong={(ctx)=>this.getSong(ctx)}
+               updateSettings={(set)=>this.updateSettings(set)}
+               settings={settings}
+               songIds={this.state.songs.sort((a, b) => a.title.localeCompare(b.title)).map(song => song.id)}
+            />
+            
 
-        <div id="toolbar">
-          <i className="button fas fa-bars" onClick={() => this.toggleSidebar()}></i>
-          <div className="spacer"></div>
-          <Link to="/settings" className="notA button"><i class="fas fa-cog"></i></Link>
-          <i class="button fas fa-expand-arrows-alt" alt="Auto fit" onClick={() => this.autoFit()}></i>
-          <i class="button fas fa-search-plus" alt="Font size" onClick={() => this.togglePopup("fontsize")}></i>
-          <i class="button fas fa-hashtag" alt="Transpoze" onClick={() => this.togglePopup("transpoze")}>{!!this.state.transpoze && <>&thinsp;{this.state.transpoze}</>}</i>
-          <i className="button fas fa-columns" alt="Columns" onClick={() => this.toggleColumns()}>&thinsp;{this.state.columns}</i>
-          {!!this.state.popup.length && <div id="popup">
-            {{
-              "transpoze": <>
-                <InputRange
-                  maxValue={12} minValue={0}
-                  value={this.state.transpoze}
-                  onChange={value => this.setState({ transpoze: value })}
-                />
-              </>,
-              "fontsize": <>
-                <InputRange
-                  maxValue={30} minValue={10}
-                  value={this.state.fontsize}
-                  onChange={value => this.setState({ fontsize: value })}
-                />
-              </>
-            }[this.state.popup]}
-          </div>}
-        </div>
-      </div>
-    );
-  }
+            <div id="toolbar">
+               <i className="button fas fa-bars" onClick={() => this.toggleSidebar()}></i>
+               <div className="spacer"></div>
+               <Link to="/settings" className="notA button"><i className="fas fa-cog"></i></Link>
+               <i className="button fas fa-expand-arrows-alt" alt="Auto fit" onClick={() => this.autoFit()}></i>
+               <i className="button fas fa-search-plus" alt="Font size" onClick={() => this.togglePopup("fontsize")}></i>
+               <i className="button fas fa-hashtag" alt="Transpoze" onClick={() => this.togglePopup("transpoze")}>{settings.transpoze && <>&thinsp;{settings.transpoze}</>}</i>
+               <i className="button fas fa-columns" alt="Columns" onClick={() => this.toggleColumns()}>&thinsp;{settings.columns}</i>
+               {!!this.state.popup.length && <div id="popup">
+                  {{
+                     "transpoze": <>
+                        <InputRange
+                           maxValue={12} minValue={0}
+                           value={settings.transpoze}
+                           onChange={value => this.updateSetting("transpoze",value)}
+                        />
+                     </>,
+                     "fontsize": <>
+                        <InputRange
+                           maxValue={30} minValue={10}
+                           value={settings.fontsize}
+                           onChange={value => this.updateSetting("fontsize",value)}
+                        />
+                     </>
+                  }[this.state.popup]}
+               </div>}
+            </div>
+         </div>
+      );
+   }
 }
+
+
 
 export default App;
 
-function normalize(string) {
-  if (typeof string !== "string") return ""
-  return string.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
-}
 
-function isMobile() {
-  return Boolean(window.innerWidth < 600);
-}
+
