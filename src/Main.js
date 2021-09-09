@@ -28,6 +28,7 @@ function Main({settings={}, getSong=()=>{}, updateSettings=()=>{}, location, his
                 fontsize={settings.fontsize}
                 trans={settings.transpoze}
                 swipes={!!songId?handlers:{}}
+                prev={prev} next={next}
             />} />
             <Route path="/" exact><Redirect to="/1" /></Route>
         </Switch>
