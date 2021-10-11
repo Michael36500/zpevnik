@@ -2,6 +2,7 @@ import React from 'react';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import './App.scss';
 import Main from './Main';
 import './Main.scss';
@@ -23,8 +24,10 @@ class App extends React.Component {
             columns: 1,
             darkMode: false,
             fontsize: 20,
-            transpoze: 0,
+            transpose: 0,
             displayNsfw: false,
+            resetTranspositions: true,
+            compactMode: false,
          }
       }
    }
@@ -38,17 +41,28 @@ class App extends React.Component {
       }).catch(err => console.log(err))
 
       const settings = JSON.parse(localStorage.getItem("settings"))
-      if (settings) this.updateSettings( settings)
+      if (settings) this.updateSettings(settings)
    }
 
    toggleSidebar() {
       this.setState({ sidebarOpen: !this.state.sidebarOpen, popup: "" })
    }
 
+   componentDidUpdate(prevProps) {
+      if (this.props.location !== prevProps.location) {
+         this.onRouteChanged();
+      }
+   }
+
+   onRouteChanged(){
+      console.log("route changed")
+      if(this.state.settings.resetTranspositions)this.updateSetting("transpose",0)
+   }
+
    toggleColumns() {
       var c = this.state.settings.columns;
       c = c >= 3 ? 1 : c + 1
-      this.updateSetting("columns",c)
+      this.updateSetting("columns", c)
    }
 
    getSong(ctx) {
@@ -68,8 +82,8 @@ class App extends React.Component {
 
       const t = this
       function correct(val) {
-         const fs =  parseInt((t.state.settings.fontsize + val) * 10) / 10 
-         t.setState({settings: {...t.state.settings, fontsize:fs}}, () => {
+         const fs = parseInt((t.state.settings.fontsize + val) * 10) / 10
+         t.setState({ settings: { ...t.state.settings, fontsize: fs } }, () => {
             song = document.getElementById("song")?.clientHeight
             main = document.getElementById("main")?.clientHeight
          })
@@ -95,7 +109,7 @@ class App extends React.Component {
       }
    }
 
-   updateSetting(name,val){
+   updateSetting(name, val) {
       //console.log("updateSetting")
       let settings = this.state.settings
       settings[name] = val
@@ -104,7 +118,7 @@ class App extends React.Component {
 
    updateSettings(set) {
       //console.log("updateSettings", set)
-      let settings = {...this.state.settings, ...set}
+      let settings = { ...this.state.settings, ...set }
       this.setState({ settings: settings })
       localStorage.setItem("settings", JSON.stringify(settings))
    }
@@ -123,14 +137,14 @@ class App extends React.Component {
                open={this.state.sidebarOpen}
                settings={settings}
             />
-            
+
             <Main
-               getSong={(ctx)=>this.getSong(ctx)}
-               updateSettings={(set)=>this.updateSettings(set)}
+               getSong={(ctx) => this.getSong(ctx)}
+               updateSettings={(set) => this.updateSettings(set)}
                settings={settings}
-               songIds={this.state.songs.filter(s=>(s.sfw || settings.displayNsfw)).sort((a, b) => a.title.localeCompare(b.title)).map(song => song.id)}
+               songIds={this.state.songs.filter(s => (s.sfw || settings.displayNsfw)).sort((a, b) => a.title.localeCompare(b.title)).map(song => song.id)}
             />
-            
+
 
             <div id="toolbar">
                <i className="button fas fa-bars" onClick={() => this.toggleSidebar()}></i>
@@ -138,22 +152,22 @@ class App extends React.Component {
                <Link to="/settings" className="notA button"><i className="fas fa-cog"></i></Link>
                <i className="button fas fa-expand-arrows-alt" alt="Auto fit" onClick={() => this.autoFit()}></i>
                <i className="button fas fa-search-plus" alt="Font size" onClick={() => this.togglePopup("fontsize")}></i>
-               <i className="button fas fa-hashtag" alt="Transpoze" onClick={() => this.togglePopup("transpoze")}>{settings.transpoze && <>&thinsp;{settings.transpoze}</>}</i>
+               <i className="button fas fa-hashtag" alt="Transpoze" onClick={() => this.togglePopup("transpose")}>{settings.transpose && <>&thinsp;{settings.transpose}</>}</i>
                <i className="button fas fa-columns" alt="Columns" onClick={() => this.toggleColumns()}>&thinsp;{settings.columns}</i>
                {!!this.state.popup.length && <div id="popup">
                   {{
-                     "transpoze": <>
+                     "transpose": <>
                         <InputRange
                            maxValue={12} minValue={0}
-                           value={settings.transpoze}
-                           onChange={value => this.updateSetting("transpoze",value)}
+                           value={settings.transpose}
+                           onChange={value => this.updateSetting("transpose", value)}
                         />
                      </>,
                      "fontsize": <>
                         <InputRange
                            maxValue={30} minValue={10}
                            value={settings.fontsize}
-                           onChange={value => this.updateSetting("fontsize",value)}
+                           onChange={value => this.updateSetting("fontsize", value)}
                         />
                      </>
                   }[this.state.popup]}
@@ -166,7 +180,7 @@ class App extends React.Component {
 
 
 
-export default App;
+export default withRouter(App);
 
 
 

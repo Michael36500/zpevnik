@@ -34,6 +34,12 @@ export default class Settings extends React.Component{
                 value={settings.darkMode}
                 onChange={v => this.set("darkMode",v)}
             />
+            <Setting
+                title="Auto-reset transposition"
+                text="Transposition will be automatically reset each time you select a song."
+                value={settings.resetTranspositions}
+                onChange={v => this.set("resetTranspositions",v)}
+            />
             {(this.state.showNSFW>0 || settings.displayNsfw)&&<Setting
                 title="Display all songs"
                 text=""

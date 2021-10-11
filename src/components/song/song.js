@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 
 const notes = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
 
-function transpoze(lyrics="", howMuch=0){
+function transpose(lyrics="", howMuch=0){
   if(typeof lyrics !== "string")return ""
   return lyrics.replaceAll(/\[(.*?)\]/g,chord => {
     return chord.replaceAll(/[CDEFGAB]#?/g, note => {
@@ -26,7 +26,7 @@ export function Song({song,columns=1, fontsize=20, trans=0, swipes={}, prev, nex
             {song.verses?.map((verse,k) => {
                 return <div className="verse" key={k}>
                 <Lyrics name={verse.name}>
-                    {transpoze(verse.lyrics, trans)}
+                    {transpose(verse.lyrics, trans)}
                 </Lyrics></div>
             })}
         </div>

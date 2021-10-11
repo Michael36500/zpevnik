@@ -26,7 +26,7 @@ function Main({settings={}, getSong=()=>{}, updateSettings=()=>{}, location, his
                 song={getSong(ctx)}
                 columns={settings.columns}
                 fontsize={settings.fontsize}
-                trans={settings.transpoze}
+                trans={settings.transpose}
                 swipes={!!songId?handlers:{}}
                 prev={prev} next={next}
             />} />
