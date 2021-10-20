@@ -42,7 +42,8 @@
     }
 
     .next, .prev{
-        position: absolute;
+        z-index: 100;
+        position: fixed;
         height: 100%;
         max-height: calc(100vh - 3rem);
         width:5rem;
@@ -55,6 +56,6 @@
         background-color:var(--primary-bg-hover);
         opacity: 0;
         transition:.3s;
-        &:hover{opacity:1};
+        &:hover{opacity:.6};
     }
 }

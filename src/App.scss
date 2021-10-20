@@ -115,3 +115,23 @@
     --widget-bg:#EEE;
     --widget-bg-hover: #DDD;
 }
+
+.compactMode{
+    #song{
+        padding: 2px;
+        h1,h2{
+            font-size: 1em !important;
+        }
+        .chord{
+            font-size: .8em;
+            font-weight: 700;
+        }
+        .with-chords{
+            line-height: 1.9em;
+        }
+    }
+    #toolbar{
+        font-size: .8em;
+    }
+    grid-template-rows: 1fr 2em !important;
+}

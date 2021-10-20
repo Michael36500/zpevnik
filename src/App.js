@@ -76,15 +76,16 @@ class App extends React.Component {
    }
 
    async autoFit() {
-      var song = document.getElementById("song")?.clientHeight
+      var song = document.getElementById("song")?.clientHeight - (this.state.settings.compactMode?(document.getElementById("song-head")?.clientHeight-parseInt(this.state.settings.fontsize)):0)
       var main = document.getElementById("main")?.clientHeight
+      console.log(song,main)
       if (!song || !main) return
 
       const t = this
       function correct(val) {
          const fs = parseInt((t.state.settings.fontsize + val) * 10) / 10
          t.setState({ settings: { ...t.state.settings, fontsize: fs } }, () => {
-            song = document.getElementById("song")?.clientHeight
+            song = document.getElementById("song")?.clientHeight - (t.state.settings.compactMode?(document.getElementById("song-head")?.clientHeight+fs):0)
             main = document.getElementById("main")?.clientHeight
          })
       }
@@ -107,6 +108,8 @@ class App extends React.Component {
             }
          }, 0)
       }
+
+      document.getElementById("lyrics")?.scrollIntoView()
    }
 
    updateSetting(name, val) {
@@ -128,7 +131,7 @@ class App extends React.Component {
       //console.log(settings)
 
       return (
-         <div id="app" className={this.state.settings.darkMode ? "dark-theme" : "light-theme"}>
+         <div id="app" className={(settings.darkMode ? "dark-theme" : "light-theme") +" "+(settings.compactMode ? "compactMode": "")}>
             <Sidebar
                songs={this.state.songs}
                toggle={() => this.toggleSidebar()}
