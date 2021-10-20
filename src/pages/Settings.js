@@ -49,6 +49,12 @@ class Settings extends React.Component{
                 value={settings.resetTranspositions}
                 onChange={v => this.set("resetTranspositions",v)}
             />
+            <Setting
+                title="YouTube search button"
+                text="Display button with link to youtube search of the current song in toolbar."
+                value={settings.youtubeLinks}
+                onChange={v => this.set("youtubeLinks",v)}
+            />
             {(this.state.showNSFW>0 || settings.displayNsfw)&&<Setting
                 title="Display all songs"
                 text=""

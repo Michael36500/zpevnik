@@ -28,6 +28,7 @@ class App extends React.Component {
             displayNsfw: false,
             resetTranspositions: true,
             compactMode: false,
+            youtubeLinks: true,
          }
       }
    }
@@ -65,8 +66,8 @@ class App extends React.Component {
       this.updateSetting("columns", c)
    }
 
-   getSong(ctx) {
-      const id = ctx.match.params.id;
+   getSong() {
+      const id = parseInt(this.props.location.pathname.substring(1))
       return this.state.songs.filter(s => parseInt(s.id) === parseInt(id))[0] || {}
    }
 
@@ -128,6 +129,7 @@ class App extends React.Component {
 
    render() {
       const settings = this.state.settings
+      const song = this.getSong()
       //console.log(settings)
 
       return (
@@ -142,7 +144,7 @@ class App extends React.Component {
             />
 
             <Main
-               getSong={(ctx) => this.getSong(ctx)}
+               song={song}
                updateSettings={(set) => this.updateSettings(set)}
                settings={settings}
                songIds={this.state.songs.filter(s => (s.sfw || settings.displayNsfw)).sort((a, b) => a.title.localeCompare(b.title)).map(song => song.id)}
@@ -152,6 +154,7 @@ class App extends React.Component {
             <div id="toolbar">
                <i className="button fas fa-bars" onClick={() => this.toggleSidebar()}></i>
                <div className="spacer"></div>
+               {!!settings.youtubeLinks&&<a href={"https://www.youtube.com/results?search_query="+song.title+" "+song.author} className="button notA"><i class="fab fa-youtube"></i></a>}
                <Link to="/settings" className="notA button"><i className="fas fa-cog"></i></Link>
                <i className="button fas fa-expand-arrows-alt" alt="Auto fit" onClick={() => this.autoFit()}></i>
                <i className="button fas fa-search-plus" alt="Font size" onClick={() => this.togglePopup("fontsize")}></i>

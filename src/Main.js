@@ -5,7 +5,7 @@ import NewSong from "./pages/NewSong";
 import Settings from "./pages/Settings";
 import TexToLyrics from "./TexToLyrics";
 
-function Main({settings={}, getSong=()=>{}, updateSettings=()=>{}, location, history, songIds=[]}){
+function Main({settings={}, song, updateSettings=()=>{}, location, history, songIds=[]}){
     const songId=parseInt(location.pathname.substring(1,location.pathname.length))
     const next=songIds[(songIds.indexOf(songId)+1)%songIds.length]
     const prev=songIds[(songIds.indexOf(songId)-1)>=0?(songIds.indexOf(songId)-1):songIds.length-1]
@@ -23,7 +23,7 @@ function Main({settings={}, getSong=()=>{}, updateSettings=()=>{}, location, his
             <Route path="/new" exact><NewSong /></Route>
             <Route path="/ttl" exact><TexToLyrics /></Route>
             <Route path="/:id" render={ctx => <Song
-                song={getSong(ctx)}
+                song={song}
                 columns={settings.columns}
                 fontsize={settings.fontsize}
                 trans={settings.transpose}
