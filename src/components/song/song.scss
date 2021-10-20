@@ -1,4 +1,5 @@
 #song{
+    position: relative;
     padding: 2em;
     @media(max-width:600px){padding: 1em}
     display: flex;
@@ -43,7 +44,7 @@
 
     .next, .prev{
         z-index: 100;
-        position: fixed;
+        position: absolute;
         height: 100%;
         max-height: calc(100vh - 3rem);
         width:5rem;

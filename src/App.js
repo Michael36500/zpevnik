@@ -29,6 +29,7 @@ class App extends React.Component {
             resetTranspositions: true,
             compactMode: false,
             youtubeLinks: true,
+            favorites: [],
          }
       }
    }
@@ -127,6 +128,18 @@ class App extends React.Component {
       localStorage.setItem("settings", JSON.stringify(settings))
    }
 
+   toggleFavorite(id){
+      let favorites = [...this.state.settings.favorites]
+      if(favorites.includes(id)){
+         favorites.splice(favorites.indexOf(id),1)
+      }
+      else{
+         favorites.push(id)
+      }
+      this.updateSetting("favorites",favorites)
+      console.log(favorites)
+   }
+
    render() {
       const settings = this.state.settings
       const song = this.getSong()
@@ -155,6 +168,7 @@ class App extends React.Component {
                <i className="button fas fa-bars" onClick={() => this.toggleSidebar()}></i>
                <div className="spacer"></div>
                {!!settings.youtubeLinks&&<a href={"https://www.youtube.com/results?search_query="+song.title+" "+song.author} className="button notA"><i class="fab fa-youtube"></i></a>}
+               <i className={"button "+(settings.favorites.includes(song.id)?"fas fa-star":"far fa-star")} alt="Auto fit" onClick={() => this.toggleFavorite(song.id)}></i>
                <Link to="/settings" className="notA button"><i className="fas fa-cog"></i></Link>
                <i className="button fas fa-expand-arrows-alt" alt="Auto fit" onClick={() => this.autoFit()}></i>
                <i className="button fas fa-search-plus" alt="Font size" onClick={() => this.togglePopup("fontsize")}></i>

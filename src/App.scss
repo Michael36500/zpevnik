@@ -70,7 +70,8 @@
 
         .song{
             padding: .3em 1em ;
-            display: block;
+            display: flex; align-items: center; justify-content: space-between;
+            .favorite{margin-left: .5em; font-size: .7em;}
             
             .author{
                 font-size: .8em;
@@ -90,7 +91,6 @@
         &:hover{background-color: var(--primary-bg-hover);}
         @media(max-width:600px){min-width: 2.5em;}
         font-family: "Font Awesome 5 Free", "Nunito";
-        font-weight: 800;
     }
 
     *-webkit-tap-highlight-color: transparent;
