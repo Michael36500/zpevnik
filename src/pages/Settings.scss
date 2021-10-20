@@ -3,8 +3,15 @@
     @media (max-width:600px) {padding: 1em;}
     max-width: 1000px; margin: auto;
     
+    .back{
+        margin: 0em 0em .5em;
+        font-size: 2em;
+    }
+
     h1{
         margin: 0em 0em .5em; font-weight: 300;
+        display: flex; align-items: center; justify-content: space-between;
+        svg{cursor: pointer}
     }
 
     .setting{
@@ -26,5 +33,4 @@
             align-items: center; justify-content: center;
         }
     }
-    
 }

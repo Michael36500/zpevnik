@@ -1,8 +1,11 @@
 import React from 'react';
 import './Settings.scss';
 import {Toggle} from '../components/toggle'
+import {withRouter} from 'react-router'
+import {RiArrowLeftLine} from 'react-icons/ri'
+import {VscArrowLeft} from 'react-icons/vsc'
 
-export default class Settings extends React.Component{
+class Settings extends React.Component{
     constructor(props){
         super(props)
         this.state = {
@@ -27,12 +30,18 @@ export default class Settings extends React.Component{
     render(){
         const settings = this.state.settings
         return <div id="settings">
-            <h1 onClick={()=>this.setState({showNSFW:this.state.showNSFW+1})}>Settings</h1>
+            <h1 onClick={()=>this.setState({showNSFW:this.state.showNSFW+1})}>Settings <VscArrowLeft onClick={()=>this.props.history.goBack()}/></h1>
             <Setting
                 title="Dark Mode"
                 text="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
                 value={settings.darkMode}
                 onChange={v => this.set("darkMode",v)}
+            />
+            <Setting
+                title="Compact mode"
+                text="Smaller margins and title font size so that more text can fit on the screen."
+                value={settings.compactMode}
+                onChange={v => this.set("compactMode",v)}
             />
             <Setting
                 title="Auto-reset transposition"
@@ -61,3 +70,5 @@ function Setting({title, text, value, onChange}){
         </div>
     </div>
 }
+
+export default withRouter(Settings)
