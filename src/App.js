@@ -31,6 +31,7 @@ class App extends React.Component {
             youtubeLinks: true,
             favorites: [],
             transposeCapo: false,
+            showFavorites: true,
          }
       }
    }
@@ -169,7 +170,7 @@ class App extends React.Component {
                <i className="button fas fa-bars" onClick={() => this.toggleSidebar()}></i>
                <div className="spacer"></div>
                {!!settings.youtubeLinks&&<a href={"https://www.youtube.com/results?search_query="+song.title+" "+song.author} className="button notA"><i class="fab fa-youtube"></i></a>}
-               <i className={"button "+(settings.favorites.includes(song.id)?"fas fa-star":"far fa-star")} alt="Auto fit" onClick={() => this.toggleFavorite(song.id)}></i>
+               {!!settings.showFavorites&&<i className={"button "+(settings.favorites.includes(song.id)?"fas fa-star":"far fa-star")} alt="Auto fit" onClick={() => this.toggleFavorite(song.id)}></i>}
                <Link to="/settings" className="notA button"><i className="fas fa-cog"></i></Link>
                <i className="button fas fa-expand-arrows-alt" alt="Auto fit" onClick={() => this.autoFit()}></i>
                <i className="button fas fa-search-plus" alt="Font size" onClick={() => this.togglePopup("fontsize")}></i>

@@ -61,6 +61,13 @@ class Settings extends React.Component{
                 value={settings.transposeCapo}
                 onChange={v => this.set("transposeCapo",v)}
             />
+            <Setting
+                title="Favorites"
+                text={"Show \"Add to favorites\" button and sort songs by favorites."}
+                value={settings.showFavorites}
+                onChange={v => this.set("showFavorites",v)}
+            />
+            
             {(this.state.showNSFW>0 || settings.displayNsfw)&&<Setting
                 title="Display all songs"
                 text=""

@@ -18,7 +18,7 @@ export default function Sidebar({ songs, toggle, inputOnChange, inputVal, open, 
 
       {songs
          .sort((a, b) => a.title.localeCompare(b.title))
-         .sort((a, b) => settings.favorites.includes(b.id)?(settings.favorites.includes(a.id)?0:1):(settings.favorites.includes(a.id)?-1:0))
+         .sort(settings.showFavorites? (a, b) => settings.favorites.includes(b.id)?(settings.favorites.includes(a.id)?0:1):(settings.favorites.includes(a.id)?-1:0) : ()=>{})
          .filter(s => (normalize(s.title) + normalize(s.author)).includes(normalize(inputVal)))
          .filter(s => s.sfw || settings.displayNsfw)
          .map(song => <Link to={"/" + song.id} className="notA" key={song.id}>
@@ -26,7 +26,7 @@ export default function Sidebar({ songs, toggle, inputOnChange, inputVal, open, 
                <div className="text">
                   {song.title} <span className="author">{song.author}</span>
                </div>
-               {!!settings.favorites.includes(song.id)&&<div className="favorite">
+               {!!settings.showFavorites&&!!settings.favorites.includes(song.id)&&<div className="favorite">
                   <i class="fas fa-star"></i>
                </div>}
             </div>
