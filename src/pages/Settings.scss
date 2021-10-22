@@ -32,5 +32,18 @@
             display: flex;
             align-items: center; justify-content: center;
         }
+
+    }
+
+    
+    hr{
+        border: none;
+        border-bottom: 1px solid #777;
+        margin: 1em 0em;
+    }
+
+    .info{
+        font-size: .8em;
+        color: #777;
     }
 }

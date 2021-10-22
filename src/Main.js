@@ -19,7 +19,7 @@ function Main({settings={}, song, updateSettings=()=>{}, location, history, song
 
     return<div id="main" >
         <Switch>
-            <Route path="/settings"><Settings settings={settings} onChange={v => updateSettings(v)} /></Route>
+            <Route path="/settings"><Settings settings={settings} onChange={v => updateSettings(v)} songs={songIds.length} /></Route>
             <Route path="/new" exact><NewSong /></Route>
             <Route path="/ttl" exact><TexToLyrics /></Route>
             <Route path="/:id" render={ctx => <Song

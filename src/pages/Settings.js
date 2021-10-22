@@ -67,13 +67,17 @@ class Settings extends React.Component{
                 value={settings.showFavorites}
                 onChange={v => this.set("showFavorites",v)}
             />
-            
             {(this.state.showNSFW>0 || settings.displayNsfw)&&<Setting
                 title="Display all songs"
                 text=""
                 value={settings.displayNsfw}
                 onChange={v => this.set("displayNsfw",v)}
             />}
+            <hr/>
+            <div className="info">
+                There are currently {this.props.songs} songs.
+            </div>
+            
         </div>
     }
 }
