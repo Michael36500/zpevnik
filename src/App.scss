@@ -21,6 +21,7 @@
         align-items: center;
         border-top: 2px solid var(--border);
         position: relative;
+        overflow: auto;
 
         #popup{
             position: absolute;
