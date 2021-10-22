@@ -31,6 +31,7 @@ class Settings extends React.Component{
         const settings = this.state.settings
         return <div id="settings">
             <h1 onClick={()=>this.setState({showNSFW:this.state.showNSFW+1})}>Settings <VscArrowLeft onClick={()=>this.props.history.goBack()}/></h1>
+            <h2>Visual settings</h2>
             <Setting
                 title="Dark Mode"
                 text="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
@@ -43,6 +44,7 @@ class Settings extends React.Component{
                 value={settings.compactMode}
                 onChange={v => this.set("compactMode",v)}
             />
+            <h2>Advanced functions</h2>
             <Setting
                 title="Auto-reset transposition"
                 text="Transposition will be automatically reset each time you select a song."
@@ -67,12 +69,14 @@ class Settings extends React.Component{
                 value={settings.showFavorites}
                 onChange={v => this.set("showFavorites",v)}
             />
-            {(this.state.showNSFW>0 || settings.displayNsfw)&&<Setting
+            {(this.state.showNSFW>0 || settings.displayNsfw)&&<>
+            <h2>Hidden songs</h2>
+            <Setting
                 title="Display all songs"
                 text=""
                 value={settings.displayNsfw}
                 onChange={v => this.set("displayNsfw",v)}
-            />}
+            /></>}
             <hr/>
             <div className="info">
                 There are currently {this.props.songs} songs.
