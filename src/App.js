@@ -30,6 +30,7 @@ class App extends React.Component {
             compactMode: false,
             youtubeLinks: true,
             favorites: [],
+            transposeCapo: false,
          }
       }
    }

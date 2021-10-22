@@ -15,7 +15,12 @@ function transpose(lyrics="", howMuch=0){
   })
 }
 
-export function Song({song,columns=1, fontsize=20, trans=0, swipes={}, prev, next}){
+export function Song({song,columns=1, fontsize=20, trans=0, swipes={}, prev, next, transposeCapo=false}){
+    let capo = (12 + song.capo - (transposeCapo?trans:0))%12
+    let displayCapo = !!capo || !!song.capo;
+    console.log(capo, displayCapo)
+
+
     return <div id="song" style={{fontSize:fontsize}} {...swipes}>
         <Link className="notA" to={"/"+prev}><div className="prev"><i className="fas fa-chevron-left"></i></div></Link>
         <Link className="notA" to={"/"+next}><div className="next"><i className="fas fa-chevron-right"></i></div></Link>
@@ -24,7 +29,7 @@ export function Song({song,columns=1, fontsize=20, trans=0, swipes={}, prev, nex
           <h2 className="author">{song.author}</h2>
         </div>
         <div id="lyrics" className="lyrics" style={{columnCount:columns}}>
-            {!!song.capo&&<div className="capo">Capo {song.capo}</div>}
+            {!!displayCapo&&<div className="capo">Capo {capo}</div>}
             {song.verses?.map((verse,k) => {
                 return <div className="verse" key={k}>
                 <Lyrics name={verse.name}>

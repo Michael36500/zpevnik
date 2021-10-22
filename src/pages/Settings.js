@@ -55,6 +55,12 @@ class Settings extends React.Component{
                 value={settings.youtubeLinks}
                 onChange={v => this.set("youtubeLinks",v)}
             />
+            <Setting
+                title="Transpose capo"
+                text="Show capo needed to stay in original song key after transposition."
+                value={settings.transposeCapo}
+                onChange={v => this.set("transposeCapo",v)}
+            />
             {(this.state.showNSFW>0 || settings.displayNsfw)&&<Setting
                 title="Display all songs"
                 text=""
