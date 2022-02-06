@@ -69,6 +69,15 @@ class Settings extends React.Component{
                 value={settings.showFavorites}
                 onChange={v => this.set("showFavorites",v)}
             />
+            <div className="setting choose">
+                <div className="title">Chords</div>
+                <div className="description">Display chord diagrams for guitar or ukulele.</div>
+                <div className="options">
+                    <div className={(settings.chords === "guitar")?"active":""} onClick={()=>{this.set("chords","guitar")}}>Guitar</div>
+                    <div className={(settings.chords === "ukulele")?"active":""} onClick={()=>{this.set("chords","ukulele")}}>Ukulele</div>
+                    <div className={(settings.chords === "none")?"active":""} onClick={()=>{this.set("chords","none")}}>None</div>
+                </div>
+            </div>
             {(this.state.showNSFW>0 || settings.displayNsfw)&&<>
             <h2>Hidden songs</h2>
             <Setting

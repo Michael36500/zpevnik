@@ -32,6 +32,7 @@ function Main({settings={}, song, updateSettings=()=>{}, location, history, song
                 swipes={!!songId?handlers:{}}
                 prev={prev} next={next}
                 transposeCapo={settings.transposeCapo}
+                instrument={settings.chords}
             />} />
             <Route path="/" exact><Redirect to="/1" /></Route>
         </Switch>

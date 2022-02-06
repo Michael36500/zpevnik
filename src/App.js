@@ -32,6 +32,7 @@ class App extends React.Component {
             favorites: [],
             transposeCapo: false,
             showFavorites: true,
+            chords: "guitar",
          }
       }
    }

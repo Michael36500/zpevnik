@@ -22,15 +22,15 @@
     .setting{
         padding: 1em 0em;
         display: flex;
+        .title{
+            font-weight: 700;
+        }
+        .description{
+            color:#777;
+            font-size: .8em;
+        }
         .left{
-            flex-grow: 1;
-            .title{
-                font-weight: 700;
-            }
-            .description{
-                color:#777;
-                font-size: .8em;
-            }
+            flex-grow: 1;   
         }
         .right{
             padding-left:1em;
@@ -38,6 +38,30 @@
             align-items: center; justify-content: center;
         }
 
+        &.choose{
+            display: block;
+            .options{
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-gap:1em;
+                margin-top: .5em;
+                div{
+                    box-shadow: var(--shadow);
+                    border-radius: var(--border-radius);
+                    display: flex;
+                    justify-content: center;
+                    align-content: center;
+                    padding:.3em .5em;
+                    font-size: .8em;
+                    color:#777;
+                    cursor: pointer;
+                    &.active{
+                        background-color: #0B0;
+                        color: var(--primary-tx)
+                    }
+                }
+            }
+        }
     }
 
     

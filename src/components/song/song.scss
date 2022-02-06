@@ -29,7 +29,7 @@
     }
 
     .verse{
-            &:not(:first-child){margin-top: 1em;}
+            &:not(:first-child){padding-top: 1em;}
             break-inside: avoid;
             position: relative;
             padding-left: 1.5em;

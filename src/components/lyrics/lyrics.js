@@ -22,7 +22,7 @@ const replacers = [
   },
 ]
 
-export function Lyrics({children="",name=""}){
+export function Lyrics({children="",name="", instrument=""}){
     if(typeof children !== "string")children=""
     if(typeof name !== "string")name=""
 
@@ -45,7 +45,10 @@ export function Lyrics({children="",name=""}){
           options={{
             overrides: {
               chord: {
-                component: Chord
+                component: Chord,
+                props:{
+                  instrument: instrument
+                }
               }
             }
           }}
