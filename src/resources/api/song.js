@@ -9,7 +9,7 @@ export async function getSongs(){
     let res = JSON.parse(localStorage.getItem("songs"))
     
     try {
-        res = await strapi.getEntries("songs")
+        res = await strapi.getEntries("songs?_limit=1000")
         localStorage.setItem("songs",JSON.stringify(res))
     } catch (error) {
         console.log(error)
