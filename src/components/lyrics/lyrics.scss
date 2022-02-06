@@ -3,18 +3,13 @@
         position:relative;
         margin: 0em;
         font-size: 1em;
+        z-index: 100;
         &:first-child.with-chords{
             padding-top:1em;
         }
         &.with-chords{
             line-height: 2.5em;
             &:first-child{line-height: 2em;}
-        }
-        span.chord{
-            font-size: 1em;
-            position: absolute;
-            font-weight: 800;
-            transform: translateY(-1em);
         }
         .hskip{
             display: inline-block;

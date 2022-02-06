@@ -1,0 +1,23 @@
+span.chord{
+    font-size: 1em;
+    position: absolute;
+    font-weight: 800;
+    transform: translateY(-1em);
+
+    .chord-chart{
+        position: absolute;
+        width: 4em;
+        height: 4em;
+        background-color: var(--primary-bg);
+        box-shadow: var(--shadow);
+        border-radius: var(--border-radius);
+        z-index: 200;
+        top:-4em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        svg{
+            transform: scale(1.1);
+        }
+    }
+}

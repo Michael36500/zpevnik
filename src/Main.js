@@ -3,6 +3,7 @@ import { useSwipeable } from "react-swipeable";
 import { Song } from "./components/song";
 import NewSong from "./pages/NewSong";
 import Settings from "./pages/Settings";
+import TestPage from "./pages/TestPage";
 import TexToLyrics from "./TexToLyrics";
 
 function Main({settings={}, song, updateSettings=()=>{}, location, history, songIds=[]}){
@@ -22,6 +23,7 @@ function Main({settings={}, song, updateSettings=()=>{}, location, history, song
             <Route path="/settings"><Settings settings={settings} onChange={v => updateSettings(v)} songs={songIds.length} /></Route>
             <Route path="/new" exact><NewSong /></Route>
             <Route path="/ttl" exact><TexToLyrics /></Route>
+            <Route path="/test"><TestPage/></Route>
             <Route path="/:id" render={ctx => <Song
                 song={song}
                 columns={settings.columns}
