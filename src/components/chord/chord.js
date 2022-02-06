@@ -92,7 +92,7 @@ export class Chord extends React.Component {
 
         return <span> 
             <span
-                className="chord"
+                className="chord unselectable"
                 onClick={() => {
                     this.setState({ displayChart: !this.state.displayChart })
                 }}>

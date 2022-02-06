@@ -20,6 +20,11 @@ span.chord{
         font-weight: 400;
         svg{
             transform: scale(1.1);
+
         }
     }
+}
+
+.dark-theme span.chord .chord-chart svg{
+    filter: invert(1);
 }
