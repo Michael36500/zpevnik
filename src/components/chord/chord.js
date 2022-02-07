@@ -77,6 +77,7 @@ export class Chord extends React.Component {
             //get chord suffix
             suffix = chordName.replace(/[CDEFGAB]#?/,n=>{note = notes[n]; return ""}) //get note (/g za regexem by nahradilo všechny)
             if(suffix==="m" || suffix==="mi") suffix = "minor"
+            if(suffix==="maj")suffix = "maj7"
             if(!suffix.length)suffix="major"
 
             console.table({chordName, note, suffix})
