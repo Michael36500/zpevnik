@@ -5,4 +5,4 @@ export function normalize(string) {
  
 export function isMobile() {
     return Boolean(window.innerWidth < 600);
- }
+}
