@@ -2,7 +2,7 @@ import React from 'react';
 import './NewSong.scss';
 import { createSong } from '../resources/api/song';
 
-export default class NewSong extends React.Component{
+export default class NewSongPage extends React.Component{
     constructor(props){
         super(props)
         this.state = {

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class TexToLyrics extends React.Component{
+export default class TexToLyricsPage extends React.Component{
     constructor(){
         super()
         this.state = {

@@ -41,22 +41,4 @@
             }
         }
     }
-
-    .next, .prev{
-        z-index: 100;
-        position: absolute;
-        height: 100%;
-        max-height: calc(100vh - 3rem);
-        width:5rem;
-        font-size: 1.5rem;
-        display: flex; align-items: center; justify-content: center;
-        top:0; cursor: pointer;
-        &.prev{left:0}
-        &.next{right:0}
-        @media(max-width:1200px){display: none;}
-        background-color:var(--primary-bg-hover);
-        opacity: 0;
-        transition:.3s;
-        &:hover{opacity:.6};
-    }
 }

@@ -15,15 +15,13 @@ function transpose(lyrics="", howMuch=0){
   })
 }
 
-export function Song({song,columns=1, fontsize=20, trans=0, swipes={}, prev, next, transposeCapo=false, instrument=""}){
+export function Song({song,columns=1, fontSize=20, trans=0, swipes={}, transposeCapo=false, instrument=""}){
     let capo = (12 + song.capo - (transposeCapo?trans:0))%12
     let displayCapo = !!capo || !!song.capo;
     console.log(capo, displayCapo)
 
 
-    return <div id="song" style={{fontSize:fontsize}} {...swipes}>
-        <Link className="notA" to={"/"+prev}><div className="prev"><i className="fas fa-chevron-left"></i></div></Link>
-        <Link className="notA" to={"/"+next}><div className="next"><i className="fas fa-chevron-right"></i></div></Link>
+    return <div id="song" style={{fontSize:fontSize}} {...swipes}>
         <div id="song-head">
           <h1 className="title">{song.title}</h1>
           <h2 className="author">{song.author}</h2>

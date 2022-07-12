@@ -5,7 +5,7 @@ import {withRouter} from 'react-router'
 import {RiArrowLeftLine} from 'react-icons/ri'
 import {VscArrowLeft} from 'react-icons/vsc'
 
-class Settings extends React.Component{
+class SettingsPage extends React.Component{
     constructor(props){
         super(props)
         this.state = {
@@ -54,8 +54,8 @@ class Settings extends React.Component{
             <Setting
                 title="YouTube search button"
                 text="Display button with link to youtube search of the current song in toolbar."
-                value={settings.youtubeLinks}
-                onChange={v => this.set("youtubeLinks",v)}
+                value={settings.displayYTButton}
+                onChange={v => this.set("displayYTButton",v)}
             />
             <Setting
                 title="Transpose capo"
@@ -107,4 +107,4 @@ function Setting({title, text, value, onChange}){
     </div>
 }
 
-export default withRouter(Settings)
+export default withRouter(SettingsPage)
