@@ -53,7 +53,6 @@ class ZpevnikDataModel {
 
     //update settings in state
     setSettings(settings) {
-        console.log(settings)
         this.setState({
             settings: {
                 ...this.state.settings,

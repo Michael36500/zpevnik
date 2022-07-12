@@ -25,7 +25,6 @@ export default class Toolbar extends React.Component {
     async autoFit() {
         var song = document.getElementById("song")?.clientHeight - (this.state.settings.compactMode ? (document.getElementById("song-head")?.clientHeight - parseInt(this.state.settings.fontSize)) : 0)
         var main = document.getElementById("main")?.clientHeight
-        console.log(song, main)
         if (!song || !main) return
 
         const t = this

@@ -12,7 +12,6 @@ export async function getSongs(){
         res = await strapi.getEntries("songs",{},{parameters:{_limit:1000}})
         localStorage.setItem("songs",JSON.stringify(res))
     } catch (error) {
-        console.log(error)
     }
 
     return res

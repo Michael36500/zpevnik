@@ -5,6 +5,16 @@ import { Song } from '../components/song';
 import model from '../resources/model/model';
 import './SongPage.scss';
 
+let prevFunct = ()=>{};
+let nextFunct = ()=>{};
+window.addEventListener("keyup",(e)=>{
+    if(e.key==="ArrowRight"){
+        nextFunct();
+    }
+    if(e.key==="ArrowLeft")
+        prevFunct();
+})
+
 export default function SongPage() {
     const song = model.currentSong || {};
     const songIDs = model.songIDs;
@@ -16,6 +26,8 @@ export default function SongPage() {
         onSwipedLeft: () => { history.push("/" + next) },
         onSwipedRight: () => { history.push("/" + prev) },
     })
+    prevFunct = () => { history.push("/" + prev) }
+    nextFunct = () => { history.push("/" + next) }
 
     return <div className="page" id="song-page" {...handlers}>
         <Link className="notA" to={"/" + prev}><div className="prev"><i className="fas fa-chevron-left"></i></div></Link>

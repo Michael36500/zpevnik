@@ -79,12 +79,9 @@ export class Chord extends React.Component {
             if(suffix==="m" || suffix==="mi") suffix = "minor"
             if(suffix==="maj")suffix = "maj7"
             if(!suffix.length)suffix="major"
-
-            console.table({chordName, note, suffix})
             
             chord = chords.chords?.[note]?.filter(chord => chord.suffix === suffix)?.[0]
             
-            console.log(chord||"fail")
             if(!chord)diagram = false;
             
         }

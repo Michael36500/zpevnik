@@ -83,7 +83,6 @@ export default class NewSongPage extends React.Component{
             alert("Písnička úspěšně přidána.")
             this.clear()
         }).catch(err => {
-            console.log(err)
         })
     }
 

@@ -18,7 +18,6 @@ function transpose(lyrics="", howMuch=0){
 export function Song({song,columns=1, fontSize=20, trans=0, swipes={}, transposeCapo=false, instrument=""}){
     let capo = (12 + song.capo - (transposeCapo?trans:0))%12
     let displayCapo = !!capo || !!song.capo;
-    console.log(capo, displayCapo)
 
 
     return <div id="song" style={{fontSize:fontSize}} {...swipes}>

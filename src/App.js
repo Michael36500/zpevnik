@@ -30,7 +30,6 @@ class App extends React.Component {
    }
 
    onRouteChanged() {
-      console.log("route changed")
       if (model.settings.resetTranspositions) model.setSettings({ transposition: 0 })
    }
 
