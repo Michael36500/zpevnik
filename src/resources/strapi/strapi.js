@@ -1,3 +1,5 @@
-import Strapi from 'strapi-sdk';
+import Strapi from 'strapi-sdk-js';
 
-export const strapi = new Strapi(process.env.REACT_APP_STRAPI_URL||"https://strapi.jradl.cz")
+export const strapi = new Strapi({
+    url: process.env.REACT_APP_STRAPI_URL||"https://strapi.jradl.cz"
+})
