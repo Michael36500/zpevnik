@@ -7,19 +7,27 @@ class ZpevnikDataModel {
         songs: [],
         settings: {
             columns: 1,
-            darkMode: false,
-            fontSize: 20,
             transpose: 0,
-            displayNsfw: false,
-            resetTranspositions: true,
+            fontSize: 20,
+
+            darkMode: false,
             compactMode: false,
-            displayYTButton: true,
-            favorites: [],
-            transposeCapo: false,
-            showFavorites: true,
+            sortAlphabetically:true,
+            
+            displayChords: true,
             chords: "guitar",
+            transposeCapo: false,
+            
+            favorites: [],
+            showYTButton: true,
+            showFavorites: true,
+            showColumnsButton: true,
+            showAutoFitButton:true,
+            showTranspositionButton:true,
+            
+            resetTranspositions: true,
             closeSidebarOnSongClickPC: true,
-            sortAlfabetically:true,
+            displayNsfw: false,
         }
     }
 
@@ -49,6 +57,7 @@ class ZpevnikDataModel {
             ...this.state.settings,
             ...settings
         }})
+        localStorage.setItem("settings",JSON.stringify(this.settings))
     }
 
     //load songs from local storage, then attempt to load from server
@@ -85,7 +94,7 @@ class ZpevnikDataModel {
 
         if(!set.displayNsfw)
             songs = songs.filter(s => s.sfw)
-        if (set.sortAlfabetically)
+        if (set.sortAlphabetically)
             songs = songs.sort((a, b) => a.title.localeCompare(b.title))
         if (set.showFavorites)
             songs = songs.sort(set.showFavorites ? (a, b) => favorites.includes(b.id) ? (favorites.includes(a.id) ? 0 : 1) : (favorites.includes(a.id) ? -1 : 0) : () => { });

@@ -1,15 +1,15 @@
 import React from 'react';
-import model from './resources/model/model';
+import 'react-input-range/lib/css/index.css';
 import { Redirect, Route, Switch, withRouter } from 'react-router';
-import Sidebar from './Sidebar';
-import Toolbar from './Toolbar';
+import './App.scss';
 import NewSongPage from './pages/NewSong';
-import SettingsPage from './pages/Settings';
+import SettingsPage from './pages/SettingsPage';
 import SongPage from './pages/SongPage';
 import TestPage from './pages/TestPage';
 import TexToLyricsPage from './pages/TexToLyrics';
-import 'react-input-range/lib/css/index.css';
-import './App.scss';
+import model from './resources/model/model';
+import Sidebar from './Sidebar';
+import Toolbar from './Toolbar';
 
 class App extends React.Component {
    constructor() {
@@ -31,7 +31,7 @@ class App extends React.Component {
 
    onRouteChanged() {
       console.log("route changed")
-      if (model.settings.resetTranspositions) model.setSettings({transposition:0})
+      if (model.settings.resetTranspositions) model.setSettings({ transposition: 0 })
    }
 
    toggleSidebar() {
@@ -53,7 +53,7 @@ class App extends React.Component {
                <Route path="/new" exact><NewSongPage /></Route>
                <Route path="/ttl" exact><TexToLyricsPage /></Route>
                <Route path="/test"><TestPage /></Route>
-               <Route path="/:id" render={ctx => <SongPage />} />
+               <Route path="/:id" ><SongPage /></Route>
                <Route path="/" exact><Redirect to="/1" /></Route>
             </Switch>
          </div>
