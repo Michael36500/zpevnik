@@ -12,19 +12,20 @@ class ZpevnikDataModel {
 
             darkMode: false,
             compactMode: false,
-            sortAlphabetically:true,
-            
+            sortAlphabetically: true,
+
             displayChords: true,
             chords: "guitar",
             transposeCapo: false,
-            
+
             favorites: [],
             showYTButton: true,
             showFavorites: true,
             showColumnsButton: true,
-            showAutoFitButton:true,
-            showTranspositionButton:true,
-            
+            showAutoFitButton: true,
+            showFontSizeButton: true,
+            showTranspositionButton: true,
+
             resetTranspositions: true,
             closeSidebarOnSongClickPC: true,
             displayNsfw: false,
@@ -38,7 +39,7 @@ class ZpevnikDataModel {
 
     //call update callback function to notify listeners
     notifyListeners() {
-        this.updateCallbacks.forEach(fn=>fn())
+        this.updateCallbacks.forEach(fn => fn())
     }
 
     //update model properties
@@ -51,13 +52,15 @@ class ZpevnikDataModel {
     }
 
     //update settings in state
-    setSettings(settings){
+    setSettings(settings) {
         console.log(settings)
-        this.setState({settings:{
-            ...this.state.settings,
-            ...settings
-        }})
-        localStorage.setItem("settings",JSON.stringify(this.settings))
+        this.setState({
+            settings: {
+                ...this.state.settings,
+                ...settings
+            }
+        })
+        localStorage.setItem("settings", JSON.stringify(this.settings))
     }
 
     //load songs from local storage, then attempt to load from server
@@ -82,7 +85,7 @@ class ZpevnikDataModel {
     }
 
     //get settings
-    get settings(){
+    get settings() {
         return this.state.settings
     }
 
@@ -92,7 +95,7 @@ class ZpevnikDataModel {
         let favorites = set.favorites || [];
         let songs = this.state.songs || [];
 
-        if(!set.displayNsfw)
+        if (!set.displayNsfw)
             songs = songs.filter(s => s.sfw)
         if (set.sortAlphabetically)
             songs = songs.sort((a, b) => a.title.localeCompare(b.title))
@@ -103,25 +106,25 @@ class ZpevnikDataModel {
     }
 
     //get sorted song ids
-    get songIDs(){
+    get songIDs() {
         return this.songs.map(song => song.id)
     }
 
     //get songs whose title+author contain query string
     //strings are normalized
-    searchSongs(query){
+    searchSongs(query) {
         return this.songs
             .filter(s => (normalize(s.title) + normalize(s.author)).includes(normalize(query)))
     }
 
 
     //get song by id from array of songs filtered acording to settings
-    getSongById(id){
-        return this.songs.find(song => song.id===id)
+    getSongById(id) {
+        return this.songs.find(song => song.id === id)
     }
 
     //get song by id in window URI
-    get currentSong(){
+    get currentSong() {
         return this.getSongById(getCurrentSongId())
     }
 

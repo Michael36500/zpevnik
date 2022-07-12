@@ -14,8 +14,8 @@ class SettingsPage extends React.Component {
         }
     }
 
-    set(name,val){
-        model.setSettings({[name]:val})
+    set(name, val) {
+        model.setSettings({ [name]: val })
     }
 
     render() {
@@ -38,7 +38,7 @@ class SettingsPage extends React.Component {
                 title="Chords"
                 text="Display chords in lyrics."
             />
-            {settings.displayChords&&<div className="setting choose">
+            {settings.displayChords && <div className="setting choose">
                 <div className="title">Chord diagrams</div>
                 <div className="description">Display chord diagrams for guitar or ukulele.</div>
                 <div className="options">
@@ -47,7 +47,7 @@ class SettingsPage extends React.Component {
                     <div className={(settings.chords === "none") ? "active" : ""} onClick={() => { this.set("chords", "none") }}>None</div>
                 </div>
             </div>}
-            
+
             <Setting
                 name="sortAlphabetically"
                 title="Alphabetical sort"
@@ -75,28 +75,28 @@ class SettingsPage extends React.Component {
                 title="Font size"
                 text={"Show manual font size adjustment button."}
             />
+            {settings.displayChords && <Setting
+                name="showTranspositionButton"
+                title="Transposition"
+                text={"Show transposition button."}
+            />}
             <Setting
                 name="showColumnsButton"
                 title="Columns"
                 text={"Show column setting button."}
             />
-            <Setting
-                name="showTranspositionButton"
-                title="Transposition"
-                text={"Show transposition button."}
-            />
-            
+
             <h2>Advanced functions</h2>
-            <Setting
+            {settings.displayChords && settings.showTranspositionButton && <Setting
                 name="resetTranspositions"
                 title="Auto-reset transposition"
                 text="Transposition will be automatically reset each time you select a song."
-            />
-            <Setting
+            />}
+            {settings.displayChords && settings.showTranspositionButton && <Setting
                 name="transposeCapo"
                 title="Transpose capo"
                 text="Show capo needed to stay in original song key after transposition."
-            />
+            />}
             <Setting
                 name="closeSidebarOnSongClickPC"
                 title="Auto-close sidebar"
@@ -118,7 +118,7 @@ class SettingsPage extends React.Component {
     }
 }
 
-function Setting({ title, text, name}) {
+function Setting({ title, text, name }) {
     return <div className="setting">
         <div className="left">
             <div className="title">{title}</div>

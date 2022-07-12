@@ -76,13 +76,13 @@ export default class Toolbar extends React.Component {
         return <div id="toolbar">
             <i className="button fas fa-bars" onClick={() => this.props.toggleSidebar()}></i>
             <div className="spacer"></div>
-            {!!settings.displayYTButton && <a href={"https://www.youtube.com/results?search_query=" + song.title + " " + song.author} className="button notA"><i className="fab fa-youtube"></i></a>}
-            {!!settings.showFavorites && <i className={"button " + (settings.favorites.includes(song.id) ? "fas fa-star" : "far fa-star")} alt="Auto fit" onClick={() => this.toggleFavorite(song.id)}></i>}
             <Link to="/settings" className="notA button"><i className="fas fa-cog"></i></Link>
-            <i className="button fas fa-expand-arrows-alt" alt="Auto fit" onClick={() => this.autoFit()}></i>
-            <i className="button fas fa-search-plus" alt="Font size" onClick={() => this.togglePopup("fontsize")}></i>
-            <i className="button fas fa-hashtag" alt="Transpoze" onClick={() => this.togglePopup("transpose")}>{settings.transpose && <>&thinsp;{settings.transpose}</>}</i>
-            <i className="button fas fa-columns" alt="Columns" onClick={() => this.toggleColumns()}>&thinsp;{settings.columns}</i>
+            {!!settings.showYTButton && <a href={"https://www.youtube.com/results?search_query=" + song.title + " " + song.author} className="button notA"><i className="fab fa-youtube"></i></a>}
+            {!!settings.showFavorites && <i className={"button " + (settings.favorites.includes(song.id) ? "fas fa-star" : "far fa-star")} alt="Auto fit" onClick={() => this.toggleFavorite(song.id)}></i>}
+            {!!settings.showAutoFitButton &&<i className="button fas fa-expand-arrows-alt" alt="Auto fit" onClick={() => this.autoFit()}></i>}
+            {!!settings.showFontSizeButton &&<i className="button fas fa-search-plus" alt="Font size" onClick={() => this.togglePopup("fontsize")}></i>}
+            {!!settings.showTranspositionButton &&<i className="button fas fa-hashtag" alt="Transpoze" onClick={() => this.togglePopup("transpose")}>{settings.transpose && <>&thinsp;{settings.transpose}</>}</i>}
+            {!!settings.showColumnsButton &&<i className="button fas fa-columns" alt="Columns" onClick={() => this.toggleColumns()}>&thinsp;{settings.columns}</i>}
             {!!this.state.popup.length && <div id="popup">
                 {{
                     "transpose": <>
