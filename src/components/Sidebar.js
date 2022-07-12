@@ -1,8 +1,8 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import { useSwipeable } from "react-swipeable"
-import { isMobile, normalize } from "./resources/helpers"
-import model from "./resources/model/model"
+import { isMobile, normalize } from "../resources/helpers"
+import model from "../resources/model/model"
 
 export default class Sidebar extends React.Component {
    constructor() {

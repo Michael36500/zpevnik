@@ -8,8 +8,8 @@ import SongPage from './pages/SongPage';
 import TestPage from './pages/TestPage';
 import TexToLyricsPage from './pages/TexToLyrics';
 import model from './resources/model/model';
-import Sidebar from './Sidebar';
-import Toolbar from './Toolbar';
+import Sidebar from './components/Sidebar';
+import Toolbar from './components/Toolbar';
 
 class App extends React.Component {
    constructor() {

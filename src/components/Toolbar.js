@@ -1,7 +1,7 @@
 import React from 'react';
 import InputRange from 'react-input-range';
 import { Link } from 'react-router-dom';
-import model from './resources/model/model';
+import model from '../resources/model/model';
 
 export default class Toolbar extends React.Component {
     constructor() {
