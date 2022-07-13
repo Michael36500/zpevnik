@@ -45,7 +45,6 @@ export default class Toolbar extends React.Component {
                     clearInterval(i)
                     correct(-.1)
                 }
-                console.log(model.settings.fontSize,songH(),mainH())
             },delay)   
         }
 
@@ -53,7 +52,6 @@ export default class Toolbar extends React.Component {
             let i = setInterval(()=>{
                 correct(-.1)
                 if(songH()<mainH())clearInterval(i)
-                console.log(model.settings.fontSize,songH(),mainH())
             },delay)   
         }
 
