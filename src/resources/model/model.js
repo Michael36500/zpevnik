@@ -29,6 +29,7 @@ class ZpevnikDataModel {
             resetTranspositions: true,
             closeSidebarOnSongClickPC: true,
             displayNsfw: false,
+            autofitIntervalDelay:10,
         }
     }
 
@@ -53,6 +54,7 @@ class ZpevnikDataModel {
 
     //update settings in state
     setSettings(settings) {
+        console.log("setSettings",settings)
         this.setState({
             settings: {
                 ...this.state.settings,
@@ -60,6 +62,7 @@ class ZpevnikDataModel {
             }
         })
         localStorage.setItem("settings", JSON.stringify(this.settings))
+        console.log("settings set", this.settings)
     }
 
     //load songs from local storage, then attempt to load from server

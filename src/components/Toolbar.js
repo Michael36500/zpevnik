@@ -23,36 +23,38 @@ export default class Toolbar extends React.Component {
     }
 
     async autoFit() {
-        var song = document.getElementById("song")?.clientHeight - (this.state.settings.compactMode ? (document.getElementById("song-head")?.clientHeight - parseInt(this.state.settings.fontSize)) : 0)
-        var main = document.getElementById("main")?.clientHeight
-        if (!song || !main) return
-
-        const t = this
-        function correct(val) {
-            const fs = parseInt((t.state.settings.fontSize + val) * 10) / 10
-            t.setState({ settings: { ...t.state.settings, fontsize: fs } }, () => {
-                song = document.getElementById("song")?.clientHeight - (t.state.settings.compactMode ? (document.getElementById("song-head")?.clientHeight + fs) : 0)
-                main = document.getElementById("main")?.clientHeight
-            })
+        
+        const delay = model.settings.autofitIntervalDelay;
+        let songH = ()=>document.getElementById("song")?.clientHeight - (model.settings.compactMode ? (document.getElementById("song-head")?.clientHeight - parseInt(model.settings.fontSize)) : 0)
+        let mainH = ()=>document.getElementById("main")?.clientHeight
+        if (!songH() || !mainH()) return
+        
+        function correct(val){
+            const curFS = model.settings.fontSize
+            console.log("current fs:", curFS)
+            console.log("correct by:",val)
+            let fs = (curFS*10 + val*10)/10
+            console.log("set fs to:", fs)
+            model.setSettings({fontSize:fs})
         }
 
-        if (song < main) {
-            let i = setInterval(() => {
+        if(songH()<mainH()){
+            let i = setInterval(()=>{
                 correct(.1)
-                if (song > main) {
+                if(songH()>mainH()){
                     clearInterval(i)
-                    this.autoFit()
+                    correct(-.1)
                 }
-            }, 0)
+                console.log(model.settings.fontSize,songH(),mainH())
+            },delay)   
         }
 
-        if (song > main) {
-            let i = setInterval(() => {
+        if(songH()>mainH()){
+            let i = setInterval(()=>{
                 correct(-.1)
-                if (song < main) {
-                    clearInterval(i)
-                }
-            }, 0)
+                if(songH()<mainH())clearInterval(i)
+                console.log(model.settings.fontSize,songH(),mainH())
+            },delay)   
         }
 
         document.getElementById("lyrics")?.scrollIntoView()
