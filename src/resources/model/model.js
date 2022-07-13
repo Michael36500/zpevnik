@@ -28,7 +28,7 @@ class ZpevnikDataModel {
             showRandomSongButton: true,
 
             resetTranspositions: true,
-            closeSidebarOnSongClickPC: true,
+            closeSidebarOnSongClickPC: false,
             displayNsfw: false,
             autofitIntervalDelay:10,
         }
