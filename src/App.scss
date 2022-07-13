@@ -22,6 +22,34 @@ html, body, #root{
         //background-color: #00F5;
         overflow: auto;
         position: relative;
+
+        .next, .prev{
+            position: absolute;
+            top:0; 
+            &.prev{left:0}
+            &.next{right:0}
+            
+            width:5rem;
+            background-color:var(--primary-bg-hover);
+            height: 100%;
+            max-height: calc(100vh - 3rem);
+            font-size: 1.5rem;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+    
+            z-index: 100;
+            opacity: 0;
+            transition:.3s;
+            &:hover{opacity:.6};
+    
+            @media(max-width:1200px){display: none;}
+
+            
+        }  
+        
+        ::-webkit-scrollbar,  ::-webkit-scrollbar-track, ::-webkit-scrollbar-thumb  {
+            display: none;
+          }
     }
 
     #toolbar{

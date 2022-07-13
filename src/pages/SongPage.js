@@ -5,13 +5,13 @@ import { Song } from '../components/song';
 import model from '../resources/model/model';
 import './SongPage.scss';
 
-let prevFunct = ()=>{};
-let nextFunct = ()=>{};
-window.addEventListener("keyup",(e)=>{
-    if(e.key==="ArrowRight"){
+let prevFunct = () => { };
+let nextFunct = () => { };
+window.addEventListener("keyup", (e) => {
+    if (e.key === "ArrowRight") {
         nextFunct();
     }
-    if(e.key==="ArrowLeft")
+    if (e.key === "ArrowLeft")
         prevFunct();
 })
 
@@ -29,16 +29,18 @@ export default function SongPage() {
     prevFunct = () => { history.push("/" + prev) }
     nextFunct = () => { history.push("/" + next) }
 
-    return <div className="page" id="song-page" {...handlers}>
+    return <>
         <Link className="notA" to={"/" + prev}><div className="prev"><i className="fas fa-chevron-left"></i></div></Link>
         <Link className="notA" to={"/" + next}><div className="next"><i className="fas fa-chevron-right"></i></div></Link>
-        <Song
-            song={song}
-            columns={model.settings.columns}
-            fontSize={model.settings.fontSize}
-            trans={model.settings.transpose}
-            transposeCapo={model.settings.transposeCapo}
-            instrument={model.settings.chords}
-        />
-    </div>
+        <div className="page" id="song-page" {...handlers}>
+            <Song
+                song={song}
+                columns={model.settings.columns}
+                fontSize={model.settings.fontSize}
+                trans={model.settings.transpose}
+                transposeCapo={model.settings.transposeCapo}
+                instrument={model.settings.chords}
+            />
+        </div>
+    </>
 }
