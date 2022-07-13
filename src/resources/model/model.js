@@ -19,11 +19,11 @@ class ZpevnikDataModel {
             transposeCapo: false,
 
             favorites: [],
-            showYTButton: true,
-            showFavorites: true,
+            showYTButton: false,
+            showFavorites: false,
             showColumnsButton: true,
             showAutoFitButton: true,
-            showFontSizeButton: true,
+            showFontSizeButton: false,
             showTranspositionButton: true,
             showRandomSongButton: true,
 
