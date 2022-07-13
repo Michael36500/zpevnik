@@ -35,7 +35,9 @@ export function Lyrics({ children = "", name = "" }) {
   const rows = text.split("\n")
 
   return <div className="chord-lyrics">
-    {rows.map(row => <div className={`lyrics-line ${row.includes("<chord>")?"has-chords":""}`}>
+    
+    {rows.map((row,key) => <div className={`lyrics-line ${row.includes("<chord>")?"has-chords":""}`}>
+      {key===0&&<div className="verse-name">{name}</div>}
       <Markdown
         options={{
           overrides: {

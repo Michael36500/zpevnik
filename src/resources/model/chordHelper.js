@@ -63,7 +63,7 @@ class ChordHelper {
         if (!diagramSuffix.length) diagramSuffix = "major"
 
         let chordInfo = {
-            name: this.getNoteNameById(noteId) + suffix,
+            name: this.getNoteNameById(noteId).replace("b","♭") + suffix,
             diagrams: {
                 guitar: guitar.chords?.[this.guitarScale[noteId]]?.filter(chord => chord.suffix === diagramSuffix)?.[0],
                 ukulele: ukulele.chords?.[this.ukuleleScale[noteId]]?.filter(chord => chord.suffix === diagramSuffix)?.[0],
