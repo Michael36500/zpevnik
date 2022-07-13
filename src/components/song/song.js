@@ -1,7 +1,6 @@
 import React from 'react';
-import './song.scss';
 import { Lyrics } from '../lyrics';
-import { Link } from 'react-router-dom';
+import './song.scss';
 
 
 const notes = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]

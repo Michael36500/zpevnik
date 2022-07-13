@@ -1,7 +1,7 @@
+import guitar from '@tombatossals/chords-db/lib/guitar.json';
+import Chord from '@tombatossals/react-chords/lib/Chord';
+import Markdown from 'markdown-to-jsx';
 import React from 'react';
-import Chord from '@tombatossals/react-chords/lib/Chord'
-import guitar from '@tombatossals/chords-db/lib/guitar.json'
-import Markdown from 'markdown-to-jsx'
 
 
 export default class TestPage extends React.Component {
@@ -21,10 +21,10 @@ export default class TestPage extends React.Component {
 
         const rows = children.split("\n")
         const mappedRows = rows.map((row,key) => {
-          let chords = 0;
+         // let chords = 0;
           
           let newRow = row.replaceAll(/\[(.*?)\]/g, chord => {
-            chords++;
+           // chords++;
             return `<chord>${chord.substring(1,chord.length-1)}</chord>`
           })
     

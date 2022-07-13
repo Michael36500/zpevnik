@@ -1,6 +1,6 @@
 import React from 'react';
 import InputRange from 'react-input-range';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import model from '../resources/model/model';
 
 export default class Toolbar extends React.Component {
@@ -31,10 +31,7 @@ export default class Toolbar extends React.Component {
         
         function correct(val){
             const curFS = model.settings.fontSize
-            console.log("current fs:", curFS)
-            console.log("correct by:",val)
             let fs = (curFS*10 + val*10)/10
-            console.log("set fs to:", fs)
             model.setSettings({fontSize:fs})
         }
 

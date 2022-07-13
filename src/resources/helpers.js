@@ -1,4 +1,3 @@
-import { useLocation } from "react-router";
 
 export function normalize(string) {
     if (typeof string !== "string") return ""

@@ -1,10 +1,9 @@
 import React from 'react';
-import './Settings.scss';
-import { Toggle } from '../components/toggle'
-import { withRouter } from 'react-router'
-import { RiArrowLeftLine } from 'react-icons/ri'
-import { VscArrowLeft } from 'react-icons/vsc'
+import { VscArrowLeft } from 'react-icons/vsc';
+import { withRouter } from 'react-router';
+import { Toggle } from '../components/toggle';
 import model from '../resources/model/model';
+import './Settings.scss';
 
 class SettingsPage extends React.Component {
     constructor(props) {

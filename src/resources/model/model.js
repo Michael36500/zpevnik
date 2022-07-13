@@ -101,7 +101,7 @@ class ZpevnikDataModel {
         if (set.sortAlphabetically)
             songs = songs.sort((a, b) => a.title.localeCompare(b.title))
         if (set.showFavorites)
-            songs = songs.sort(set.showFavorites ? (a, b) => favorites.includes(b.id) ? (favorites.includes(a.id) ? 0 : 1) : (favorites.includes(a.id) ? -1 : 0) : () => { });
+            songs = songs.sort((a, b) => favorites.includes(b.id) ? (favorites.includes(a.id) ? 0 : 1) : (favorites.includes(a.id) ? -1 : 0));
 
         return songs
     }

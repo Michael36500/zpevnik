@@ -1,4 +1,4 @@
-import {strapi} from '../strapi/strapi';
+import { strapi } from '../strapi/strapi';
 
 export function getCacheSongs(){
     let res = JSON.parse(localStorage.getItem("songs"))
