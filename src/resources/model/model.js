@@ -17,6 +17,7 @@ class ZpevnikDataModel {
             displayChords: true,
             chords: "guitar",
             transposeCapo: false,
+            preferedScale:0,
 
             favorites: [],
             showYTButton: false,

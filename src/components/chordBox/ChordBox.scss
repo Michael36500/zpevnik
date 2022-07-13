@@ -1,12 +1,17 @@
-span.chord{
+span.chord-box{
     font-size: 1em;
     position: absolute;
     font-weight: 800;
     transform: translateY(-1em);
     cursor: pointer;
 
+    .chord{
+        margin-right: .5em;
+        position:relative
+    }
+
     .chord-chart{
-        position: relative;
+        position: absolute; top:1.5em;
         width: 4em;
         height: 4em;
         background-color: var(--secondary-bg);
@@ -21,6 +26,9 @@ span.chord{
         svg{
             transform: scale(1.1);
 
+        }
+        .no-chord{
+            font-size: 1.5em;
         }
     }
 }

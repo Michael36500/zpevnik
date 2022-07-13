@@ -30,7 +30,8 @@ class App extends React.Component {
    }
 
    onRouteChanged() {
-      if (model.settings.resetTranspositions) model.setSettings({ transposition: 0 })
+      console.log("route changed")
+      if (model.settings.resetTranspositions) model.setSettings({ transpose: 0 })
    }
 
    toggleSidebar() {
