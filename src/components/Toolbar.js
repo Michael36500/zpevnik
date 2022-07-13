@@ -1,6 +1,6 @@
 import React from 'react';
 import InputRange from 'react-input-range';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import model from '../resources/model/model';
 
 export default class Toolbar extends React.Component {
@@ -76,11 +76,12 @@ export default class Toolbar extends React.Component {
             <i className="button fas fa-bars" onClick={() => this.props.toggleSidebar()}></i>
             <div className="spacer"></div>
             <Link to="/settings" className="notA button"><i className="fas fa-cog"></i></Link>
+            {!!settings.showRandomSongButton && <Link to={"/"+model.songIDs[parseInt(Math.random()*model.songIDs.length)]} className="notA button" title="Random song"><i className="fas fa-random"></i></Link>}
             {!!settings.showYTButton && <a href={"https://www.youtube.com/results?search_query=" + song.title + " " + song.author} className="button notA"><i className="fab fa-youtube"></i></a>}
             {!!settings.showFavorites && <i className={"button " + (settings.favorites.includes(song.id) ? "fas fa-star" : "far fa-star")} alt="Auto fit" onClick={() => this.toggleFavorite(song.id)}></i>}
             {!!settings.showAutoFitButton &&<i className="button fas fa-expand-arrows-alt" alt="Auto fit" onClick={() => this.autoFit()}></i>}
             {!!settings.showFontSizeButton &&<i className="button fas fa-search-plus" alt="Font size" onClick={() => this.togglePopup("fontsize")}></i>}
-            {!!settings.showTranspositionButton &&<i className="button fas fa-hashtag" alt="Transpoze" onClick={() => this.togglePopup("transpose")}>{settings.transpose && <>&thinsp;{settings.transpose}</>}</i>}
+            {!!settings.displayChords && settings.showTranspositionButton &&<i className="button fas fa-hashtag" alt="Transpoze" onClick={() => this.togglePopup("transpose")}>{settings.transpose && <>&thinsp;{settings.transpose}</>}</i>}
             {!!settings.showColumnsButton &&<i className="button fas fa-columns" alt="Columns" onClick={() => this.toggleColumns()}>&thinsp;{settings.columns}</i>}
             {!!this.state.popup.length && <div id="popup">
                 {{

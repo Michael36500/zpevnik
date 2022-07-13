@@ -25,6 +25,7 @@ class ZpevnikDataModel {
             showAutoFitButton: true,
             showFontSizeButton: true,
             showTranspositionButton: true,
+            showRandomSongButton: true,
 
             resetTranspositions: true,
             closeSidebarOnSongClickPC: true,

@@ -54,7 +54,11 @@ class SettingsPage extends React.Component {
                 text={"Sort songs alphabetically."}
             />
             <h2>Buttons</h2>
-
+            <Setting
+                name="showRandomSongButton"
+                title="Random song"
+                text="Show random song button."
+            />
             <Setting
                 name="showYTButton"
                 title="YouTube"
