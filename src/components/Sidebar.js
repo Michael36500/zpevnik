@@ -27,7 +27,7 @@ function RenderSidebar({ setQuery = () => { }, toggle = () => { }, query = false
    return <div id="sidebar"
       className={open ? "open" : ""}
       {...useSwipeable({
-         onSwipedLeft: () => this.props.toggle()
+         onSwipedLeft: () => toggle()
       })}
    >
       <div className="top">
