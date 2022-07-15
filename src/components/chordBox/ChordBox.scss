@@ -11,21 +11,20 @@ span.chord-box{
     }
 
     .chord-chart{
-        position: absolute; top:1.5em;
-        width: 4em;
-        height: 4em;
+        width: 5em;
+        height: 5em;
+        position: absolute;
+        top:-5em; left:0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         background-color: var(--secondary-bg);
         box-shadow: var(--shadow);
         border-radius: var(--border-radius);
         z-index: 200;
-        transform: translateY(-6em);
-        display: flex;
-        align-items: center;
-        justify-content: center;
         font-weight: 400;
         svg{
             transform: scale(1.1);
-
         }
         .no-chord{
             font-size: 1.5em;

@@ -42,7 +42,7 @@ export function Lyrics({ children = "", name = "" }) {
         options={{
           overrides: {
             chord: {
-              component: ChordBox,
+              component: ChordBox
             },
           }
         }}
@@ -50,4 +50,3 @@ export function Lyrics({ children = "", name = "" }) {
     </div>)}
   </div>
 }
-
