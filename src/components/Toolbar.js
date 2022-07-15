@@ -68,7 +68,7 @@ export default class Toolbar extends React.Component {
 
     render() {
         const settings = model.settings
-        const song = model.currentSong
+        const song = model.currentSong||{}
         return <div id="toolbar">
             <i className="button fas fa-bars" onClick={() => this.props.toggleSidebar()}></i>
             <div className="spacer"></div>
