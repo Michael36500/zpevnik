@@ -4,7 +4,7 @@ import { withRouter } from 'react-router';
 import { Toggle } from '../components/toggle';
 import model from '../resources/model/model';
 import './Settings.scss';
-
+import ChordHelper from '../resources/model/chordHelper';
 class SettingsPage extends React.Component {
     constructor(props) {
         super(props)
@@ -44,6 +44,18 @@ class SettingsPage extends React.Component {
                     <div className={(settings.chords === "guitar") ? "active" : ""} onClick={() => { this.set("chords", "guitar") }}>Guitar</div>
                     <div className={(settings.chords === "ukulele") ? "active" : ""} onClick={() => { this.set("chords", "ukulele") }}>Ukulele</div>
                     <div className={(settings.chords === "none") ? "active" : ""} onClick={() => { this.set("chords", "none") }}>None</div>
+                </div>
+            </div>}
+            {settings.displayChords && <div className="setting choose">
+                <div className="title">Scale</div>
+                <div className="description">Select scale for displaying chords.</div>
+                <div className="options">
+                    {ChordHelper.scales.map((scale,key) => <div 
+                    className={(settings.preferedScale === key) ? "active" : ""}
+                    onClick={()=>this.set("preferedScale",key)}
+                    >{
+                        scale.reduce((prev,cur)=>prev+", "+cur.replace("b","♭"))
+                    }</div> )}
                 </div>
             </div>}
 
