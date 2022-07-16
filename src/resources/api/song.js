@@ -19,5 +19,5 @@ export async function getSongs(){
 }
 
 export async function createSong(data){
-    return strapi.createEntry("songs", data)
+    return strapi.create("songs", data)
 }
