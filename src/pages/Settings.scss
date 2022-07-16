@@ -61,6 +61,18 @@
                     }
                 }
             }
+            &.scales .options{
+                @media (max-width:1000px) {
+                    grid-template-columns: 1fr 1fr;
+                }
+                @media (max-width:600px) {
+                    grid-template-columns: 1fr;
+                }
+
+                font-weight: 600;
+                font-size: .9em;
+                letter-spacing: -1px;
+            }
         }
     }
 

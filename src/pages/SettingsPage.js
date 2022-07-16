@@ -46,7 +46,7 @@ class SettingsPage extends React.Component {
                     <div className={(settings.chords === "none") ? "active" : ""} onClick={() => { this.set("chords", "none") }}>None</div>
                 </div>
             </div>}
-            {settings.displayChords && <div className="setting choose">
+            {settings.displayChords && <div className="setting choose scales">
                 <div className="title">Scale</div>
                 <div className="description">Select scale for displaying chords.</div>
                 <div className="options">
