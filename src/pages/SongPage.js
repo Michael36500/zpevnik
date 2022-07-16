@@ -32,7 +32,7 @@ export default function SongPage() {
     return <>
         <Link className="notA" to={"/" + prev}><div className="prev"><i className="fas fa-chevron-left"></i></div></Link>
         <Link className="notA" to={"/" + next}><div className="next"><i className="fas fa-chevron-right"></i></div></Link>
-        <div className="page" id="song-page" {...handlers}>
+        <div className="page" id="song-page" {...(model.settings.swipeGesturesPrevNext ?handlers:{})}>
             <Song
                 song={song}
                 columns={model.settings.columns}

@@ -64,6 +64,11 @@ class SettingsPage extends React.Component {
                 title="Alphabetical sort"
                 text={"Sort songs alphabetically."}
             />
+            <Setting
+                name="swipeGesturesPrevNext"
+                title="Swipe gestures"
+                text={"Swipe left or right on a song to move to the next or previous one."}
+            />
             <h2>Buttons</h2>
             <Setting
                 name="showRandomSongButton"

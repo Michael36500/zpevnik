@@ -13,6 +13,7 @@ class ZpevnikDataModel {
             darkMode: false,
             compactMode: false,
             sortAlphabetically: true,
+            swipeGesturesPrevNext: true,
 
             displayChords: true,
             chords: "guitar",
