@@ -201,3 +201,7 @@ html, body, #root{
 }
 
 .spacer{flex-grow: 1;}
+
+*{
+    scroll-behavior: smooth;
+}

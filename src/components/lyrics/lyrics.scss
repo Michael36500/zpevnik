@@ -1,29 +1,35 @@
-.chord-lyrics{
-    .lyrics-line{
-        position:relative;
-        margin: 0em;
-        font-size: 1em;
-        z-index: 100;
-        &:first-child.with-chords{
-            padding-top:1em;
+#lyrics {
+
+    scroll-margin-top: 1em;
+    .chord-lyrics {
+        .lyrics-line {
+            position: relative;
+            margin: 0em;
+            font-size: 1em;
+            z-index: 100;
+            &:first-child.with-chords {
+                padding-top: 1em;
+            }
+            &.has-chords {
+                line-height: 2.5em;
+                &:first-child {
+                    line-height: 2em;
+                }
+            }
+            .hskip {
+                display: inline-block;
+            }
+            .italic {
+                font-style: italic;
+            }
+            .bold {
+                font-weight: 800;
+            }
         }
-        &.has-chords{
-            line-height: 2.5em;
-            &:first-child{line-height: 2em;}
+        .verse-name {
+            position: absolute;
+            left: -1.5em;
+            font-weight: bold;
         }
-        .hskip{
-            display: inline-block;
-        }
-        .italic{
-            font-style: italic;
-        }
-        .bold{
-            font-weight: 800;
-        }
-    }
-    .verse-name{
-        position:absolute;
-        left: -1.5em;
-        font-weight: bold;
     }
 }

@@ -25,7 +25,7 @@ export default class Toolbar extends React.Component {
     async autoFit() {
         
         const delay = model.settings.autofitIntervalDelay;
-        let songH = ()=>document.getElementById("song")?.clientHeight - (model.settings.compactMode ? (document.getElementById("song-head")?.clientHeight - parseInt(model.settings.fontSize)) : 0)
+        let songH = ()=>document.getElementById("lyrics")?.clientHeight + model.settings.fontSize   
         let mainH = ()=>document.getElementById("main")?.clientHeight
         if (!songH() || !mainH()) return
         
@@ -41,6 +41,7 @@ export default class Toolbar extends React.Component {
                 if(songH()>mainH()){
                     clearInterval(i)
                     correct(-.1)
+                    document.getElementById("lyrics")?.scrollIntoView()
                 }
             },delay)   
         }
@@ -48,11 +49,13 @@ export default class Toolbar extends React.Component {
         if(songH()>mainH()){
             let i = setInterval(()=>{
                 correct(-.1)
-                if(songH()<mainH())clearInterval(i)
+                if(songH()<mainH()){
+                    document.getElementById("lyrics")?.scrollIntoView()
+                    clearInterval(i)
+                }
             },delay)   
         }
 
-        document.getElementById("lyrics")?.scrollIntoView()
     }
 
     toggleFavorite(id) {
