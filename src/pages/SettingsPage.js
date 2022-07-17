@@ -127,8 +127,7 @@ class SettingsPage extends React.Component {
                 <Setting
                     title="Display all songs"
                     text=""
-                    value={settings.displayNsfw}
-                    onChange={v => this.set("displayNsfw", v)}
+                    name="displayNsfw"
                 /></>}
             <hr />
             <div className="info">
