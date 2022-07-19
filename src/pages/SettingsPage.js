@@ -5,6 +5,7 @@ import { Toggle } from '../components/toggle';
 import model from '../resources/model/model';
 import './Settings.scss';
 import ChordHelper from '../resources/model/chordHelper';
+import {version} from '../../package.json';
 class SettingsPage extends React.Component {
     constructor(props) {
         super(props)
@@ -131,7 +132,8 @@ class SettingsPage extends React.Component {
                 /></>}
             <hr />
             <div className="info">
-                There are currently {model.songs.length} songs.
+                <p>There are currently {model.songs.length} songs.</p>
+                <p>Version {version}</p>
             </div>
         </div>
     }
