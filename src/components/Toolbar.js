@@ -100,7 +100,7 @@ export default class Toolbar extends React.Component {
                     </>,
                     "fontsize": <>
                         <InputRange
-                            maxValue={30} minValue={10}
+                            maxValue={30} minValue={5}
                             value={settings.fontSize}
                             onChange={value => model.setSettings({ fontSize: value })}
                         />
