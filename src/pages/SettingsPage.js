@@ -106,6 +106,11 @@ class SettingsPage extends React.Component {
                 title="Columns"
                 text={"Show column setting button."}
             />
+            <Setting
+                name="showLineBreakButton"
+                title="Line Break"
+                text={"Show line break button."}
+            />
 
             <h2>Advanced functions</h2>
             {settings.displayChords && settings.showTranspositionButton && <Setting
@@ -122,6 +127,11 @@ class SettingsPage extends React.Component {
                 name="closeSidebarOnSongClickPC"
                 title="Auto-close sidebar"
                 text="Automatically close sidebar after clicking on a song."
+            />
+            <Setting
+                name="lineBreak"
+                title="Line Break"
+                text="Allow lines to break when scaling lyrics."
             />
             {(this.state.showNSFW > 0 || settings.displayNsfw) && <>
                 <h2>Hidden songs</h2>

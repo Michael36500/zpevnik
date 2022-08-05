@@ -1,5 +1,6 @@
 import React from 'react';
 import ChordHelper from '../../resources/model/chordHelper';
+import model from '../../resources/model/model';
 import { Lyrics } from '../lyrics';
 import './song.scss';
 
@@ -23,7 +24,7 @@ export function Song({song,columns=1, fontSize=20, trans=0,transposeCapo=false, 
           <h1 className="title">{song.title}</h1>
           <h2 className="author">{song.author}</h2>
         </div>
-        <div id="lyrics" className="lyrics" style={{columnCount:columns}}>
+        <div id="lyrics" className={"lyrics"+(!model.settings.lineBreak?" no-line-break":"")} style={{columnCount:columns}}>
             {!!displayCapo&&<div className="capo">Capo {capo}</div>}
             {song.verses?.map((verse,k) => {
                 return <div className="verse" key={k}>

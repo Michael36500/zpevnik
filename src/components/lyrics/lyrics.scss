@@ -32,4 +32,8 @@
             font-weight: bold;
         }
     }
+
+    &.no-line-break .lyrics-line>span{
+        white-space: nowrap;
+    }
 }

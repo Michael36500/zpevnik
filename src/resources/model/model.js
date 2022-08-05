@@ -9,6 +9,7 @@ class ZpevnikDataModel {
             columns: 1,
             transpose: 0,
             fontSize: 20,
+            lineBreak: true,
 
             darkMode: false,
             compactMode: false,
@@ -28,6 +29,7 @@ class ZpevnikDataModel {
             showFontSizeButton: false,
             showTranspositionButton: true,
             showRandomSongButton: true,
+            showLineBreakButton: false,
 
             resetTranspositions: true,
             closeSidebarOnSongClickPC: false,
