@@ -28,7 +28,7 @@
         }
         .verse-name {
             position: absolute;
-            left: -1.5em;
+            transform: translateX(calc(-100% - .3em));
             font-weight: bold;
         }
     }
