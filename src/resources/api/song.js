@@ -1,4 +1,22 @@
-import { strapi } from '../strapi/strapi';
+import { pocket } from "../pocket/pocket";
+
+function lyricsToVerses(lyrics){
+    let verseNames = []
+    lyrics.replaceAll(/<.*>/g, x => verseNames.push(x.slice(1,-1)))
+    let verses = lyrics.split(/<.*>\r\n/g).slice(1)
+    return verses.map((verse, key) => ({name:verseNames[key], lyrics:verse}))
+}
+
+function mapSong(s){
+    return {
+        id: s.id,
+        title: s.title || "",
+        author: s.author || "",
+        capo: s.capo || 0,
+        sfw: s.sfw || true,
+        verses: lyricsToVerses(s.lyrics)
+    }
+}
 
 export function getCacheSongs(){
     let res = JSON.parse(localStorage.getItem("songs"))
@@ -9,7 +27,8 @@ export async function getSongs(){
     let res = JSON.parse(localStorage.getItem("songs"))
     
     try {
-        res = await strapi.find("songs",{_limit:1000})
+        res = await pocket.collection("song").getFullList(1000)
+        res = res.map(s => mapSong(s))
         localStorage.setItem("songs",JSON.stringify(res))
     } catch (error) {
         console.log(error)
@@ -19,5 +38,5 @@ export async function getSongs(){
 }
 
 export async function createSong(data){
-    return strapi.create("songs", data)
+    //return strapi.create("songs", data)
 }

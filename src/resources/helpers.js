@@ -10,5 +10,5 @@ export function isMobile() {
 
 export function getCurrentSongId(){
     let location = window.location
-    return parseInt(location.pathname.substring(1))
+    return location.pathname.substring(1)
 }

@@ -130,7 +130,8 @@ class ZpevnikDataModel {
 
     //get song by id in window URI
     get currentSong() {
-        return this.getSongById(getCurrentSongId())
+        let id = getCurrentSongId()
+        return this.getSongById(id)
     }
 
 
