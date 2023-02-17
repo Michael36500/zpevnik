@@ -21,6 +21,7 @@ class App extends React.Component {
 
    componentDidMount() {
       model.addUpdateCallback(() => this.forceUpdate())
+      model.state.history = this.props.history
    }
 
    componentDidUpdate(prevProps) {
@@ -54,7 +55,7 @@ class App extends React.Component {
                <Route path="/ttl" exact><TexToLyricsPage /></Route>
                <Route path="/test"><TestPage /></Route>
                <Route path="/:id" ><SongPage /></Route>
-               <Route path="/" exact><Redirect to="/1" /></Route>
+               <Route path="/" exact><Redirect to="/qoy8s97lyguc9nn"/></Route>
             </Switch>
          </div>
 

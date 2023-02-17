@@ -87,4 +87,17 @@
         font-size: .8em;
         color: #777;
     }
+
+    .session{
+        .buttons{
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-gap:1em;
+            margin-top: .5em;
+            .button{
+                box-shadow: var(--shadow);
+                border-radius: var(--border-radius);
+            }
+        }
+    }
 }

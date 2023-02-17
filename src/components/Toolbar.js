@@ -89,6 +89,7 @@ export default class Toolbar extends React.Component {
             {!!settings.displayChords && settings.showTranspositionButton &&<i className="button fas fa-hashtag" title="Transpoze" onClick={() => this.togglePopup("transpose")}>{settings.transpose && <>&thinsp;{settings.transpose}</>}</i>}
             {!!settings.showColumnsButton &&<i className="button fas fa-columns" title="Columns" onClick={() => this.toggleColumns()}>&thinsp;{settings.columns}</i>}
             {!!settings.showLineBreakButton &&<i className={"button fas "+(settings.lineBreak?"fa-heart-broken":"fa-heart")} alt="Columns" onClick={() => model.setSettings({lineBreak:!settings.lineBreak})} title="Line Break"></i>}
+            {!!model.state.session.leader &&<i className="button fas fa-broadcast-tower" alt="Broadcast" onClick={() => model.broadcastSong()} title="Broadcast"></i>}
             {!!this.state.popup.length && <div id="popup">
                 {{
                     "transpose": <>

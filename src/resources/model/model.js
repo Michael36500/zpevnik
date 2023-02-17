@@ -1,5 +1,9 @@
+import { useHistory } from "react-router";
 import { getCacheSongs, getSongs } from "../api/song";
 import { getCurrentSongId, normalize } from "../helpers";
+import { pocket } from "../pocket/pocket";
+import { changeSessionSong, listenSession, newSession, subscribeToSession } from "../pocket/session";
+
 
 class ZpevnikDataModel {
     updateCallbacks = [];
@@ -19,7 +23,7 @@ class ZpevnikDataModel {
             displayChords: true,
             chords: "guitar",
             transposeCapo: false,
-            preferedScale:0,
+            preferedScale: 0,
 
             favorites: [],
             showYTButton: false,
@@ -34,8 +38,14 @@ class ZpevnikDataModel {
             resetTranspositions: true,
             closeSidebarOnSongClickPC: false,
             displayNsfw: false,
-            autofitIntervalDelay:10,
-        }
+            autofitIntervalDelay: 10,
+        },
+        session: {
+            online: false,
+            code: "",
+            leader: false
+        },
+        history: {}
     }
 
     //set update callback function
@@ -84,9 +94,21 @@ class ZpevnikDataModel {
         if (settings) this.setSettings(settings)
     }
 
+    //load session data
+    loadSession() {
+        const session = JSON.parse(localStorage.getItem("session"))
+        if (session) this.setState({session: session})
+        if (this.state.session.online && !this.state.session.leader){
+            subscribeToSession(this.state.session.code,(e)=>{
+                this.state.history.push(e.record.song)
+            })
+        }
+    }
+
     constructor() {
         this.loadSettings()
         this.loadSongs()
+        this.loadSession()
     }
 
     //get settings
@@ -134,7 +156,44 @@ class ZpevnikDataModel {
         return this.getSongById(id)
     }
 
+    async startSession() {
+        let code = await newSession()
+        this.setState({
+            session: {
+                code: code,
+                online: true,
+                leader: true
+            }
+        })
+        localStorage.setItem("session", JSON.stringify(this.state.session))
+    }
 
+    async joinSession(){
+        const code = window.prompt("Session code:")
+        subscribeToSession(code, (e)=>{
+            this.state.history.push(e.record.song)
+        })
+        this.setState({session:{
+            online: true,
+            leader: false,
+            code: code
+        }})
+        localStorage.setItem("session", JSON.stringify(this.state.session))
+    }
+
+    async broadcastSong(){
+        console.log("lolec")
+        changeSessionSong(this.state.session.code, getCurrentSongId())
+    }
+
+    async leaveSession(){
+        this.setState({session:{
+            online: false,
+            leader: false,
+            code: ""
+        }})
+        localStorage.setItem("session", JSON.stringify(this.state.session))
+    }
 }
 
 const model = new ZpevnikDataModel()

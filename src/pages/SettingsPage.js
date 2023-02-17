@@ -133,6 +133,26 @@ class SettingsPage extends React.Component {
                 title="Line Break"
                 text="Allow lines to break when scaling lyrics."
             />
+            <h2>Session</h2>
+            <div className="session">
+                {model.state.session.online?<>
+                    You are in a session.
+                    Code: {model.state.session.code}
+                    <div className="buttons">
+                        <div className="button" onClick={()=>{model.leaveSession()}}>Leave Session</div>
+                    </div>
+                </>:<>
+                    You are currently not in a session.
+                    <div className="buttons">
+                        <div className="button" onClick={()=>{model.startSession()}}>Start Session</div>
+                        <div className="button" onClick={()=>{model.joinSession()}}>Join Session</div>
+                    </div>
+                </>
+
+                }
+                
+            </div>
+
             {(this.state.showNSFW > 0 || settings.displayNsfw) && <>
                 <h2>Hidden songs</h2>
                 <Setting
@@ -141,6 +161,7 @@ class SettingsPage extends React.Component {
                     name="displayNsfw"
                 /></>}
             <hr />
+            
             <div className="info">
                 <p>There are currently {model.songs.length} songs.</p>
                 <p>Version {version}</p>
