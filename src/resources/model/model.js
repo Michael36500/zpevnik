@@ -85,7 +85,7 @@ class ZpevnikDataModel {
 
         getSongs().then(res => {
             this.setState({ songs: res })
-        }).catch(err => console.log(err))
+        })
     }
 
     //load settings from local storage
@@ -102,7 +102,6 @@ class ZpevnikDataModel {
             subscribeToSession(this.state.session.code,(e)=>{
                 this.state.history.push(e.record.song)
             }).catch(err => {
-                console.log(err)
                 this.leaveSession()
             })
         }
@@ -160,36 +159,44 @@ class ZpevnikDataModel {
     }
 
     async startSession() {
-        let code = await newSession()
-        this.setState({
-            session: {
-                code: code,
-                online: true,
-                leader: true
-            }
+        newSession().then(code => {
+            localStorage.setItem("session", JSON.stringify(this.state.session))
+            this.setState({
+                session: {
+                    code: code,
+                    online: true,
+                    leader: true
+                }
+            })
+        }).catch(err => {
+            alert("Error starting new session.")
         })
-        localStorage.setItem("session", JSON.stringify(this.state.session))
     }
 
     async joinSession(){
-        const code = window.prompt("Session code:")
+        const code = prompt("Session code:")?.toUpperCase()
+        if (!code) return
         subscribeToSession(code, (e)=>{
             if(e.action === "update")
                 this.state.history.push(e.record.song)
             if(e.action === "delete")
                 this.leaveSession()
+        }).then(() => {
+            this.setState({session:{
+                online: true,
+                leader: false,
+                code: code
+            }})
+            localStorage.setItem("session", JSON.stringify(this.state.session))
+        }).catch(err => {
+            alert("Error joining session.")
         })
-        this.setState({session:{
-            online: true,
-            leader: false,
-            code: code
-        }})
-        localStorage.setItem("session", JSON.stringify(this.state.session))
     }
 
     async broadcastSong(){
-        console.log("lolec")
-        changeSessionSong(this.state.session.code, getCurrentSongId())
+        changeSessionSong(this.state.session.code, getCurrentSongId()).catch(err => {
+            alert("Session error.")
+        })
     }
 
     async leaveSession(){
