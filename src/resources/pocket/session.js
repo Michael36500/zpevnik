@@ -20,7 +20,10 @@ export async function subscribeToSession(code, funct){
         alert("Error joining session")
         return
     }
-    pocket.collection('session').subscribe(record.id, funct);
+    pocket.collection('session').subscribe(record.id, (e) => {
+        funct(e)
+        console.log(e)
+    });
 }
 
 export async function changeSessionSong(code,song){
@@ -31,4 +34,13 @@ export async function changeSessionSong(code,song){
     }
     console.log(record.id, song)
     pocket.collection('session').update(record.id, {song:song});
+}
+
+export async function unsubscribeFromSession(){
+    pocket.collection('session').unsubscribe();
+}
+
+export async function endSession(code){
+    const record = await pocket.collection('session').getFirstListItem('code="'+code+'"')
+    pocket.collection('session').delete(record.id);
 }

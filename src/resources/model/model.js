@@ -2,7 +2,7 @@ import { useHistory } from "react-router";
 import { getCacheSongs, getSongs } from "../api/song";
 import { getCurrentSongId, normalize } from "../helpers";
 import { pocket } from "../pocket/pocket";
-import { changeSessionSong, listenSession, newSession, subscribeToSession } from "../pocket/session";
+import { changeSessionSong, endSession, listenSession, newSession, subscribeToSession, unsubscribeFromSession } from "../pocket/session";
 
 
 class ZpevnikDataModel {
@@ -101,6 +101,9 @@ class ZpevnikDataModel {
         if (this.state.session.online && !this.state.session.leader){
             subscribeToSession(this.state.session.code,(e)=>{
                 this.state.history.push(e.record.song)
+            }).catch(err => {
+                console.log(err)
+                this.leaveSession()
             })
         }
     }
@@ -171,7 +174,10 @@ class ZpevnikDataModel {
     async joinSession(){
         const code = window.prompt("Session code:")
         subscribeToSession(code, (e)=>{
-            this.state.history.push(e.record.song)
+            if(e.action === "update")
+                this.state.history.push(e.record.song)
+            if(e.action === "delete")
+                this.leaveSession()
         })
         this.setState({session:{
             online: true,
@@ -187,12 +193,19 @@ class ZpevnikDataModel {
     }
 
     async leaveSession(){
+        if (this.state.session.leader){
+            endSession(this.state.session.code)
+        }else{
+            unsubscribeFromSession()
+        }
+
         this.setState({session:{
             online: false,
             leader: false,
             code: ""
         }})
         localStorage.setItem("session", JSON.stringify(this.state.session))
+
     }
 }
 
