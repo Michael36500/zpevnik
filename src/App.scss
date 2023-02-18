@@ -57,6 +57,8 @@ html, body, #root{
         display: flex;
         align-items: center;
         border-top: 2px solid var(--border);
+        &.s-lead{border-top: 2px solid var(--s-lead);}
+        &.s-online{border-top: 2px solid var(--s-online);}
         position: relative;
         overflow: auto;
 
@@ -146,6 +148,8 @@ html, body, #root{
     --widget-bg-hover: #333;
     --shadow: 0px 0px 8px 4px #00000019;
     --border-radius: .25em;
+    --s-online: #0B0;
+    --s-lead: #5b0089;
 }
 
 .light-theme{
@@ -159,6 +163,8 @@ html, body, #root{
     --widget-bg-hover: #DDD;
     --shadow: 0px 0px 8px 4px #00000019;
     --border-radius: .25em;
+    --s-online: #0B0;
+    --s-lead: #b92dff;
 }
 
 .compactMode{

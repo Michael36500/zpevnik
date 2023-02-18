@@ -139,7 +139,9 @@ class SettingsPage extends React.Component {
                     You are in a session.
                     Code: {model.state.session.code}
                     <div className="buttons">
-                        <div className="button" onClick={()=>{model.leaveSession()}}>Leave Session</div>
+                        <div className="button" onClick={()=>{model.leaveSession()}}>
+                            {model.state.session.leader?"End Session":"Leave Session"}
+                        </div>
                     </div>
                 </>:<>
                     You are currently not in a session.

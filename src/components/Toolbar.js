@@ -77,7 +77,8 @@ export default class Toolbar extends React.Component {
     render() {
         const settings = model.settings
         const song = model.currentSong||{}
-        return <div id="toolbar">
+        const session = model.state?.session?.online?(model.state.session.leader?"s-lead":"s-online"):""
+        return <div id={"toolbar"} className={session}>
             <i className="button fas fa-bars" onClick={() => this.props.toggleSidebar()}></i>
             <div className="spacer"></div>
             <Link to="/settings" className="notA button" title="Settings"><i className="fas fa-cog"></i></Link>
