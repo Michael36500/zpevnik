@@ -23,7 +23,11 @@ const replacers = [
   {
     reg: /\[(.*?)\]/g,
     fun: str => model.settings.displayChords?"<chord>" + str.substring(1, str.length - 1) + "</chord>":""
-  }
+  },
+  {
+    reg: /[Jj]ít/g,
+    fun: str => model.state.settings.yeet ? (str[0]=="J"?"Yeet":"yeet") : str
+  },
 ]
 
 export function Lyrics({ children = "", name = "" }) {

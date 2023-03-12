@@ -133,6 +133,11 @@ class SettingsPage extends React.Component {
                 title="Line Break"
                 text="Allow lines to break when scaling lyrics."
             />
+            <Setting
+                name="yeet"
+                title="Yeet"
+                text="Yeeeeeeeet."
+            />
             <h2>Session</h2>
             <div className="session">
                 {model.state.session.online?<>

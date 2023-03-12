@@ -39,6 +39,8 @@ class ZpevnikDataModel {
             closeSidebarOnSongClickPC: false,
             displayNsfw: false,
             autofitIntervalDelay: 10,
+
+            yeet: false,
         },
         session: {
             online: false,
