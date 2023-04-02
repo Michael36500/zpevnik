@@ -170,6 +170,7 @@ class ZpevnikDataModel {
                     leader: true
                 }
             })
+            localStorage.setItem("session", JSON.stringify(this.state.session))
         }).catch(err => {
             alert("Error starting new session.")
         })
