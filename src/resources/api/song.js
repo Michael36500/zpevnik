@@ -13,7 +13,7 @@ function mapSong(s){
         title: s.title || "",
         author: s.author || "",
         capo: s.capo || 0,
-        sfw: s.sfw || true,
+        sfw: s.sfw || false,
         verses: lyricsToVerses(s.lyrics)
     }
 }
