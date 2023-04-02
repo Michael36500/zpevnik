@@ -38,5 +38,13 @@ export async function getSongs(){
 }
 
 export async function createSong(data){
-    //return strapi.create("songs", data)
+    data.lyrics = data.verses.reduce((acc, verse) => {
+        return acc + "<"+verse.name+">\n" + verse.lyrics + "\n\n";
+    },"")
+    delete data.verses;
+    return pocket.collection('song').create(data).catch(err => {
+        alert("Song creation failed!");
+        console.log(err);
+        throw(err);
+    });
 }
