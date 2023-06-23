@@ -4,11 +4,12 @@ import "./App.scss";
 import Sidebar from "./components/Sidebar";
 import Toolbar from "./components/Toolbar";
 import NewSongPage from "./pages/NewSong";
-import SettingsPage from "./pages/SettingsPage";
+import SettingsPage from "./pages/settings/SettingsPage";
 import SongPage from "./pages/SongPage";
 import TestPage from "./pages/TestPage";
 import TexToLyricsPage from "./pages/TexToLyrics";
 import model from "./resources/model/model";
+import React from "react";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -22,7 +23,7 @@ function App() {
   const forceUpdate = useCallback(()=>foo({}), [])
   useEffect(() => {
     model.addUpdateCallback(() => forceUpdate());
-  }, [])
+  },[])
 
   const settings = model.settings;
   let className = settings.darkMode ? "dark-theme" : "light-theme";
