@@ -1,7 +1,8 @@
 import React from 'react';
-import InputRange from 'react-input-range';
 import { Link } from 'react-router-dom';
 import model from '../resources/model/model';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
 
 export default class Toolbar extends React.Component {
     constructor() {
@@ -94,17 +95,19 @@ export default class Toolbar extends React.Component {
             {!!this.state.popup.length && <div id="popup">
                 {{
                     "transpose": <>
-                        <InputRange
-                            maxValue={12} minValue={0}
-                            value={settings.transpose}
+                        <Slider
+                            max={12} min={0}
+                            defaultValue={settings.transpose}
                             onChange={value => model.setSettings({ transpose: value })}
+                            marks={{0:"0", 12:"12"}}
                         />
                     </>,
                     "fontsize": <>
-                        <InputRange
-                            maxValue={30} minValue={5}
-                            value={settings.fontSize}
+                        <Slider
+                            min={5} max={30}
+                            defaultValue={settings.fontSize}
                             onChange={value => model.setSettings({ fontSize: value })}
+                            marks={{5:"5", 30:"30"}}
                         />
                     </>
                 }[this.state.popup]}

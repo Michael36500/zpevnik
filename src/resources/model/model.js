@@ -7,6 +7,7 @@ import { changeSessionSong, endSession, listenSession, newSession, subscribeToSe
 
 class ZpevnikDataModel {
     updateCallbacks = [];
+    location = {};
     state = {
         songs: [],
         settings: {
@@ -78,6 +79,13 @@ class ZpevnikDataModel {
             }
         })
         localStorage.setItem("settings", JSON.stringify(this.settings))
+    }
+
+    //on route change
+    onRouteChanged(location){
+        console.log("Path changed to: "+location.pathname)
+        this.location = location
+        if(this.state.settings.resetTranspositions)this.setSettings({transpose:0})
     }
 
     //load songs from local storage, then attempt to load from server
@@ -215,7 +223,6 @@ class ZpevnikDataModel {
             code: ""
         }})
         localStorage.setItem("session", JSON.stringify(this.state.session))
-
     }
 }
 

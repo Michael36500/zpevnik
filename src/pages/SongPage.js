@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSwipeable } from 'react-swipeable';
 import { Song } from '../components/song';
 import model from '../resources/model/model';
@@ -21,13 +21,14 @@ export default function SongPage() {
     const next = songIDs[(songIDs.indexOf(song.id) + 1) % (songIDs.length)]
     const prev = songIDs[(songIDs.indexOf(song.id) + songIDs.length - 1) % (songIDs.length)]
 
-    const history = useHistory()
+    const navigate = useNavigate()
+
     const handlers = useSwipeable({
-        onSwipedLeft: () => { history.push("/" + next) },
-        onSwipedRight: () => { history.push("/" + prev) },
+        onSwipedLeft: () => { navigate("/" + next) },
+        onSwipedRight: () => { navigate("/" + prev) },
     })
-    prevFunct = () => { history.push("/" + prev) }
-    nextFunct = () => { history.push("/" + next) }
+    prevFunct = () => { navigate("/" + prev) }
+    nextFunct = () => { navigate("/" + next) }
 
     return <>
         <Link className="notA" to={"/" + prev}><div className="prev"><i className="fas fa-chevron-left"></i></div></Link>
