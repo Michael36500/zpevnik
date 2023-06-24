@@ -95,6 +95,9 @@ html, body, #root{
         .top{
             height:3em;
             display: flex; align-items: center;
+            position: sticky;
+            top: 0;
+            background-color: var(--primary-bg);
             
             input{
                 border: none;
@@ -106,6 +109,14 @@ html, body, #root{
                 padding: .3em .5em 0em;
                 background-color: inherit;
                 color: inherit;
+                outline: none;
+            }
+
+            .clear{
+                position: absolute;
+                right: 2.5em;
+                cursor:pointer;
+                font-size: 1.4em;
             }
         }
 
@@ -169,6 +180,7 @@ html, body, #root{
     --border-radius: .25em;
     --s-online: #0B0;
     --s-lead: #5b0089;
+    --scrollbar-bg: #FFFFFF05
 }
 
 .oled-theme{
@@ -218,4 +230,17 @@ html, body, #root{
 
 *{
     scroll-behavior: smooth;
+}
+
+*::-webkit-scrollbar-track, *::-webkit-scrollbar
+{
+  width: 10px;
+  background-color: var(--scrollbar-bg);
+}
+
+*::-webkit-scrollbar-thumb
+{
+  border-radius: 6px;
+  -webkit-box-shadow: none;
+  background-color: #777;
 }
