@@ -110,13 +110,13 @@ class ZpevnikDataModel {
 
     //load settings from local storage
     loadSettings() {
-        const settings = JSON.parse(localStorage.getItem("settings") || "")
+        const settings = JSON.parse(localStorage.getItem("settings") || "false")
         if (settings) this.setSettings(settings)
     }
 
     //load session data
     loadSession() {
-        const session = JSON.parse(localStorage.getItem("session") || "")
+        const session = JSON.parse(localStorage.getItem("session") || "false")
         if (session) this.setState({session: session})
         if (this.state.session.online && !this.state.session.leader){
             subscribeToSession(this.state.session.code, (e: RecordSubscription<Record>)=>this.onSessionUpdate(e)).catch(err => {
