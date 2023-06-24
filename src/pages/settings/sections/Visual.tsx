@@ -12,6 +12,11 @@ export default function VisualSettings() {
         title="Dark Mode"
         text="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
       />
+      {model.settings.darkMode&&<Setting
+        name="oledMode"
+        title="OLED Mode"
+        text="Completely dark background"
+      />}
       <Setting
         name="compactMode"
         title="Compact mode"

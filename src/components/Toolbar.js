@@ -18,7 +18,8 @@ export default class Toolbar extends React.Component {
 
     toggleColumns() {
         let c = model.settings.columns;
-        c = c >= 3 ? 1 : c + 1
+        const max = model.settings.maxColumns;
+        c = c >= max ? 1 : c + 1
         model.setSettings({ columns: c })
     }
 

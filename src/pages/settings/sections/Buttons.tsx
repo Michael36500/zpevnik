@@ -1,6 +1,7 @@
 import React from "react";
 import model from "../../../resources/model/model";
 import { Setting } from "../SettingsPage";
+import NumberInput from "../../../components/numberInput/NumberInput";
 
 export default function ButtonsSection() {
   const settings = model.settings;
@@ -45,6 +46,17 @@ export default function ButtonsSection() {
         title="Columns"
         text={"Show column setting button."}
       />
+      {settings.showColumnsButton&&<Setting
+        name="maxColumns"
+        title="Max columns"
+        text={"Maximum number of columns."}
+        input={<NumberInput
+            min={1}
+            defaultValue={model.setting("maxColumns")}
+            onChange={v => model.setSettings({maxColumns: v})}
+        />}
+      />}
+
       <Setting
         name="showLineBreakButton"
         title="Line Break"

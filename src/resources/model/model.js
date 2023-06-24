@@ -15,6 +15,7 @@ class ZpevnikDataModel {
             lineBreak: true,
 
             darkMode: false,
+            oledMode: false,
             compactMode: false,
             sortAlphabetically: true,
             swipeGesturesPrevNext: true,
@@ -38,6 +39,7 @@ class ZpevnikDataModel {
             closeSidebarOnSongClickPC: false,
             displayNsfw: false,
             autofitIntervalDelay: 10,
+            maxColumns: 3,
 
             autofitOnSessionUpdate: false,
             autofitShowTitle: false,
@@ -123,6 +125,10 @@ class ZpevnikDataModel {
     //get settings
     get settings() {
         return this.state.settings
+    }
+
+    setting(name){
+        return this.settings[name]
     }
 
     //get songs sorted and filtered depending on settings

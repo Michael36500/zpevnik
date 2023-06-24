@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { VscArrowLeft } from "react-icons/vsc";
 import { useNavigate } from "react-router-dom";
 import packageJSON from "../../../package.json";
@@ -56,7 +56,14 @@ function SettingsPage() {
   );
 }
 
-export function Setting({ title, text, name }) {
+interface setting {
+  title: string,
+  text: string,
+  name: string,
+  input?: ReactNode | null
+}
+
+export function Setting({ title, text, name, input = null } : setting) {
   return (
     <div className="setting">
       <div className="left">
@@ -64,16 +71,16 @@ export function Setting({ title, text, name }) {
         <div className="description">{text}</div>
       </div>
       <div className="right">
-        <Toggle
-          onChange={(v) => model.setSettings({ [name]: v })}
-          value={model.settings[name]}
-        />
+        {input?input:<Toggle
+          onChange={(v: string) => model.setSettings({ [name]: v })}
+          value={model.setting(name)}
+        />}
       </div>
     </div>
   );
 }
 
-export function set(name, val) {
+export function set(name: string, val: any) {
   model.setSettings({ [name]: val });
 }
 
