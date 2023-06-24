@@ -1,5 +1,6 @@
 import React from "react";
 import model from "../../../resources/model/model";
+import { Setting } from "../SettingsPage";
 
 export default function SessionSettings() {
   return (
@@ -43,6 +44,12 @@ export default function SessionSettings() {
           </>
         )}
       </div>
+
+      <Setting
+        name="autofitOnSessionUpdate"
+        title="Auto-fit"
+        text="Automatically auto-fit song on session update"
+      />
     </div>
   );
 }

@@ -1,14 +1,12 @@
-import { useHistory } from "react-router";
 import { getCacheSongs, getSongs } from "../api/song";
-import { getCurrentSongId, normalize } from "../helpers";
-import { pocket } from "../pocket/pocket";
-import { changeSessionSong, endSession, listenSession, newSession, subscribeToSession, unsubscribeFromSession } from "../pocket/session";
+import { autoFit, getCurrentSongId, normalize } from "../helpers";
+import { changeSessionSong, endSession, newSession, subscribeToSession, unsubscribeFromSession } from "../pocket/session";
 
 
 class ZpevnikDataModel {
-    updateCallbacks = [];
-    location = {};
+    updateCallbacks = []
     state = {
+        navigate: ()=>{},
         songs: [],
         settings: {
             columns: 1,
@@ -41,6 +39,9 @@ class ZpevnikDataModel {
             displayNsfw: false,
             autofitIntervalDelay: 10,
 
+            autofitOnSessionUpdate: false,
+            autofitShowTitle: false,
+
             yeet: false,
         },
         session: {
@@ -48,7 +49,6 @@ class ZpevnikDataModel {
             code: "",
             leader: false
         },
-        history: {}
     }
 
     //set update callback function
@@ -83,7 +83,6 @@ class ZpevnikDataModel {
 
     //on route change
     onRouteChanged(location){
-        console.log("Path changed to: "+location.pathname)
         this.location = location
         if(this.state.settings.resetTranspositions)this.setSettings({transpose:0})
     }
@@ -109,9 +108,7 @@ class ZpevnikDataModel {
         const session = JSON.parse(localStorage.getItem("session"))
         if (session) this.setState({session: session})
         if (this.state.session.online && !this.state.session.leader){
-            subscribeToSession(this.state.session.code,(e)=>{
-                this.state.history.push(e.record.song)
-            }).catch(err => {
+            subscribeToSession(this.state.session.code, (e)=>this.onSessionUpdate(e)).catch(err => {
                 this.leaveSession()
             })
         }
@@ -156,7 +153,6 @@ class ZpevnikDataModel {
             .filter(s => (normalize(s.title) + normalize(s.author)).includes(normalize(query)))
     }
 
-
     //get song by id from array of songs filtered acording to settings
     getSongById(id) {
         return this.songs.find(song => song.id === id)
@@ -166,6 +162,15 @@ class ZpevnikDataModel {
     get currentSong() {
         let id = getCurrentSongId()
         return this.getSongById(id)
+    }
+
+    onSessionUpdate(event){
+        if(event.action === "update")
+            this.state.navigate(event.record.song)
+        if(event.action === "delete")
+            this.leaveSession()
+        if(this.settings.autofitOnSessionUpdate)
+            this.autoFit()
     }
 
     async startSession() {
@@ -187,12 +192,7 @@ class ZpevnikDataModel {
     async joinSession(){
         const code = prompt("Session code:")?.toUpperCase()
         if (!code) return
-        subscribeToSession(code, (e)=>{
-            if(e.action === "update")
-                this.state.history.push(e.record.song)
-            if(e.action === "delete")
-                this.leaveSession()
-        }).then(() => {
+        subscribeToSession(code, (e)=>this.onSessionUpdate(e)).then(() => {
             this.setState({session:{
                 online: true,
                 leader: false,
@@ -223,6 +223,11 @@ class ZpevnikDataModel {
             code: ""
         }})
         localStorage.setItem("session", JSON.stringify(this.state.session))
+    }
+
+    ////
+    autoFit(){
+        autoFit()
     }
 }
 

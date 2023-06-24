@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Navigate, Route, Routes, useLocation } from "react-router";
+import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router";
 import "./App.scss";
 import Sidebar from "./components/Sidebar";
 import Toolbar from "./components/Toolbar";
@@ -19,10 +19,13 @@ function App() {
     model.onRouteChanged(location);
   }, [location]);
 
+  const navigate = useNavigate()
+
   const [, foo] = useState({});
   const forceUpdate = useCallback(()=>foo({}), [])
   useEffect(() => {
     model.addUpdateCallback(() => forceUpdate());
+    model.setState({navigate: (to: string)=>navigate(to)});
   },[])
 
   const settings = model.settings;
