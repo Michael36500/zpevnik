@@ -21,7 +21,11 @@ export default function ButtonsSection() {
         name="showFavorites"
         title="Favorites"
         text={'Show "Add to favorites" button and sort songs by favorites.'}
-      />
+      />{settings.showFavorites&&<Setting indent
+        name="separateFavorites"
+        title="Separate favorites"
+        text={"Show favorite song separately at the top and then again in all songs."}
+      />}
       <Setting
         name="showAutoFitButton"
         title="Auto-fit"

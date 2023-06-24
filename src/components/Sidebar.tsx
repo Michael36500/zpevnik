@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
 import { isMobile } from "../resources/helpers";
-import model from "../resources/model/model";
+import model, { song } from "../resources/model/model";
 
 interface props {
   toggle: () => any;
@@ -30,24 +30,32 @@ export default function Sidebar({ toggle, open }: props) {
         <i className="button fas fa-arrow-left" onClick={() => toggle()}></i>
       </div>
 
-      {model.searchSongs(query).map((song) => (
-        <Link to={"/" + song.id} className="notA" key={song.id}>
-          <div
-            className="song"
-            onClick={() => {
-              if (isMobile() || model.settings.closeSidebarOnSongClickPC)
-                toggle();
-            }}
-          >
-            <div className="text">
-              {song.title} <span className="author">{song.author}</span>
-            </div>
-            {/*!!model.settings.showFavorites && !!model.settings.favorites.includes(song.id) && <div className="favorite">
-                  <i className="fas fa-star"></i>
-         </div>*/}
-          </div>
-        </Link>
-      ))}
+      {!!model.settings.separateFavorites&& !!model.settings.favorites.length && <>
+        <div className="divider">Favorites</div>
+        {model.searchSongs(query).filter(song => model.isFavorite(song.id)).map((song) => <SongLink toggle={()=>toggle()} song={song}/>)}
+        <div className="divider">All</div>
+      </>
+      }
+      {model.searchSongs(query).map((song) => <SongLink toggle={()=>toggle()} song={song}/>)}
     </div>
   );
+}
+
+function SongLink({toggle, song}:{toggle:()=>any, song:song}){
+        return <Link to={"/" + song.id} className="notA" key={song.id}>
+        <div
+        className="song"
+        onClick={() => {
+            if (isMobile() || model.settings.closeSidebarOnSongClickPC)
+            toggle();
+        }}
+        >
+        <div className="text">
+            {song.title} <span className="author">{song.author}</span>
+        </div>
+        {!!model.settings.showFavorites && !model.settings.separateFavorites && !!model.settings.favorites.includes(song.id) && <div className="favorite">
+                <i className="fas fa-star"></i>
+    </div>}
+        </div>
+    </Link>
 }

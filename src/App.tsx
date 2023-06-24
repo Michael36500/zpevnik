@@ -16,7 +16,7 @@ function App() {
 
   const location = useLocation();
   useEffect(() => {
-    model.onRouteChanged(location);
+    model.onRouteChanged();
   }, [location]);
 
   const navigate = useNavigate()

@@ -1,12 +1,23 @@
+import { Record, RecordSubscription } from "pocketbase";
 import { getCacheSongs, getSongs } from "../api/song";
 import { autoFit, getCurrentSongId, normalize } from "../helpers";
 import { changeSessionSong, endSession, newSession, subscribeToSession, unsubscribeFromSession } from "../pocket/session";
 
+type id = string
+
+export interface song {
+    id: id,
+    title: string,
+    author: string,
+    capo: number,
+    sfw: boolean,
+    verses: any
+}
 
 class ZpevnikDataModel {
-    updateCallbacks = []
+    updateCallbacks: (()=>any)[] = []
     state = {
-        navigate: ()=>{},
+        navigate: (to:string)=>{},
         songs: [],
         settings: {
             columns: 1,
@@ -40,6 +51,7 @@ class ZpevnikDataModel {
             displayNsfw: false,
             autofitIntervalDelay: 10,
             maxColumns: 3,
+            separateFavorites: false,
 
             autofitOnSessionUpdate: false,
             autofitShowTitle: false,
@@ -54,7 +66,7 @@ class ZpevnikDataModel {
     }
 
     //set update callback function
-    addUpdateCallback(fn) {
+    addUpdateCallback(fn: ()=>void) {
         this.updateCallbacks.push(fn)
     }
 
@@ -64,16 +76,14 @@ class ZpevnikDataModel {
     }
 
     //update model properties
-    setState(data) {
-        for (let key in data) {
-            this.state[key] = data[key]
-        }
+    setState(data: object) {
+        this.state = {...this.state, ...data}
 
         this.notifyListeners()
     }
 
     //update settings in state
-    setSettings(settings) {
+    setSettings(settings: object) {
         this.setState({
             settings: {
                 ...this.state.settings,
@@ -84,8 +94,7 @@ class ZpevnikDataModel {
     }
 
     //on route change
-    onRouteChanged(location){
-        this.location = location
+    onRouteChanged(){
         if(this.state.settings.resetTranspositions)this.setSettings({transpose:0})
     }
 
@@ -101,16 +110,16 @@ class ZpevnikDataModel {
 
     //load settings from local storage
     loadSettings() {
-        const settings = JSON.parse(localStorage.getItem("settings"))
+        const settings = JSON.parse(localStorage.getItem("settings") || "")
         if (settings) this.setSettings(settings)
     }
 
     //load session data
     loadSession() {
-        const session = JSON.parse(localStorage.getItem("session"))
+        const session = JSON.parse(localStorage.getItem("session") || "")
         if (session) this.setState({session: session})
         if (this.state.session.online && !this.state.session.leader){
-            subscribeToSession(this.state.session.code, (e)=>this.onSessionUpdate(e)).catch(err => {
+            subscribeToSession(this.state.session.code, (e: RecordSubscription<Record>)=>this.onSessionUpdate(e)).catch(err => {
                 this.leaveSession()
             })
         }
@@ -123,54 +132,59 @@ class ZpevnikDataModel {
     }
 
     //get settings
-    get settings() {
+    get settings(): {[key:string]: any} {
         return this.state.settings
     }
 
-    setting(name){
+    setting(name: string){
         return this.settings[name]
     }
 
     //get songs sorted and filtered depending on settings
     get songs() {
         let set = this.state.settings;
-        let favorites = set.favorites || [];
-        let songs = this.state.songs || [];
+        let favorites: string[] = set.favorites || [];
+        let songs: song[] = this.state.songs || [];
 
         if (!set.displayNsfw)
             songs = songs.filter(s => s.sfw)
         if (set.sortAlphabetically)
             songs = songs.sort((a, b) => a.title.localeCompare(b.title))
-        if (set.showFavorites)
+        if (set.showFavorites && !set.separateFavorites)
             songs = songs.sort((a, b) => favorites.includes(b.id) ? (favorites.includes(a.id) ? 0 : 1) : (favorites.includes(a.id) ? -1 : 0));
 
         return songs
     }
 
     //get sorted song ids
-    get songIDs() {
+    get songIDs(): id[] {
         return this.songs.map(song => song.id)
     }
 
     //get songs whose title+author contain query string
     //strings are normalized
-    searchSongs(query) {
+    searchSongs(query: string) {
         return this.songs
             .filter(s => (normalize(s.title) + normalize(s.author)).includes(normalize(query)))
     }
 
     //get song by id from array of songs filtered acording to settings
-    getSongById(id) {
+    getSongById(id: id) {
         return this.songs.find(song => song.id === id)
     }
 
     //get song by id in window URI
-    get currentSong() {
+    get currentSong(): song | undefined {
         let id = getCurrentSongId()
         return this.getSongById(id)
     }
 
-    onSessionUpdate(event){
+    isFavorite(id: id){
+        const favorites: id[] = model.settings.favorites
+        return favorites.includes(id)
+    }
+
+    onSessionUpdate(event:RecordSubscription<Record>){
         if(event.action === "update")
             this.state.navigate(event.record.song)
         if(event.action === "delete")
@@ -198,7 +212,7 @@ class ZpevnikDataModel {
     async joinSession(){
         const code = prompt("Session code:")?.toUpperCase()
         if (!code) return
-        subscribeToSession(code, (e)=>this.onSessionUpdate(e)).then(() => {
+        subscribeToSession(code, (e:RecordSubscription<Record>)=>this.onSessionUpdate(e)).then(() => {
             this.setState({session:{
                 online: true,
                 leader: false,
@@ -235,6 +249,10 @@ class ZpevnikDataModel {
     autoFit(){
         autoFit()
     }
+}
+
+declare global {
+    interface Window { model: any; }
 }
 
 const model = new ZpevnikDataModel()

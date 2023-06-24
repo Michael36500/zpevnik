@@ -97,6 +97,7 @@ html, body, #root{
             display: flex; align-items: center;
             position: sticky;
             top: 0;
+            z-index: 100;
             background-color: var(--primary-bg);
             
             input{
@@ -132,6 +133,24 @@ html, body, #root{
             &:hover{
                 background-color: var(--primary-bg-hover);
             }
+        }
+
+        .divider{
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: .7em;
+            padding: .5em 1.3em;
+            color: #777;
+            &::after{
+                margin-left: 1em;
+                border-bottom: 1px solid #777;
+                width: 100%;
+                position: relative;
+                content: "";
+
+            }
+            display: flex;
+            align-items: center;
         }
     }
 
