@@ -1,0 +1,61 @@
+import { pocket } from "./pocket";
+
+const vowels = "AEIYOU"
+const consonants = "BCDFGHJKLMNPQRSTVWXZ"
+
+export async function newSession(){
+    let code = ""
+    code = code + consonants[parseInt(Math.random()*20)]
+    code = code + vowels[parseInt(Math.random()*6)]
+    code = code + consonants[parseInt(Math.random()*20)]
+    code = code + vowels[parseInt(Math.random()*6)]
+    code = code + consonants[parseInt(Math.random()*20)]
+    await pocket.collection("session").create({code: code}).catch(err => {
+        console.log(err)
+        throw err
+    })
+    return code
+}
+
+export async function subscribeToSession(code, funct){
+    const record = await pocket.collection('session').getFirstListItem('code="'+code+'"').catch(err => {
+        console.log(err)
+        throw err
+    })
+    if(!record.id){
+        alert("Error joining session")
+        return
+    }
+    pocket.collection('session').subscribe(record.id, (e) => {
+        funct(e)
+        console.log(e)
+    }).catch(err => {
+        console.log(err)
+        throw err
+    });
+}
+
+export async function changeSessionSong(code,song){
+    const record = await pocket.collection('session').getFirstListItem('code="'+code+'"').catch(err => {
+        console.log(err)
+        throw err
+    })
+    if(!record.id){
+        alert("Error changing song")
+        return
+    }
+    console.log(record.id, song)
+    pocket.collection('session').update(record.id, {song:song}).catch(err => {
+        console.log(err)
+        throw err
+    });
+}
+
+export async function unsubscribeFromSession(){
+    pocket.collection('session').unsubscribe().catch(err => console.log(err));
+}
+
+export async function endSession(code){
+    const record = await pocket.collection('session').getFirstListItem('code="'+code+'"').catch(err => console.log(err))
+    pocket.collection('session').delete(record.id).catch(err => console.log(err));
+}

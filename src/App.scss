@@ -57,6 +57,8 @@ html, body, #root{
         display: flex;
         align-items: center;
         border-top: 2px solid var(--border);
+        &.s-lead{border-top: 2px solid var(--s-lead);}
+        &.s-online{border-top: 2px solid var(--s-online);}
         position: relative;
         overflow: auto;
 
@@ -93,6 +95,10 @@ html, body, #root{
         .top{
             height:3em;
             display: flex; align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background-color: var(--primary-bg);
             
             input{
                 border: none;
@@ -104,6 +110,14 @@ html, body, #root{
                 padding: .3em .5em 0em;
                 background-color: inherit;
                 color: inherit;
+                outline: none;
+            }
+
+            .clear{
+                position: absolute;
+                right: 2.5em;
+                cursor:pointer;
+                font-size: 1.4em;
             }
         }
 
@@ -120,6 +134,24 @@ html, body, #root{
                 background-color: var(--primary-bg-hover);
             }
         }
+
+        .divider{
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: .7em;
+            padding: .5em 1.3em;
+            color: #777;
+            &::after{
+                margin-left: 1em;
+                border-bottom: 1px solid #777;
+                width: 100%;
+                position: relative;
+                content: "";
+
+            }
+            display: flex;
+            align-items: center;
+        }
     }
 
     .button{
@@ -135,19 +167,6 @@ html, body, #root{
     *-webkit-tap-highlight-color: transparent;
 }
 
-.dark-theme{
-    --primary-bg:#111;
-    --primary-bg-hover: #222;
-    --primary-text: #DDD;
-    --secondary-bg: #252525;
-    --border: #333;
-    --icon:#AAA;
-    --widget-bg:#222;
-    --widget-bg-hover: #333;
-    --shadow: 0px 0px 8px 4px #00000019;
-    --border-radius: .25em;
-}
-
 .light-theme{
     --primary-bg:#FFF;
     --primary-bg-hover: #EEE;
@@ -157,8 +176,34 @@ html, body, #root{
     --icon:#555;
     --widget-bg:#EEE;
     --widget-bg-hover: #DDD;
+    --menu-bg: #FFF;
+    --menu-hover-bg: #F5F5F5;
     --shadow: 0px 0px 8px 4px #00000019;
     --border-radius: .25em;
+    --s-online: #0B0;
+    --s-lead: #b92dff;
+}
+
+.dark-theme{
+    --primary-bg:#111;
+    --primary-bg-hover: #222;
+    --primary-text: #DDD;
+    --secondary-bg: #252525;
+    --border: #333;
+    --icon:#AAA;
+    --widget-bg:#171819;
+    --widget-bg-hover: #1A1B1C;
+    --menu-bg: #131415;
+    --menu-hover-bg: #171819;
+    --shadow: 0px 0px 8px 4px #00000019;
+    --border-radius: .25em;
+    --s-online: #0B0;
+    --s-lead: #5b0089;
+    --scrollbar-bg: #FFFFFF05
+}
+
+.oled-theme{
+    --primary-bg: #000;
 }
 
 .compactMode{
@@ -204,4 +249,17 @@ html, body, #root{
 
 *{
     scroll-behavior: smooth;
+}
+
+*::-webkit-scrollbar-track, *::-webkit-scrollbar
+{
+  width: 10px;
+  background-color: var(--scrollbar-bg);
+}
+
+*::-webkit-scrollbar-thumb
+{
+  border-radius: 6px;
+  -webkit-box-shadow: none;
+  background-color: #777;
 }
