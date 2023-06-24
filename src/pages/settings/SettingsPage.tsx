@@ -60,12 +60,13 @@ interface setting {
   title: string,
   text: string,
   name: string,
-  input?: ReactNode | null
+  input?: ReactNode | null,
+  indent?: boolean,
 }
 
-export function Setting({ title, text, name, input = null } : setting) {
+export function Setting({ title, text, name, input = null, indent=false } : setting) {
   return (
-    <div className="setting">
+    <div className={"setting" + (indent?" indent":"")}>
       <div className="left">
         <div className="title">{title}</div>
         <div className="description">{text}</div>

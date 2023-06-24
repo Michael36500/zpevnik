@@ -46,7 +46,7 @@ export default function ButtonsSection() {
         title="Columns"
         text={"Show column setting button."}
       />
-      {settings.showColumnsButton&&<Setting
+      {settings.showColumnsButton&&<Setting indent
         name="maxColumns"
         title="Max columns"
         text={"Maximum number of columns."}

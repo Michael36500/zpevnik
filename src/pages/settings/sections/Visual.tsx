@@ -13,6 +13,7 @@ export default function VisualSettings() {
         text="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
       />
       {model.settings.darkMode&&<Setting
+        indent
         name="oledMode"
         title="OLED Mode"
         text="Completely dark background"
@@ -28,7 +29,7 @@ export default function VisualSettings() {
         text="Display chords in lyrics."
       />
       {settings.displayChords && (
-        <div className="setting choose">
+        <div className="setting choose indent">
           <div className="title">Chord diagrams</div>
           <div className="description">
             Display chord diagrams for guitar or ukulele.
@@ -62,7 +63,7 @@ export default function VisualSettings() {
         </div>
       )}
       {settings.displayChords && (
-        <div className="setting choose scales">
+        <div className="setting choose scales indent">
           <div className="title">Scale</div>
           <div className="description">Select scale for displaying chords.</div>
           <div className="options">

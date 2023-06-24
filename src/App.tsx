@@ -30,7 +30,7 @@ function App() {
 
   const settings = model.settings;
   let className = settings.darkMode ? "dark-theme" : "light-theme"
-  className = className + (settings.oledMode ? " oled-theme":"")
+  className = className + (settings.oledMode && settings.darkMode ? " oled-theme":"")
   className = className + (settings.compactMode ? " compactMode" : "")
   
   return (

@@ -117,6 +117,12 @@
         letter-spacing: -1px;
       }
     }
+
+    &.indent{
+      margin-left: .5em;
+      padding: .7em 0em .7em 1em;
+      border-left: var(--border) 2px solid;
+    }
   }
 
   hr {
