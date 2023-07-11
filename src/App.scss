@@ -180,6 +180,7 @@ html, body, #root{
     --border-radius: .25em;
     --s-online: #0B0;
     --s-lead: #b92dff;
+    --outline: 2px solid black;
 }
 
 .dark-theme{
@@ -197,7 +198,7 @@ html, body, #root{
     --border-radius: .25em;
     --s-online: #0B0;
     --s-lead: #5b0089;
-    --scrollbar-bg: #FFFFFF05
+    --scrollbar-bg: #FFFFFF05;
 }
 
 .oled-theme{
@@ -261,3 +262,8 @@ html, body, #root{
   -webkit-box-shadow: none;
   background-color: #777;
 }
+
+
+textarea, input{
+    outline: none
+  }
