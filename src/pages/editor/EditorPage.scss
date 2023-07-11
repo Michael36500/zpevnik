@@ -23,18 +23,6 @@
       align-items: center;
     }
 
-    input {
-      border: none;
-      margin-left: 0.7em;
-      flex-grow: 1;
-      border-bottom: 1px solid var(--border);
-      font-family: inherit;
-      color: inherit;
-      font-size: 1em;
-      padding: 0.3em 0.5em 0em;
-      background-color: var(--primary-bg);
-    }
-
     .number-input-component {
       margin-left: 0.7em;
     }

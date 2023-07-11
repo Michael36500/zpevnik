@@ -52,7 +52,7 @@ export default class NewSongPage extends React.Component{
         if(name==="name"){
             song.verses[key].name=value;
         }else if(name==="lyrics"){
-            if(value.substring(value.length-2)==="\n\n"){//create new verse
+            if(value.substring(value.length-2)==="\r\n\r\n"){//create new verse
                 song.verses.push({
                     name:(song.verses.map(verse=>parseInt(verse.name)).filter(i=>i).sort().reverse()?.[0]||0)+1+".",
                     lyrics:""

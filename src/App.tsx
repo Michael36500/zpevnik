@@ -32,6 +32,7 @@ function App() {
   let className = settings.darkMode ? "dark-theme" : "light-theme"
   className = className + (settings.oledMode && settings.darkMode ? " oled-theme":"")
   className = className + (settings.compactMode ? " compactMode" : "")
+
   
   return (
     <div id="app" className={className}>
@@ -41,6 +42,7 @@ function App() {
         <Routes>
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/editor" element={<EditorPage/>}/>
+          <Route path="/editor/:id" element={<EditorPage/>}/>
           <Route path="/new" element={<NewSongPage />} />
           <Route path="/ttl" element={<TexToLyricsPage />} />
           <Route path="/test" element={<TestPage />} />

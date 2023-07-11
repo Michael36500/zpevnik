@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
 import { isMobile } from "../resources/helpers";
 import model, { song } from "../resources/model/model";
@@ -11,6 +11,8 @@ interface props {
 
 export default function Sidebar({ toggle, open }: props) {
   const [query, setQuery] = useState("");
+  const editor = useLocation().pathname.includes("editor")
+
   return (
     <div
       id="sidebar"
@@ -32,17 +34,17 @@ export default function Sidebar({ toggle, open }: props) {
 
       {!!model.settings.separateFavorites&& !!model.settings.favorites.length && <>
         <div className="divider">Favorites</div>
-        {model.searchSongs(query).filter(song => model.isFavorite(song.id)).map((song) => <SongLink toggle={()=>toggle()} song={song}/>)}
+        {model.searchSongs(query).filter(song => model.isFavorite(song.id)).map((song) => <SongLink toggle={()=>toggle()} song={song} editor={editor}/>)}
         <div className="divider">All</div>
       </>
       }
-      {model.searchSongs(query).map((song) => <SongLink toggle={()=>toggle()} song={song}/>)}
+      {model.searchSongs(query).map((song) => <SongLink toggle={()=>toggle()} song={song} editor={editor}/>)}
     </div>
   );
 }
 
-function SongLink({toggle, song}:{toggle:()=>any, song:song}){
-        return <Link to={"/" + song.id} className="notA" key={song.id}>
+function SongLink({toggle, song, editor}:{toggle:()=>any, song:song, editor:boolean}){
+        return <Link to={"/" + (editor?"editor/":"") + song.id} className="notA" key={song.id}>
         <div
         className="song"
         onClick={() => {

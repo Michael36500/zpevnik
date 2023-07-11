@@ -59,6 +59,7 @@ class ZpevnikDataModel {
             yeet: false,
             
             editorMode: "verses",
+            secret:"ahoj",
         },
         session: {
             online: false,

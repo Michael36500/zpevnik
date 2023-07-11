@@ -13,17 +13,18 @@ export interface Song {
 export function lyricsToVerses(lyrics: string): Verse[]{
     let verseNames: string[] = []
     lyrics.replaceAll(/<.*>/g, (x: string) => {verseNames.push(x.slice(1,-1)); return x})
-    let verses = lyrics.split(/<.*>\n/g).slice(1)
-    console.log(verseNames, verses)
+    console.log(JSON.stringify(lyrics))
+
+    lyrics=lyrics.replace(/<.*>\r\n/,"")
+    let verses = lyrics.split(/\r\n<.*>\r\n/g)
+    console.log(verseNames,verses)
     return verses.map((verse, key) => ({name:verseNames[key], lyrics:verse}))
 }
 
 export function versesToLyrics(verses: Verse[]): string{
-    console.log(verses)
-    const lyrics =  verses.reduce((acc, verse) => {
-        return acc + "<"+verse.name+">\n" + verse.lyrics;
+    const lyrics =  verses.reduce((acc, verse, key, arr) => {
+        return acc + "<"+verse.name+">\r\n" + verse.lyrics + (key===arr.length-1?"":"\r\n");
     },"")
-    console.log(lyrics)
     return(lyrics)
 }
 

@@ -1,10 +1,11 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Song, emptySong, lyricsToVerses, versesToLyrics } from "../../resources/model/songHelper"
 import model from "../../resources/model/model"
 import { Song as SongComponent } from "../../components/song"
 import "./EditorPage.scss"
 import NumberInput from "../../components/numberInput/NumberInput"
-import { createSong } from "../../resources/api/song"
+import { createSong, modifySong } from "../../resources/api/song"
+import { useNavigate, useParams } from "react-router"
 
 
 export default function EditorPage(){
@@ -13,10 +14,16 @@ export default function EditorPage(){
     const mode = model.settings.editorMode
     const updateSong = (name:string, value: any) => setSong({...song, [name]:value})
 
+
+    const { id } = useParams<string>();
+    useEffect(()=>{
+        const song = model.getSongById(id || "")
+        if (song) setSong(song)
+    }, [setSong, id])
+
     const updateVerse = (key: number, name: string, lyrics: string) => {
         let verses = [...song.verses]
-        if(lyrics.substring(lyrics.length-2) === "\n\n"){
-            console.log(verses)
+        if(lyrics.substring(lyrics.length-4) === "\r\n\r\n"){
             let newName = (verses.slice(0,key+1).map(verse=>parseInt(verse.name)).filter(i=>i).pop()||0)+1+"."
             verses.splice(key+1,0,{name:newName, lyrics:""})
             setTimeout(()=>document.getElementById("verse-"+(key+1))?.focus(), 50)
@@ -28,27 +35,39 @@ export default function EditorPage(){
     }
 
     const removeVerse = (key: number) => {
+        if(song.verses.length<2)return
         let verses = [...song.verses]
         verses.splice(key, 1)
         updateSong("verses", verses)
     }
 
     const updateLyrics = (lyrics: string) => {
-        console.log(lyricsToVerses(lyrics))
         updateSong("verses", lyricsToVerses(lyrics))
     }
 
     const clear = () => setSong(emptySong)
 
+    const navigate = useNavigate()
+
     const submit = () => {
-        if(window.confirm("Opravdu chceš písničku odeslat?"))
-        navigator.clipboard.writeText(versesToLyrics(song.verses))
-        createSong(song).then(res => {
-            alert("Písnička úspěšně přidána.")
-            clear()
-        }).catch(err => {
-            alert("Při přidávání písničky došlo k chybě.")
-        })
+        if(window.confirm("Do you really want to submit?"))
+        if(!id){
+            createSong(song).then(res => {
+                alert("Song created successfully.")
+                navigate("/editor/"+res.id)
+                clear()
+            }).catch(err => {
+                alert("Error creating song.")
+            })
+        }
+        else{
+            modifySong(id,song).then(res => {
+                alert("Song updated successfully.")
+            }).catch(err => {
+                alert("Error updating song.")
+            })
+        }
+        
     }
 
     return <div id="editor-page">
@@ -73,11 +92,11 @@ export default function EditorPage(){
                 <div className="lyrics">
                     <textarea 
                         value={versesToLyrics(song.verses)}
-                        onChange={e => updateLyrics(e.target.value)}  
+                        onChange={e => updateLyrics(e.target.value.replaceAll("\n", "\r\n"))}  
                     />
                 </div>
                 <div className="submit">
-                <div className="button" onClick={()=>submit()}>Přidat</div>
+                <div className="button" onClick={()=>submit()}>{id?"Edit":"Submit"}</div>
                 </div>
         </div>
         <div className="preview">
@@ -103,13 +122,13 @@ interface VerseProps {
 
 function Verse({id, name, lyrics, onChange=()=>{}, onDelete=()=>{}}:VerseProps){
     return <div className="verse">
-        <input size={1} type="text" value={name} onChange={e=>onChange(e.target.value, lyrics)}/>
+        <input size={1} type="text" value={name} onChange={e=>onChange(e.target.value.replaceAll("\n", "\r\n"), lyrics)}/>
         <textarea 
             placeholder={(id===0)?"[G]Jednou [C7]jeden [G]šnek [D7]\n[G]šíle[C]ně se [G]lek’, [D7]\n[G]nikdo už dnes [G7]neví, z [C]čeho se tak [Cm]zjevil,\nže se [G]dal hned [D]na ú[G]těk.[D]":""} 
             id={"verse-"+id} 
             rows={5}
             value={lyrics} 
-            onChange={e=>onChange(name, e.target.value)}/>
+            onChange={e=>onChange(name, e.target.value.replaceAll("\n", "\r\n"))}/>
         <div className="remove" onClick={()=>onDelete(id)}>×</div>
     </div> 
 }
