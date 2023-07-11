@@ -77,7 +77,7 @@ export default function EditorPage(){
                     />
                 </div>
                 <div className="submit">
-                <div className="button" onClick={()=>submit()}>Odeslat</div>
+                <div className="button" onClick={()=>submit()}>Přidat</div>
                 </div>
         </div>
         <div className="preview">
