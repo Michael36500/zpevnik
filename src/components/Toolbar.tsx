@@ -48,6 +48,13 @@ export default function Toolbar({ toggleSidebar }: props) {
         className="button fas fa-bars"
         onClick={() => toggleSidebar()}
       ></i>
+      {pathname.includes("editor")&&<>
+        <i
+          className={"button fas "+(settings.editorMode==="verses"?"fa-th-list":"fa-align-justify")}
+          title="Editor mode"
+          onClick={() => model.setSettings({editorMode: settings.editorMode==="verses"?"lyrics":"verses"})}
+        ></i>
+      </>}
       <div className="spacer"></div>
       {pathname === "/settings"?
       <i className="fas fa-cog button" onClick={()=>navigate(-1)}></i>:

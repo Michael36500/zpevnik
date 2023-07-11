@@ -1,0 +1,124 @@
+#editor-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+  overflow: hidden;
+  .preview {
+    overflow: auto;
+  }
+
+  .editor {
+    border-right: 2px solid var(--border);
+    height: calc(100% - 2em);
+    padding: 1em;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    overflow: auto;
+    grid-gap: 1em;
+
+    .grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-gap: 1em 0.5em;
+      align-items: center;
+    }
+
+    input {
+      border: none;
+      margin-left: 0.7em;
+      flex-grow: 1;
+      border-bottom: 1px solid var(--border);
+      font-family: inherit;
+      color: inherit;
+      font-size: 1em;
+      padding: 0.3em 0.5em 0em;
+      background-color: var(--primary-bg);
+    }
+
+    .number-input-component {
+      margin-left: 0.7em;
+    }
+
+    .verses,
+    .lyrics {
+      flex-grow: 1;
+      overflow: auto;
+    }
+    &:not(.verses-mode) {
+      .verses {
+        display: none;
+      }
+    }
+    &:not(.lyrics-mode) {
+      .lyrics {
+        display: none;
+      }
+    }
+
+    .verses {
+      .verse {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        grid-template-rows: 1fr 1fr;
+        margin-bottom: 1em;
+
+        border: 2px solid var(--border);
+        border-radius: var(--border-radius);
+
+        textarea {
+          border: none;
+          grid-row: 1/3;
+          grid-column: 2/3;
+          border-left: 2px solid var(--border);
+          padding: 0.5em;
+          font-size: .8em;
+        }
+
+        input {
+            border:none;
+            margin: 0;
+            text-align: center;
+            padding: .5em;
+        }
+
+        .remove {
+          border-top: 2px solid var(--border);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.5em;
+          cursor:pointer;
+          &:hover{
+            background-color: var(--menu-hover-bg);
+          }
+        }
+      }
+    }
+
+    .lyrics{
+      display: grid;
+
+      textarea {
+        border: 2px solid var(--border);
+        padding: 0.5em;
+        font-size: .8em;
+        border-radius: var(--border-radius);
+      }
+    }
+
+    .submit {
+      text-align: right;
+
+      .button {
+        background-color: var(--widget-bg);
+        display: inline-block;
+        padding: 0.5em 1.5em 0.5em;
+        box-sizing: border-box;
+        border-radius: 4px;
+        &:hover {
+          background-color: var(--widget-bg-hover);
+        }
+      }
+    }
+  }
+}

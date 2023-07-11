@@ -14,7 +14,7 @@ export default function NumberInput({onChange =(v)=>{}, defaultValue = 0, step =
     const [value, setValue] = useState(defaultValue)
     useEffect(()=>{
         onChange(value)
-    }, [value, onChange])
+    }, [value])
 
     function update(dir: 1|-1){
         if(dir === -1 && value - step >= min){

@@ -57,6 +57,8 @@ class ZpevnikDataModel {
             autofitShowTitle: false,
 
             yeet: false,
+            
+            editorMode: "verses",
         },
         session: {
             online: false,
