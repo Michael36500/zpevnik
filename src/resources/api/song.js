@@ -39,7 +39,7 @@ export async function createSong(data){
         console.log(err)
         throw(err)
     })
-    model.loadSongs()
+    await model.loadSongs()
     return record
 }
 
@@ -50,6 +50,6 @@ export async function modifySong(id,data){
         console.log(err)
         throw(err)
     })
-    model.loadSongs()
+    await model.loadSongs()
     return record
 }
