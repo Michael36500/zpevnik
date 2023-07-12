@@ -66,6 +66,11 @@ export default function ButtonsSection() {
         title="Line Break"
         text={"Show line break button."}
       />
+      <Setting
+        name="showEditButton"
+        title="Edit"
+        text="Show edit button."
+      />
     </div>
   );
 }

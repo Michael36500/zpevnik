@@ -60,6 +60,7 @@ class ZpevnikDataModel {
             
             editorMode: "verses",
             secret:"ahoj",
+            showEditButton: false,
         },
         session: {
             online: false,
