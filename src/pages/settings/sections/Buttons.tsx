@@ -45,6 +45,22 @@ export default function ButtonsSection() {
           text={"Show transposition button."}
         />
       )}
+      {settings.displayChords && settings.showTranspositionButton && (
+        <Setting
+          indent
+          name="resetTranspositions"
+          title="Auto-reset transposition"
+          text="Transposition will be automatically reset each time you select a song."
+        />
+      )}
+      {settings.displayChords && settings.showTranspositionButton && (
+        <Setting
+          indent
+          name="transposeCapo"
+          title="Transpose capo"
+          text="Show capo needed to stay in original song key after transposition."
+        />
+      )}
       <Setting
         name="showColumnsButton"
         title="Columns"
