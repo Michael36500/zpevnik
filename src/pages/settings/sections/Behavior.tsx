@@ -1,5 +1,5 @@
 import React from "react";
-import { Setting } from "../SettingsPage";
+import  Setting from "../../../components/setting/Setting"
 
 export default function BehaviorSettings() {
   return (

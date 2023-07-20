@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import model from "../../../resources/model/model";
-import { Setting } from "../SettingsPage";
+import  Setting from "../../../components/setting/Setting"
 
 
 export default function AdvancedSettings() {
