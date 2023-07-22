@@ -1,11 +1,6 @@
+import model from "../model/model";
+import { lyricsToVerses, versesToLyrics } from "../model/songHelper";
 import { pocket } from "../pocket/pocket";
-
-function lyricsToVerses(lyrics){
-    let verseNames = []
-    lyrics.replaceAll(/<.*>/g, x => verseNames.push(x.slice(1,-1)))
-    let verses = lyrics.split(/<.*>\r\n/g).slice(1)
-    return verses.map((verse, key) => ({name:verseNames[key], lyrics:verse}))
-}
 
 function mapSong(s){
     return {
@@ -38,13 +33,23 @@ export async function getSongs(){
 }
 
 export async function createSong(data){
-    data.lyrics = data.verses.reduce((acc, verse) => {
-        return acc + "<"+verse.name+">\n" + verse.lyrics + "\n\n";
-    },"")
-    delete data.verses;
-    return pocket.collection('song').create(data).catch(err => {
-        alert("Song creation failed!");
-        console.log(err);
-        throw(err);
-    });
+    let newData = {...data, lyrics: versesToLyrics(data.verses)}
+    delete newData.verses
+    const record = await pocket.collection('song').create(newData).catch(err => {
+        console.log(err)
+        throw(err)
+    })
+    await model.loadSongs()
+    return record
+}
+
+export async function modifySong(id,data){
+    let newData = {...data, lyrics: versesToLyrics(data.verses)}
+    delete newData.verses
+    const record = await  pocket.collection('song').update(id, {...newData, secret:model.settings.secret}).catch(err => {
+        console.log(err)
+        throw(err)
+    })
+    await model.loadSongs()
+    return record
 }

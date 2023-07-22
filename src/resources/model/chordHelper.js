@@ -56,7 +56,12 @@ class ChordHelper {
         const ogNote = string.match(/[CDEFGABH][#b]?/)?.[0]
         if(!ogNote)return {name:string}
         const noteId = (this.getNoteId(ogNote) + trans) % 12;
-        const suffix = string.replace(/[CDEFGABH][#b]?/, "")
+        let suffix = string.replace(/[CDEFGABH][#b]?/, "") 
+        suffix = suffix.replace(/\/[CDEFGABH][#b]?/, (str) => {
+            const note = str.substring(1,str.length)
+            return "/"+this.getTransposedNoteNameFromString(note, trans)
+        })
+        if (suffix === "mi") suffix = "m"
         let diagramSuffix = suffix;
         if (diagramSuffix === "m" || diagramSuffix === "mi") diagramSuffix = "minor"
         if (diagramSuffix === "maj") diagramSuffix = "maj7"

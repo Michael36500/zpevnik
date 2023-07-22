@@ -1,15 +1,15 @@
-import { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router";
 import "./App.scss";
 import Sidebar from "./components/Sidebar";
 import Toolbar from "./components/Toolbar";
 import NewSongPage from "./pages/NewSong";
-import SettingsPage from "./pages/settings/SettingsPage";
 import SongPage from "./pages/SongPage";
 import TestPage from "./pages/TestPage";
 import TexToLyricsPage from "./pages/TexToLyrics";
+import EditorPage from "./pages/editor/EditorPage";
+import SettingsPage from "./pages/settings/SettingsPage";
 import model from "./resources/model/model";
-import React from "react";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -32,6 +32,7 @@ function App() {
   let className = settings.darkMode ? "dark-theme" : "light-theme"
   className = className + (settings.oledMode && settings.darkMode ? " oled-theme":"")
   className = className + (settings.compactMode ? " compactMode" : "")
+
   
   return (
     <div id="app" className={className}>
@@ -40,6 +41,8 @@ function App() {
       <div id="main">
         <Routes>
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/editor" element={<EditorPage/>}/>
+          <Route path="/editor/:id" element={<EditorPage/>}/>
           <Route path="/new" element={<NewSongPage />} />
           <Route path="/ttl" element={<TexToLyricsPage />} />
           <Route path="/test" element={<TestPage />} />

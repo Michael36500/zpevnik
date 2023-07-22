@@ -2,4 +2,8 @@
 #song-page{
     height: 100%;
     overflow: auto;
+
+    ::-webkit-scrollbar,  &::-webkit-scrollbar-track, &::-webkit-scrollbar-thumb  {
+        display: none;
+    }
 }
