@@ -1,6 +1,6 @@
 import React from "react";
 import model from "../../../resources/model/model";
-import { Setting } from "../SettingsPage";
+import  Setting from "../../../components/setting/Setting"
 import NumberInput from "../../../components/numberInput/NumberInput";
 
 export default function ButtonsSection() {
@@ -45,6 +45,22 @@ export default function ButtonsSection() {
           text={"Show transposition button."}
         />
       )}
+      {settings.displayChords && settings.showTranspositionButton && (
+        <Setting
+          indent
+          name="resetTranspositions"
+          title="Auto-reset transposition"
+          text="Transposition will be automatically reset each time you select a song."
+        />
+      )}
+      {settings.displayChords && settings.showTranspositionButton && (
+        <Setting
+          indent
+          name="transposeCapo"
+          title="Transpose capo"
+          text="Show capo needed to stay in original song key after transposition."
+        />
+      )}
       <Setting
         name="showColumnsButton"
         title="Columns"
@@ -65,6 +81,11 @@ export default function ButtonsSection() {
         name="showLineBreakButton"
         title="Line Break"
         text={"Show line break button."}
+      />
+      <Setting
+        name="showEditButton"
+        title="Edit"
+        text="Show edit button."
       />
     </div>
   );

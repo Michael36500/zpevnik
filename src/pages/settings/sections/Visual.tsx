@@ -1,7 +1,8 @@
 import React from "react";
-import { Setting, set } from "../SettingsPage";
+import  Setting from "../../../components/setting/Setting"
 import model from "../../../resources/model/model";
 import ChordHelper from "../../../resources/model/chordHelper";
+import { set } from "../../../resources/helpers";
 
 export default function VisualSettings() {
   const settings = model.settings;

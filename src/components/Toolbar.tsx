@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import model, { song } from "../resources/model/model";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
@@ -15,8 +15,8 @@ export default function Toolbar({ toggleSidebar }: props) {
     setPopup(popup === id ? "" : id);
   }
 
-  const pathname = useLocation().pathname
-  const navigate = useNavigate()
+  const pathname = useLocation().pathname;
+  const navigate = useNavigate();
 
   function toggleColumns() {
     let c = model.settings.columns;
@@ -36,28 +36,63 @@ export default function Toolbar({ toggleSidebar }: props) {
   }
 
   const settings = model.settings;
-  const song = model.currentSong;
+  let song = model.currentSong;
   const session = model.state?.session?.online
     ? model.state.session.leader
       ? "s-lead"
       : "s-online"
     : "";
+
+  const inSong = pathname.split("/")[1]?.length === 15;
+  const inEditor = pathname.includes("editor");
+  const editorId  = pathname.split("/")[2]
+  if(inEditor&&editorId) song = model.getSongById(editorId)
+
   return (
     <div id={"toolbar"} className={session}>
-      <i
-        className="button fas fa-bars"
-        onClick={() => toggleSidebar()}
-      ></i>
+      <i className="button fas fa-bars" onClick={() => toggleSidebar()}></i>
       <div className="spacer"></div>
-      {pathname === "/settings"?
-      <i className="fas fa-cog button" onClick={()=>navigate(-1)}></i>:
-      <Link to="settings" className="notA button" title="Settings">
-        <i className="fas fa-cog"></i>
-      </Link>}
+
+      {inEditor && editorId && (
+        <Link to={"/" + editorId} className="notA button" title="Back to song">
+          <i className="fas fa-arrow-left"></i>
+        </Link>
+      )}
+      {inEditor && (
+        <i
+          className={
+            "button fas " +
+            (settings.editorMode === "verses"
+              ? "fa-th-list"
+              : "fa-align-justify")
+          }
+          title="Editor mode"
+          onClick={() =>
+            model.setSettings({
+              editorMode:
+                settings.editorMode === "verses" ? "lyrics" : "verses",
+            })
+          }
+        ></i>
+      )}
+      {inSong && settings.showEditButton && (
+        <Link to={"/editor" + pathname} className="notA button" title="Edit">
+          <i className="fas fa-pencil-alt"></i>
+        </Link>
+      )}
+      {pathname === "/settings" ? (
+        <i className="fas fa-arrow-left button" onClick={() => navigate(-1)}></i>
+      ) : (
+        <Link to="settings" className="notA button" title="Settings">
+          <i className="fas fa-cog"></i>
+        </Link>
+      )}
       {!!settings.showRandomSongButton && (
         <Link
           to={
-            "/" + model.songIDs[parseInt(""+(Math.random() * model.songIDs.length))]
+            "/" +
+            (inEditor ? "editor/" : "") +
+            model.songIDs[parseInt("" + Math.random() * model.songIDs.length)]
           }
           className="notA button"
           title="Random song"
@@ -65,7 +100,7 @@ export default function Toolbar({ toggleSidebar }: props) {
           <i className="fas fa-random"></i>
         </Link>
       )}
-      {!!settings.showYTButton && (
+      {!!settings.showYTButton && !!song?.title && (
         <a
           href={
             "https://www.youtube.com/results?search_query=" +
@@ -74,6 +109,7 @@ export default function Toolbar({ toggleSidebar }: props) {
             song?.author
           }
           className="button notA"
+          target="blank_"
         >
           <i className="fab fa-youtube"></i>
         </a>
@@ -82,9 +118,7 @@ export default function Toolbar({ toggleSidebar }: props) {
         <i
           className={
             "button " +
-            (model.isFavorite(song?.id || "")
-              ? "fas fa-star"
-              : "far fa-star")
+            (model.isFavorite(song?.id || "") ? "fas fa-star" : "far fa-star")
           }
           title="Auto fit"
           onClick={() => toggleFavorite(song?.id || "")}
