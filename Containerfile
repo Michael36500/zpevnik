@@ -1,8 +1,10 @@
-FROM ghcr.io/nginxinc/nginx-unprivileged:alpine3.21-slim
-
+FROM docker.io/library/node:23.10.0-alpine3.21 AS builder
 WORKDIR /app
+COPY ./package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
 
-COPY ./container/nginx.conf /app/
-COPY build .
-
-CMD nginx -g 'daemon off;' -c /app/nginx.conf
+FROM ghcr.io/nginxinc/nginx-unprivileged:alpine3.21-slim
+COPY --from=builder /app/build /app/
+COPY ./container/nginx.conf /etc/nginx/nginx.conf

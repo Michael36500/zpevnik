@@ -1,0 +1,8 @@
+# node
+./node_modules
+./pnp
+./build
+
+# misc
+./Containerfile
+./README.md
