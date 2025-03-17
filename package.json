@@ -13,7 +13,6 @@
     "@types/react": "^18.2.13",
     "@types/react-dom": "^18.2.6",
     "markdown-to-jsx": "^7.2.1",
-    "node-sass": "^7.0.3",
     "pocketbase": "^0.15.2",
     "rc-slider": "^10.2.1",
     "react": "^18.2.0",
@@ -25,6 +24,9 @@
     "react-swipeable": "^7.0.1",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+	  "sass": "^1.85.1"
   },
   "scripts": {
     "start": "react-scripts start",
