@@ -30,10 +30,20 @@ export default function SongPage() {
     prevFunct = () => { navigate("/" + prev) }
     nextFunct = () => { navigate("/" + next) }
 
+    function handleKeyDown(event) {
+        if (event.key === "+") {
+            console.log('plus');
+            model.setSettings({ transpose: Math.min(model.setting('transpose') + 1, 12) })
+        } else if (event.key === "-") {
+            console.log('minus');
+            model.setSettings({ transpose: Math.max(model.setting('transpose') - 1, 0) })
+        }
+    }
+
     return <>
         <Link className="notA" to={"/" + prev}><div className="prev"><i className="fas fa-chevron-left"></i></div></Link>
         <Link className="notA" to={"/" + next}><div className="next"><i className="fas fa-chevron-right"></i></div></Link>
-        <div className="page" id="song-page" {...(model.settings.swipeGesturesPrevNext ? handlers : {})}>
+        <div className="page" id="song-page" {...(model.settings.swipeGesturesPrevNext ? handlers : {})} onKeyDown={handleKeyDown} tabIndex={0}>
             <Song
                 song={song}
                 columns={model.settings.columns}

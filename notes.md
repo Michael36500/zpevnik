@@ -3,3 +3,4 @@
   - reorder and cleanup of the toolbar
   - added songname to the middle
   - we tweaked the default settings to our liking
+  - plus or minus for transpozition
