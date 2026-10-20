@@ -32,9 +32,11 @@ body,
     .prev {
       position: absolute;
       top: 0;
+
       &.prev {
         left: 0;
       }
+
       &.next {
         right: 0;
       }
@@ -52,6 +54,7 @@ body,
       z-index: 100;
       opacity: 0;
       transition: 0.3s;
+
       &:hover {
         opacity: 0.6;
       }
@@ -63,18 +66,28 @@ body,
   }
 
   #toolbar {
-    //background-color: #0F05;
+    // background-color: #0F05;
     display: flex;
     align-items: center;
     border-top: 2px solid var(--border);
+
     &.s-lead {
       border-top: 2px solid var(--s-lead);
     }
+
     &.s-online {
       border-top: 2px solid var(--s-online);
     }
+
     position: relative;
     overflow: auto;
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      // height: 200px;
+    }
 
     #popup {
       position: fixed;
@@ -84,9 +97,11 @@ body,
       background-color: var(--primary-bg);
       box-shadow: 0px 0px 8px 4px #00000019;
       width: 15em;
+
       @media (max-width: 600px) {
         width: calc(100vw - 4em);
       }
+
       padding: 1.5em;
       z-index: 200;
     }
@@ -102,10 +117,12 @@ body,
 
     &.open {
       margin-left: 0em;
+
       @media (max-width: 600px) {
         width: 100vw;
       }
     }
+
     border-right: 2px solid var(--border);
 
     .top {
@@ -143,6 +160,7 @@ body,
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       .favorite {
         margin-left: 0.5em;
         font-size: 0.7em;
@@ -152,6 +170,7 @@ body,
         font-size: 0.8em;
         font-style: italic;
       }
+
       &:hover {
         background-color: var(--primary-bg-hover);
       }
@@ -163,6 +182,7 @@ body,
       font-size: 0.7em;
       padding: 0.5em 1.3em;
       color: #777;
+
       &::after {
         margin-left: 1em;
         border-bottom: 1px solid #777;
@@ -170,6 +190,7 @@ body,
         position: relative;
         content: "";
       }
+
       display: flex;
       align-items: center;
     }
@@ -183,13 +204,17 @@ body,
     justify-content: center;
     color: var(--icon);
     cursor: pointer;
+
     &:hover {
       background-color: var(--primary-bg-hover);
     }
+
     @media (max-width: 600px) {
       min-width: 2.5em;
     }
-    font-family: "Font Awesome 5 Free", "Nunito";
+
+    font-family: "Font Awesome 5 Free",
+    "Nunito";
   }
 
   *-webkit-tap-highlight-color: transparent;
@@ -238,21 +263,26 @@ body,
 .compactMode {
   #song {
     padding: 2px;
+
     h1,
     h2 {
       font-size: 1em !important;
     }
+
     .chord {
       font-size: 0.8em;
       font-weight: 700;
     }
+
     .with-chords {
       line-height: 1.9em;
     }
   }
+
   #toolbar {
     font-size: 0.8em;
   }
+
   grid-template-rows: 1fr 2em !important;
 }
 
