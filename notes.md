@@ -1,0 +1,5 @@
+- stuff we did with claude
+- what we did manually
+  - reorder and cleanup of the toolbar
+  - added songname to the middle
+  - we tweaked the default settings to our liking
