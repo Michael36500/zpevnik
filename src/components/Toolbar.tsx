@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import model, { song } from "../resources/model/model";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import { isMobile } from "../resources/helpers";
 
 interface props {
   toggleSidebar: () => any;
@@ -64,7 +65,7 @@ export default function Toolbar({ toggleSidebar }: props) {
             "button fas " +
             (settings.editorMode === "verses"
               ? "fa-th-list"
-              : "fa-align-justify")
+              : "fa-sticky-note")
           }
           title="Editor mode"
           onClick={() =>
@@ -75,6 +76,7 @@ export default function Toolbar({ toggleSidebar }: props) {
           }
         ></i>
       )}
+
       {inSong && settings.showEditButton && (
         <Link to={"/editor" + pathname} className="notA button" title="Edit">
           <i className="fas fa-pencil-alt"></i>
