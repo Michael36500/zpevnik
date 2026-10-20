@@ -11,7 +11,7 @@ export default function VisualSettings() {
       <Setting
         name="darkMode"
         title="Dark Mode"
-        text="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        text="Enables Dark Mode. Background will be black and text white."
       />
       {model.settings.darkMode && <Setting
         indent
