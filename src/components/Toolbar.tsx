@@ -45,13 +45,13 @@ export default function Toolbar({ toggleSidebar }: props) {
 
   const inSong = pathname.split("/")[1]?.length === 15;
   const inEditor = pathname.includes("editor");
-  const editorId  = pathname.split("/")[2]
-  if(inEditor&&editorId) song = model.getSongById(editorId)
+  const editorId = pathname.split("/")[2]
+  if (inEditor && editorId) song = model.getSongById(editorId)
+  const amIOnPhone = window.matchMedia("(max-width: 600px)").matches;
 
   return (
-    <div id={"toolbar"} className={session}>
+    <div id="toolbar" className={`${session} container`}>
       <i className="button fas fa-bars" onClick={() => toggleSidebar()}></i>
-      <div className="spacer"></div>
 
       {inEditor && editorId && (
         <Link to={"/" + editorId} className="notA button" title="Back to song">
@@ -87,6 +87,13 @@ export default function Toolbar({ toggleSidebar }: props) {
           <i className="fas fa-cog"></i>
         </Link>
       )}
+      {(!amIOnPhone && song) ? (
+        <div className="spacer container"><span ><b>{song?.title}</b>{" – "}<i>{song?.author}</i></span></div>
+        // <div className="spacer"></div>
+      )
+        :
+        (<div className="spacer container"></div>)
+      }
       {!!settings.showRandomSongButton && (
         <Link
           to={
