@@ -33,10 +33,10 @@ export default function SongPage() {
     function handleKeyDown(event) {
         if (event.key === "+") {
             console.log('plus');
-            model.setSettings({ transpose: Math.min(model.setting('transpose') + 1, 12) })
+            model.setSettings({ transpose: (model.setting('transpose') + 1) % 12 })
         } else if (event.key === "-") {
             console.log('minus');
-            model.setSettings({ transpose: Math.max(model.setting('transpose') - 1, 0) })
+            model.setSettings({ transpose: (model.setting('transpose') - 1 + 12) % 12 })
         }
     }
 
