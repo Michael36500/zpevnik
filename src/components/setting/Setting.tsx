@@ -5,7 +5,7 @@ import "./Setting.scss";
 
 interface setting {
     title: string;
-    text: string;
+    text: ReactNode;
     name: string;
     input?: ReactNode | null;
     indent?: boolean;

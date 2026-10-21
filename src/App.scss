@@ -235,6 +235,10 @@ body,
   --primary-bg: #000;
 }
 
+.night-mode {
+  filter: url(#night-mode-filter);
+}
+
 .compactMode {
   #song {
     padding: 2px;

@@ -1,7 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import model from "../../../resources/model/model";
 import  Setting from "../../../components/setting/Setting"
 import NumberInput from "../../../components/numberInput/NumberInput";
+import { downloadSongbook } from "../../../resources/pdf/generate";
+
+function PdfSetting() {
+  //percent while the songbook is being made
+  const [progress, setProgress] = useState<number | null>(null);
+
+  function download() {
+    if (progress !== null) return;
+    setProgress(0);
+    downloadSongbook((done, total) => setProgress(Math.round((done / total) * 100)))
+      .catch((err) => {
+        console.log(err);
+        alert("Error creating PDF.");
+      })
+      .finally(() => setProgress(null));
+  }
+
+  return (
+    <Setting
+      name="showPdfButton"
+      title="PDF"
+      text={
+        <>
+          Show button for downloading current song. The whole zpěvník is{" "}
+          <span
+            className="link"
+            role="link"
+            tabIndex={0}
+            onClick={download}
+            onKeyDown={(e) => e.key === "Enter" && download()}
+          >
+            {progress === null ? "here" : `being created… ${progress} %`}
+          </span>
+          .
+        </>
+      }
+    />
+  );
+}
 
 export default function ButtonsSection() {
   const settings = model.settings;
@@ -17,6 +56,7 @@ export default function ButtonsSection() {
         title="YouTube"
         text="Show button with link to youtube search of the current song."
       />
+      <PdfSetting />
       <Setting
         name="showFavorites"
         title="Favorites"

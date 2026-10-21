@@ -3,6 +3,29 @@ import  Setting from "../../../components/setting/Setting"
 import model from "../../../resources/model/model";
 import ChordHelper from "../../../resources/model/chordHelper";
 import { set } from "../../../resources/helpers";
+import { downloadChordSheet } from "../../../resources/pdf/generate";
+
+function allChords(instrument: "guitar" | "ukulele") {
+  downloadChordSheet(instrument).catch((err) => {
+    console.log(err);
+    alert("Error creating PDF.");
+  });
+}
+
+function ChordsLink({ instrument, column }: { instrument: "guitar" | "ukulele"; column: number }) {
+  return (
+    <span
+      className="pdf-link"
+      role="link"
+      tabIndex={0}
+      style={{ gridColumn: column }}
+      onClick={() => allChords(instrument)}
+      onKeyDown={(e) => e.key === "Enter" && allChords(instrument)}
+    >
+      All chords
+    </span>
+  );
+}
 
 export default function VisualSettings() {
   const settings = model.settings;
@@ -19,6 +42,11 @@ export default function VisualSettings() {
         title="OLED Mode"
         text="Completely dark background"
       />}
+      <Setting
+        name="nightMode"
+        title="Night mode"
+        text="Page doesn't emit blue light."
+      />
       <Setting
         name="compactMode"
         title="Compact mode"
@@ -60,6 +88,8 @@ export default function VisualSettings() {
             >
               None
             </div>
+            <ChordsLink instrument="guitar" column={1} />
+            <ChordsLink instrument="ukulele" column={2} />
           </div>
         </div>
       )}

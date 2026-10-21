@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import model, { song } from "../resources/model/model";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import { downloadSong } from "../resources/pdf/generate";
 
 interface props {
   toggleSidebar: () => any;
@@ -10,6 +11,7 @@ interface props {
 
 export default function Toolbar({ toggleSidebar }: props) {
   const [popup, setPopup] = useState("");
+  const [pdfBusy, setPdfBusy] = useState(false);
 
   function togglePopup(id: string) {
     setPopup(popup === id ? "" : id);
@@ -33,6 +35,17 @@ export default function Toolbar({ toggleSidebar }: props) {
       favorites.push(id);
     }
     model.setSettings({ favorites: favorites });
+  }
+
+  function downloadPdf(song: song) {
+    if (pdfBusy) return;
+    setPdfBusy(true);
+    downloadSong(song)
+      .catch((err) => {
+        console.log(err);
+        alert("Error creating PDF.");
+      })
+      .finally(() => setPdfBusy(false));
   }
 
   const settings = model.settings;
@@ -113,6 +126,13 @@ export default function Toolbar({ toggleSidebar }: props) {
         >
           <i className="fab fa-youtube"></i>
         </a>
+      )}
+      {!!settings.showPdfButton && !!song?.title && !inEditor && (
+        <i
+          className={"button fas " + (pdfBusy ? "fa-spinner fa-spin" : "fa-file-pdf")}
+          title="PDF"
+          onClick={() => song && downloadPdf(song)}
+        ></i>
       )}
       {!!settings.showFavorites && (
         <i

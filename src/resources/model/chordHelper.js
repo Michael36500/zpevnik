@@ -38,8 +38,8 @@ class ChordHelper {
     }
 
     //returns note name from selected scale in settings
-    static getNoteNameById(id) {
-        const scaleId = model.settings.preferedScale
+    //scaleId defaults to the scale selected in settings
+    static getNoteNameById(id, scaleId = model.settings.preferedScale) {
         return this.scales?.[scaleId]?.[id]
     }
 
@@ -47,19 +47,19 @@ class ChordHelper {
         return this.getNoteNameById(this.getNoteId(string))
     }
 
-    static getTransposedNoteNameFromString(string, howMuch) {
-        return this.getNoteNameById((this.getNoteId(string) + howMuch) % 12)
+    static getTransposedNoteNameFromString(string, howMuch, scaleId) {
+        return this.getNoteNameById((this.getNoteId(string) + howMuch) % 12, scaleId)
     }
 
-    static getChordInfoFromString(string, trans) {
+    static getChordInfoFromString(string, trans, scaleId) {
         if (typeof string !== "string") return undefined
         const ogNote = string.match(/[CDEFGABH][#b]?/)?.[0]
-        if(!ogNote)return {name:string}
+        if(!ogNote || this.getNoteId(ogNote) < 0)return {name:string}
         const noteId = (this.getNoteId(ogNote) + trans) % 12;
         let suffix = string.replace(/[CDEFGABH][#b]?/, "") 
         suffix = suffix.replace(/\/[CDEFGABH][#b]?/, (str) => {
             const note = str.substring(1,str.length)
-            return "/"+this.getTransposedNoteNameFromString(note, trans)
+            return "/"+this.getTransposedNoteNameFromString(note, trans, scaleId)
         })
         if (suffix === "mi") suffix = "m"
         let diagramSuffix = suffix;
@@ -68,7 +68,7 @@ class ChordHelper {
         if (!diagramSuffix.length) diagramSuffix = "major"
 
         let chordInfo = {
-            name: this.getNoteNameById(noteId).replace("b","♭") + suffix,
+            name: this.getNoteNameById(noteId, scaleId).replace("b","♭") + suffix,
             diagrams: {
                 guitar: guitar.chords?.[this.guitarScale[noteId]]?.filter(chord => chord.suffix === diagramSuffix)?.[0],
                 ukulele: ukulele.chords?.[this.ukuleleScale[noteId]]?.filter(chord => chord.suffix === diagramSuffix)?.[0],

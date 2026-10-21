@@ -8,6 +8,11 @@ import { createSong, modifySong } from "../../resources/api/song"
 import { useNavigate, useParams } from "react-router"
 
 
+//status and message returned by PocketBase, so a failed save says why
+function describeError(err: any){
+    return [err?.status, err?.data?.message || err?.message, JSON.stringify(err?.data?.data || {})].join(" ")
+}
+
 export default function EditorPage(){
         
     const [song, setSong] = useState<Song>(emptySong)
@@ -57,14 +62,14 @@ export default function EditorPage(){
                 navigate("/editor/"+res.id)
                 clear()
             }).catch(err => {
-                alert("Error creating song.")
+                alert("Error creating song.\n"+describeError(err))
             })
         }
         else{
             modifySong(id,song).then(res => {
                 alert("Song updated successfully.")
             }).catch(err => {
-                alert("Error updating song.")
+                alert("Error updating song.\n"+describeError(err))
             })
         }
         

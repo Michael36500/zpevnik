@@ -15,6 +15,11 @@ export default function BehaviorSettings() {
         text="Automatically close sidebar after clicking on a song."
       />
       <Setting
+        name="autoSearch"
+        title="Auto-searching"
+        text="Searches for songs without opening the sidebar."
+      />
+      <Setting
         name="autofitShowTitle"
         title="Auto-fit show title"
         text="If turned on, auto-fit will show the song title, otherwise it will zoom in on the lyrics"

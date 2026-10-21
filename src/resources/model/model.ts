@@ -1,6 +1,7 @@
 import { Record, RecordSubscription } from "pocketbase";
 import { getCacheSongs, getSongs } from "../api/song";
 import { autoFit, getCurrentSongId, normalize } from "../helpers";
+import { lyricsContain, onlyUsesChords } from "./songFilters";
 import {
     changeSessionSong,
     endSession,
@@ -33,6 +34,7 @@ class ZpevnikDataModel {
 
             darkMode: false,
             oledMode: false,
+            nightMode: false,
             compactMode: false,
             sortAlphabetically: true,
             swipeGesturesPrevNext: true,
@@ -51,9 +53,11 @@ class ZpevnikDataModel {
             showTranspositionButton: true,
             showRandomSongButton: true,
             showLineBreakButton: false,
+            showPdfButton: false,
 
             resetTranspositions: true,
             closeSidebarOnSongClickPC: false,
+            autoSearch: false,
             displayNsfw: false,
             autofitIntervalDelay: 10,
             maxColumns: 3,
@@ -67,6 +71,9 @@ class ZpevnikDataModel {
             editorMode: "verses",
             secret: "ahoj",
             showEditButton: false,
+
+            filterLyrics: false,
+            filterChords: false,
         },
         session: {
             online: false,
@@ -176,8 +183,18 @@ class ZpevnikDataModel {
 
     //get songs whose title+author contain query string
     //strings are normalized
-    searchSongs(query: string) {
-        return this.songs.filter((s) => (normalize(s.title) + normalize(s.author)).includes(normalize(query)));
+    //if enabled in settings, also finds songs by lyrics (listed after title matches)
+    //and keeps only songs playable with the selected chords
+    searchSongs(query: string, chords: string[] = []) {
+        let songs = this.songs;
+        if (this.settings.filterChords && chords.length) songs = songs.filter((s) => onlyUsesChords(s, chords));
+
+        const q = normalize(query);
+        const byTitle = songs.filter((s) => (normalize(s.title) + normalize(s.author)).includes(q));
+        if (!this.settings.filterLyrics || !q.trim()) return byTitle;
+
+        const byLyrics = songs.filter((s) => !byTitle.includes(s) && lyricsContain(s, query));
+        return [...byTitle, ...byLyrics];
     }
 
     //get song by id from array of songs filtered acording to settings

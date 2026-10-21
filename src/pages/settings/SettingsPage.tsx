@@ -4,6 +4,7 @@ import {
   FaBrush,
   FaCog,
   FaCogs,
+  FaFilter,
   FaSquare,
 } from "react-icons/fa";
 import { VscArrowLeft } from "react-icons/vsc";
@@ -12,6 +13,7 @@ import packageJSON from "../../../package.json";
 import model from "../../resources/model/model";
 import "./SettingsPage.scss";
 import AdvancedSettings from "./sections/Advanced";
+import FiltersSettings from "./sections/Filters";
 import BehaviorSettings from "./sections/Behavior";
 import ButtonsSection from "./sections/Buttons";
 import SessionSettings from "./sections/Session";
@@ -31,6 +33,7 @@ export default function SettingsPage() {
         },
         { title: "Behavior", element: <BehaviorSettings />, icon: <FaCog /> },
         { title: "Buttons", element: <ButtonsSection />, icon: <FaSquare /> },
+        { title: "Filters", element: <FiltersSettings />, icon: <FaFilter /> },
         {
             title: "Session",
             element: <SessionSettings />,

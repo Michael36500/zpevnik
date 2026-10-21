@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useSwipeable } from "react-swipeable";
 import { isMobile } from "../resources/helpers";
 import model, { song } from "../resources/model/model";
+import { collectChords } from "../resources/model/songFilters";
+import ChordFilter from "./ChordFilter";
 
 interface props {
   toggle: () => any;
@@ -11,7 +13,15 @@ interface props {
 
 export default function Sidebar({ toggle, open }: props) {
   const [query, setQuery] = useState("");
+  const [chords, setChords] = useState<string[]>([]);
+  const searchInput = useRef<HTMLInputElement>(null);
   const editor = useLocation().pathname.includes("editor")
+
+  //let the user type right after opening the sidebar, and start fresh the next time
+  useEffect(() => {
+    if (open) searchInput.current?.focus({ preventScroll: true });
+    else setQuery("");
+  }, [open]);
 
   return (
     <div
@@ -23,6 +33,7 @@ export default function Sidebar({ toggle, open }: props) {
     >
       <div className="top">
         <input
+          ref={searchInput}
           size={1}
           placeholder="Hledej ..."
           onChange={(e) => setQuery(e.target.value)}
@@ -32,13 +43,17 @@ export default function Sidebar({ toggle, open }: props) {
         <i className="button fas fa-arrow-left" onClick={() => toggle()}></i>
       </div>
 
+      {!!model.settings.filterChords && (
+        <ChordFilter chords={collectChords(model.songs)} selected={chords} onChange={setChords} />
+      )}
+
       {!!model.settings.separateFavorites&& !!model.settings.favorites.length && <>
         <div className="divider">Favorites</div>
-        {model.searchSongs(query).filter(song => model.isFavorite(song.id)).map((song) => <SongLink toggle={()=>toggle()} song={song} editor={editor}/>)}
+        {model.searchSongs(query, chords).filter(song => model.isFavorite(song.id)).map((song) => <SongLink toggle={()=>toggle()} song={song} editor={editor}/>)}
         <div className="divider">All</div>
       </>
       }
-      {model.searchSongs(query).map((song) => <SongLink toggle={()=>toggle()} song={song} editor={editor}/>)}
+      {model.searchSongs(query, chords).map((song) => <SongLink toggle={()=>toggle()} song={song} editor={editor}/>)}
     </div>
   );
 }

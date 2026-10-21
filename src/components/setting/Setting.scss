@@ -7,6 +7,13 @@
     .description {
       color: #777;
       font-size: 0.8em;
+      .link {
+        text-decoration: underline;
+        cursor: pointer;
+        &:hover {
+          color: var(--primary-tx);
+        }
+      }
     }
     .left {
       flex-grow: 1;
@@ -39,6 +46,18 @@
             background-color: #0b0;
             color: var(--primary-tx);
           }
+        }
+      }
+      .options .pdf-link {
+        grid-row: 2;
+        margin-top: -0.5em;
+        text-align: center;
+        font-size: 0.8em;
+        color: #777;
+        text-decoration: underline;
+        cursor: pointer;
+        &:hover {
+          color: var(--primary-tx);
         }
       }
       &.scales .options {

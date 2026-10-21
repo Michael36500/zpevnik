@@ -7,6 +7,8 @@ export interface Song {
     author: string,
     capo: number, 
     sfw: boolean,
+    international?: boolean,
+    genre?: string[],
     verses: Verse[]
 }
 
@@ -34,6 +36,8 @@ export const emptySong:Song = {
     author: "",
     capo: 0,
     sfw: true,
+    international: false,
+    genre: [],
     verses: [
         {name: "1.", lyrics: ""}
     ]
