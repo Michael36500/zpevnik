@@ -37,6 +37,8 @@ function App() {
     if (!settings.autoSearch || !onSongPage) return;
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.ctrlKey || e.metaKey || e.altKey || e.key.length !== 1 || e.key === " ") return;
+      //+ and - transpose the song (see SongPage), they are not meant for searching
+      if (e.key === "+" || e.key === "-") return;
       const t = e.target as HTMLElement | null;
       if (t && (t.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(t.tagName))) return;
       const input = document.querySelector<HTMLInputElement>("#sidebar .top input");
