@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import model, { song } from "../resources/model/model";
 import Slider from "rc-slider";
@@ -15,6 +15,24 @@ export default function Toolbar({ toggleSidebar }: props) {
   function togglePopup(id: string) {
     setPopup(popup === id ? "" : id);
   }
+
+  useEffect(() => {
+    if (!popup) return;
+
+    function handleOutsideClick(e: MouseEvent | TouchEvent) {
+      const target = e.target as HTMLElement;
+      // ignore clicks inside the popup or on the buttons that open it
+      if (target.closest("#popup, [data-popup-toggle]")) return;
+      setPopup("");
+    }
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener("touchstart", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("touchstart", handleOutsideClick);
+    };
+  }, [popup]);
 
   const pathname = useLocation().pathname;
   const navigate = useNavigate();
