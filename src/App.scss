@@ -89,6 +89,13 @@ body,
       // height: 200px;
     }
 
+    .session-code {
+      padding-left: 0.5em;
+      padding-right: 0.5em;
+      color: var(--s-lead);
+    }
+
+
     #popup {
       position: fixed;
       right: 1em;

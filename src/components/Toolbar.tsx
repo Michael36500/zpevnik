@@ -180,7 +180,10 @@ export default function Toolbar({ toggleSidebar }: props) {
           className="button fas fa-broadcast-tower"
           onClick={() => model.broadcastSong()}
           title="Broadcast"
-        ></i>
+        ><p className='session-code'>
+            {model.state.session.code}
+          </p></i>
+
       )}
       {!!popup.length && (
         <div id="popup">
@@ -197,7 +200,7 @@ export default function Toolbar({ toggleSidebar }: props) {
                           console.log('tranpsonse increment')
                           model.setSettings({ transpose: (model.setting('transpose') + 1) % 12 })
                           // model.setSettings({ transpose: value })
-                    }
+                        }
                         } aria-label='Increment transpose'>+</button>
                       <button type="button"
                         className="transpose-toggle"
