@@ -1,4 +1,5 @@
 - stuff we did with claude
+    - hiding transposition when clicked outside
 - what we did manually
   - reorder and cleanup of the toolbar
   - added songname to the middle
