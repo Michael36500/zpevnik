@@ -29,6 +29,27 @@ function App() {
   },[])
 
   const settings = model.settings;
+ 
+  //auto-searching: typing anywhere on a song page opens the sidebar and starts the search
+  const onSongPage = location.pathname === "/" || location.pathname.split("/")[1]?.length === 15;
+  useEffect(() => {
+    if (!settings.autoSearch || !onSongPage) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey || e.metaKey || e.altKey || e.key.length !== 1 || e.key === " ") return;
+      //+ and - transpose the song (see SongPage), they are not meant for searching
+      if (e.key === "+" || e.key === "-") return;
+      const t = e.target as HTMLElement | null;
+      if (t && (t.isContentEditable || ["INPUT", "TEXTAREA", "SELECT"].includes(t.tagName))) return;
+      const input = document.querySelector<HTMLInputElement>("#sidebar .top input");
+      if (!input) return;
+      setSidebarOpen(true);
+      //moving focus here makes the browser type the character into the search box
+      input.focus({ preventScroll: true });
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [settings.autoSearch, onSongPage]);
+
   let className = settings.darkMode ? "dark-theme" : "light-theme"
   className = className + (settings.oledMode && settings.darkMode ? " oled-theme":"")
   className = className + (settings.compactMode ? " compactMode" : "")
