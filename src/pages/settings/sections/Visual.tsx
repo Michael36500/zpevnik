@@ -1,5 +1,5 @@
 import React from "react";
-import  Setting from "../../../components/setting/Setting"
+import Setting from "../../../components/setting/Setting"
 import model from "../../../resources/model/model";
 import ChordHelper from "../../../resources/model/chordHelper";
 import { set } from "../../../resources/helpers";
@@ -34,9 +34,9 @@ export default function VisualSettings() {
       <Setting
         name="darkMode"
         title="Dark Mode"
-        text="Lorem ipsum dolor sit amet lorem ipsum dolor sit amet"
+        text="Enables Dark Mode. Background will be black and text white."
       />
-      {model.settings.darkMode&&<Setting
+      {model.settings.darkMode && <Setting
         indent
         name="oledMode"
         title="OLED Mode"

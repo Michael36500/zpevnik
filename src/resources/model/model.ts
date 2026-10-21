@@ -24,10 +24,10 @@ export interface song {
 class ZpevnikDataModel {
     updateCallbacks: (() => any)[] = [];
     state = {
-        navigate: (to: string) => {},
+        navigate: (to: string) => { },
         songs: [],
         settings: {
-            columns: 1,
+            columns: window.matchMedia("(max-width: 600px)").matches ? 1 : 3,
             transpose: 0,
             fontSize: 20,
             lineBreak: true,
@@ -46,7 +46,7 @@ class ZpevnikDataModel {
 
             favorites: [],
             showYTButton: false,
-            showFavorites: false,
+            showFavorites: true,
             showColumnsButton: true,
             showAutoFitButton: true,
             showFontSizeButton: false,
@@ -59,11 +59,11 @@ class ZpevnikDataModel {
             closeSidebarOnSongClickPC: false,
             autoSearch: false,
             displayNsfw: false,
-            autofitIntervalDelay: 10,
+            autofitIntervalDelay: 1,
             maxColumns: 3,
-            separateFavorites: false,
+            separateFavorites: true,
 
-            autofitOnSessionUpdate: false,
+            autofitOnSessionUpdate: window.matchMedia("(max-width: 600px)").matches ? false : true,
             autofitShowTitle: false,
 
             yeet: false,

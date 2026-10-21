@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import model, { song } from "../resources/model/model";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
+import { isMobile } from "../resources/helpers"
 import { downloadSong } from "../resources/pdf/generate";
 
 interface props {
@@ -16,6 +17,24 @@ export default function Toolbar({ toggleSidebar }: props) {
   function togglePopup(id: string) {
     setPopup(popup === id ? "" : id);
   }
+
+  useEffect(() => {
+    if (!popup) return;
+
+    function handleOutsideClick(e: MouseEvent | TouchEvent) {
+      const target = e.target as HTMLElement;
+      // ignore clicks inside the popup or on the buttons that open it
+      if (target.closest("#popup, [data-popup-toggle]")) return;
+      setPopup("");
+    }
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    document.addEventListener("touchstart", handleOutsideClick);
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+      document.removeEventListener("touchstart", handleOutsideClick);
+    };
+  }, [popup]);
 
   const pathname = useLocation().pathname;
   const navigate = useNavigate();
@@ -58,13 +77,13 @@ export default function Toolbar({ toggleSidebar }: props) {
 
   const inSong = pathname.split("/")[1]?.length === 15;
   const inEditor = pathname.includes("editor");
-  const editorId  = pathname.split("/")[2]
-  if(inEditor&&editorId) song = model.getSongById(editorId)
+  const editorId = pathname.split("/")[2]
+  if (inEditor && editorId) song = model.getSongById(editorId)
+  const amIOnPhone = window.matchMedia("(max-width: 600px)").matches;
 
   return (
-    <div id={"toolbar"} className={session}>
+    <div id="toolbar" className={`${session} container`}>
       <i className="button fas fa-bars" onClick={() => toggleSidebar()}></i>
-      <div className="spacer"></div>
 
       {inEditor && editorId && (
         <Link to={"/" + editorId} className="notA button" title="Back to song">
@@ -77,7 +96,7 @@ export default function Toolbar({ toggleSidebar }: props) {
             "button fas " +
             (settings.editorMode === "verses"
               ? "fa-th-list"
-              : "fa-align-justify")
+              : "fa-sticky-note")
           }
           title="Editor mode"
           onClick={() =>
@@ -88,6 +107,7 @@ export default function Toolbar({ toggleSidebar }: props) {
           }
         ></i>
       )}
+
       {inSong && settings.showEditButton && (
         <Link to={"/editor" + pathname} className="notA button" title="Edit">
           <i className="fas fa-pencil-alt"></i>
@@ -100,6 +120,13 @@ export default function Toolbar({ toggleSidebar }: props) {
           <i className="fas fa-cog"></i>
         </Link>
       )}
+      {(!amIOnPhone && song) ? (
+        <div className="spacer container"><span ><b>{song?.title}</b>{" – "}<i>{song?.author}</i></span></div>
+        // <div className="spacer"></div>
+      )
+        :
+        (<div className="spacer container"></div>)
+      }
       {!!settings.showRandomSongButton && (
         <Link
           to={
@@ -191,7 +218,10 @@ export default function Toolbar({ toggleSidebar }: props) {
           className="button fas fa-broadcast-tower"
           onClick={() => model.broadcastSong()}
           title="Broadcast"
-        ></i>
+        ><p className='session-code'>
+            {model.state.session.code}
+          </p></i>
+
       )}
       {!!popup.length && (
         <div id="popup">
@@ -199,15 +229,26 @@ export default function Toolbar({ toggleSidebar }: props) {
             {
               transpose: (
                 <>
-                  <Slider
-                    max={12}
-                    min={0}
-                    defaultValue={settings.transpose}
-                    onChange={(value) =>
-                      model.setSettings({ transpose: value })
-                    }
-                    marks={{ 0: "0", 12: "12" }}
-                  />
+
+                  {
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                      <button type="button"
+                        className="transpose-toggle"
+                        onClick={() => {
+                          console.log('tranpsonse increment')
+                          model.setSettings({ transpose: (model.setting('transpose') + 1) % 12 })
+                          // model.setSettings({ transpose: value })
+                        }
+                        } aria-label='Increment transpose'>+</button>
+                      <button type="button"
+                        className="transpose-toggle"
+                        onClick={() => {
+                          console.log('tranpsonse decrement')
+                          model.setSettings({ transpose: (model.setting('transpose') - 1 + 12) % 12 })
+                        }
+                        } aria-label='Decremnt transpose'>-</button>
+                    </div>
+                  }
                 </>
               ),
               fontsize: (
