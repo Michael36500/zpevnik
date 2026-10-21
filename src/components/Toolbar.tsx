@@ -188,15 +188,26 @@ export default function Toolbar({ toggleSidebar }: props) {
             {
               transpose: (
                 <>
-                  <Slider
-                    max={12}
-                    min={0}
-                    defaultValue={settings.transpose}
-                    onChange={(value) =>
-                      model.setSettings({ transpose: value })
+
+                  {
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                      <button type="button"
+                        className="transpose-toggle"
+                        onClick={() => {
+                          console.log('tranpsonse increment')
+                          model.setSettings({ transpose: (model.setting('transpose') + 1) % 12 })
+                          // model.setSettings({ transpose: value })
                     }
-                    marks={{ 0: "0", 12: "12" }}
-                  />
+                        } aria-label='Increment transpose'>+</button>
+                      <button type="button"
+                        className="transpose-toggle"
+                        onClick={() => {
+                          console.log('tranpsonse decrement')
+                          model.setSettings({ transpose: (model.setting('transpose') - 1 + 12) % 12 })
+                        }
+                        } aria-label='Decremnt transpose'>-</button>
+                    </div>
+                  }
                 </>
               ),
               fontsize: (
