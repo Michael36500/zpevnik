@@ -3,6 +3,7 @@ import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router"
 import "./App.scss";
 import Sidebar from "./components/Sidebar";
 import Toolbar from "./components/Toolbar";
+import Tuner from "./components/tuner/Tuner";
 import NewSongPage from "./pages/NewSong";
 import SongPage from "./pages/SongPage";
 import TestPage from "./pages/TestPage";
@@ -80,6 +81,8 @@ function App() {
       </div>
 
       <Toolbar toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
+
+      {settings.tuner && <Tuner />}
     </div>
   );
 }

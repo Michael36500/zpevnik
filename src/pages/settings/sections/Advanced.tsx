@@ -7,6 +7,7 @@ export default function AdvancedSettings({showNSFW}:{showNSFW: boolean}) {
     const settings = model.settings;
   return (
     <div className="section">
+      <Setting name="tuner" title="Tuner" text="Tune your guitar or ukulele." />
       <Setting name="yeet" title="Yeet" text="Yeeeeeeeet." />
       {(showNSFW || settings.displayNsfw) && <Setting
         title="Display all songs" 

@@ -1,0 +1,75 @@
+.tuner {
+  position: absolute;
+  right: 1em;
+  bottom: 4em; //above the toolbar
+  width: 13em;
+  padding: 0.7em 1em;
+  box-sizing: border-box;
+  text-align: center;
+  background-color: var(--secondary-bg);
+  color: var(--primary-text);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  z-index: 150; //over the song, under popups
+  user-select: none;
+
+  .strings {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7em;
+    color: #777;
+    span.active {
+      color: var(--primary-text);
+      font-weight: 700;
+    }
+  }
+  .note {
+    font-size: 2.2em;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .meter {
+    position: relative;
+    height: 0.6em;
+    margin: 0.2em 0.3em;
+    border-radius: 0.3em;
+    background-color: var(--widget-bg-hover);
+    .mark {
+      position: absolute;
+      left: 50%;
+      top: -0.15em;
+      bottom: -0.15em;
+      width: 2px;
+      margin-left: -1px;
+      background-color: #777;
+    }
+    .needle {
+      position: absolute;
+      top: -0.2em;
+      bottom: -0.2em;
+      width: 0.3em;
+      margin-left: -0.15em;
+      border-radius: 0.15em;
+      background-color: var(--primary-text);
+      transition: left 0.1s;
+    }
+  }
+  .info,
+  .message {
+    font-size: 0.7em;
+    color: #777;
+  }
+  &.in-tune {
+    .note,
+    .info {
+      color: #0b0;
+    }
+    .needle {
+      background-color: #0b0;
+    }
+  }
+}
+
+.compactMode .tuner {
+  bottom: 3em;
+}

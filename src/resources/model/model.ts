@@ -66,6 +66,7 @@ class ZpevnikDataModel {
             autofitOnSessionUpdate: window.matchMedia("(max-width: 600px)").matches ? false : true,
             autofitShowTitle: false,
 
+            tuner: false,
             yeet: false,
 
             editorMode: "verses",
