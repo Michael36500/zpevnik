@@ -59,14 +59,17 @@ export default function Sidebar({ toggle, open }: props) {
 }
 
 function SongLink({toggle, song, editor}:{toggle:()=>any, song:song, editor:boolean}){
-        return <Link to={"/" + (editor?"editor/":"") + song.id} className="notA" key={song.id}>
-        <div
-        className="song"
+        //handler is on the link, so opening a song with Enter (after Tab) closes the sidebar too
+        return <Link
+        to={"/" + (editor?"editor/":"") + song.id}
+        className="notA"
+        key={song.id}
         onClick={() => {
             if (isMobile() || model.settings.closeSidebarOnSongClickPC)
             toggle();
         }}
         >
+        <div className="song">
         <div className="text">
             {song.title} <span className="author">{song.author}</span>
         </div>
