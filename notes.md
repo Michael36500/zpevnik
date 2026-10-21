@@ -4,3 +4,5 @@
   - added songname to the middle
   - we tweaked the default settings to our liking
   - plus or minus for transpozition
+  - buttons for transposition
+  - session code in toolbar
