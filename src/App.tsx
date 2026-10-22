@@ -23,11 +23,11 @@ function App() {
   const navigate = useNavigate()
 
   const [, foo] = useState({});
-  const forceUpdate = useCallback(()=>foo({}), [])
+  const forceUpdate = useCallback(() => foo({}), [])
   useEffect(() => {
     model.addUpdateCallback(() => forceUpdate());
-    model.setState({navigate: (to: string)=>navigate(to)});
-  },[])
+    model.setState({ navigate: (to: string) => navigate(to) });
+  }, [])
 
   const settings = model.settings;
 
@@ -52,11 +52,11 @@ function App() {
   }, [settings.autoSearch, onSongPage]);
 
   let className = settings.darkMode ? "dark-theme" : "light-theme"
-  className = className + (settings.oledMode && settings.darkMode ? " oled-theme":"")
+  className = className + (settings.oledMode && settings.darkMode ? " oled-theme" : "")
   className = className + (settings.compactMode ? " compactMode" : "")
   className = className + (settings.nightMode ? " night-mode" : "")
 
-  
+
   return (
     <div id="app" className={className}>
       {settings.nightMode && (
@@ -72,8 +72,8 @@ function App() {
       <div id="main">
         <Routes>
           <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/editor" element={<EditorPage/>}/>
-          <Route path="/editor/:id" element={<EditorPage/>}/>
+          <Route path="/editor" element={<EditorPage />} />
+          <Route path="/editor/:id" element={<EditorPage />} />
           <Route path="/new" element={<NewSongPage />} />
           <Route path="/ttl" element={<TexToLyricsPage />} />
           <Route path="/test" element={<TestPage />} />
