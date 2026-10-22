@@ -2,7 +2,7 @@ import model from "../model/model";
 import { lyricsToVerses, versesToLyrics } from "../model/songHelper";
 import { pocket } from "../pocket/pocket";
 
-function mapSong(s){
+function mapSong(s) {
     return {
         id: s.id,
         title: s.title || "",
@@ -17,25 +17,39 @@ function mapSong(s){
 }
 
 //only the fields the editor works with (id and the server's own fields are not sent back)
-function songData(song){
-    const {title, author, capo, sfw, international, genre, verses} = mapSong(song)
-    return {title, author, capo, sfw, international, genre, verses, lyrics: versesToLyrics(verses)}
+function songData(song) {
+    const { title, author, capo, sfw, international, genre, verses } = mapSong(song)
+    return { title, author, capo, sfw, international, genre, verses, lyrics: versesToLyrics(verses) }
 }
 
-export function getCacheSongs(){
+export function getCacheSongs() {
     let res = JSON.parse(localStorage.getItem("songs"))
     //cache may come from an older version of the app, so bring it to the current shape
-    if(Array.isArray(res)) res = res.map(s => mapSong(s))
+    if (Array.isArray(res)) res = res.map(s => mapSong(s))
     return res;
 }
 
-export async function getSongs(){
+// export async function getSongs(){
+//     let res = getCacheSongs()
+
+//     try {
+//         res = await pocket.collection("song").getFullList(1000)
+//         res = res.map(s => mapSong(s))
+//         localStorage.setItem("songs",JSON.stringify(res))
+//     } catch (error) {
+//         console.log(error)
+//     }
+
+//     return res
+// }
+export async function getSongs() {
     let res = getCacheSongs()
-    
+
     try {
-        res = await pocket.collection("song").getFullList(1000)
-        res = res.map(s => mapSong(s))
-        localStorage.setItem("songs",JSON.stringify(res))
+        const response = await fetch('https://ultimatni-zpevnik-songdata.netlify.app/songs.json')
+        if (!response.ok) throw new Error(`HTTP ${response.status}`)
+        res = (await response.json()).items.map(s => mapSong(s))
+        localStorage.setItem("songs", JSON.stringify(res))
     } catch (error) {
         console.log(error)
     }
@@ -43,19 +57,20 @@ export async function getSongs(){
     return res
 }
 
-export async function createSong(data){
+
+export async function createSong(data) {
     const record = await pocket.collection('song').create(songData(data)).catch(err => {
         console.log(err)
-        throw(err)
+        throw (err)
     })
     await model.loadSongs()
     return record
 }
 
-export async function modifySong(id,data){
-    const record = await pocket.collection('song').update(id, {...songData(data), secret:model.settings.secret}).catch(err => {
+export async function modifySong(id, data) {
+    const record = await pocket.collection('song').update(id, { ...songData(data), secret: model.settings.secret }).catch(err => {
         console.log(err)
-        throw(err)
+        throw (err)
     })
     await model.loadSongs()
     return record

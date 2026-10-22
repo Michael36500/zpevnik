@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import model from "../../../resources/model/model";
-import  Setting from "../../../components/setting/Setting"
+import Setting from "../../../components/setting/Setting"
 import NumberInput from "../../../components/numberInput/NumberInput";
 import { downloadSongbook } from "../../../resources/pdf/generate";
 
@@ -46,7 +46,7 @@ export default function ButtonsSection() {
   const settings = model.settings;
   return (
     <div className="section">
-        <Setting
+      <Setting
         name="showRandomSongButton"
         title="Random song"
         text="Show random song button."
@@ -61,7 +61,7 @@ export default function ButtonsSection() {
         name="showFavorites"
         title="Favorites"
         text={'Show "Add to favorites" button and sort songs by favorites.'}
-      />{settings.showFavorites&&<Setting indent
+      />{settings.showFavorites && <Setting indent
         name="separateFavorites"
         title="Separate favorites"
         text={"Show favorite song separately at the top and then again in all songs."}
@@ -106,14 +106,14 @@ export default function ButtonsSection() {
         title="Columns"
         text={"Show column setting button."}
       />
-      {settings.showColumnsButton&&<Setting indent
+      {settings.showColumnsButton && <Setting indent
         name="maxColumns"
         title="Max columns"
         text={"Maximum number of columns."}
         input={<NumberInput
-            min={1}
-            defaultValue={model.setting("maxColumns")}
-            onChange={v => model.setSettings({maxColumns: v})}
+          min={1}
+          defaultValue={model.setting("maxColumns")}
+          onChange={v => model.setSettings({ maxColumns: v })}
         />}
       />}
 
@@ -122,11 +122,14 @@ export default function ButtonsSection() {
         title="Line Break"
         text={"Show line break button."}
       />
-      <Setting
+
+      Edit buttons is disabled due to maintanence :/. We're sorry.
+      {/* disabled because we will access custom song data without the ability to edit them */}
+      {/* <Setting
         name="showEditButton"
         title="Edit"
         text="Show edit button."
-      />
+      /> */}
     </div>
   );
 }

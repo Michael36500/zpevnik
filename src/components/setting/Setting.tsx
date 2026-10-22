@@ -33,6 +33,7 @@ export default function Setting({
                             model.setSettings({ [name]: v })
                         }
                         value={model.setting(name)}
+
                     />
                 )}
             </div>
